@@ -5,4 +5,4 @@ from ..app import app
 def accueil():
     """ Route permettant l'affichage d'une page accueil
     """
-    return render_template("pages/accueil.html", nom="Accueil")
+    return render_template("pages/accueil.html")
