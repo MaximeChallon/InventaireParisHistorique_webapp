@@ -5,6 +5,8 @@
         <title>{%block titre %}{%endblock%} | Inventaire du Paris Historique</title>
         {% include "partials/css.html" %}
         {% include "partials/metadata.html" %}
+        {% include "partials/js.html" %}
+        {% block js %}{%endblock%}
     </head>
     <body>
 
@@ -37,7 +39,4 @@
         </div>
       </div>
     </body>
-    <footer>
-      {% include "partials/js.html" %}
-    </footer>
 </html>
