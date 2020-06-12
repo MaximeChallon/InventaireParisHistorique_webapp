@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 import os
 
 chemin_actuel = os.path.dirname(os.path.abspath(__file__))
@@ -11,4 +12,13 @@ app = Flask(
     static_folder=statics
 )
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+app.config['SECRET_KEY'] = 'xxxxxxxx'
+
+
 from .routes import generals
+
+def init_app():
+    db.create_all()

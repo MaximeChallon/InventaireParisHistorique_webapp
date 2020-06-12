@@ -19,7 +19,7 @@ Cartographie
                 maxNativeZoom: 100
             }).addTo(map);
 
-            $.ajax("{{url_for ('static', filename='data/inventaire_complet.json')}}").done(function(data, x, z) {
+            $.ajax("{{url_for ('json_carto')}}").done(function(data, x, z) {
 
                 var leafletView = new PruneClusterForLeaflet();
                 var markers = []
