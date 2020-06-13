@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 import os
 
 chemin_actuel = os.path.dirname(os.path.abspath(__file__))
@@ -18,6 +19,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = 'xxxxxxxx'
 
+login = LoginManager(app)
 
 from .routes import generals
 
