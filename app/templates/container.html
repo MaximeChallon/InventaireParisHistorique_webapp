@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169316029-1"></script>
-<script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169316029-1"></script>
+    <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -34,6 +33,17 @@
         <li class="nav-item">
             <a class="nav-link" href="{{url_for('graphiques')}}">Graphiques</a>
         </li>
+    </ul>
+    <ul class="navbar-nav mr-auto">
+    {% if not current_user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('connexion')}}">Connexion</a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('deconnexion')}}">Déconnexion ({{current_user.nom}})</a>
+              </li>
+        {% endif %}
     </ul>
 </nav>
 <div class="container">
