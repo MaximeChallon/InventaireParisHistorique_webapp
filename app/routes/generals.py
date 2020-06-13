@@ -3,6 +3,7 @@ from ..app import app
 from ..models.graphiques import classe_graphiques
 import pandas as pd
 from ..models.donnees import Classe_db
+from ..models.users import Classe_utilisateurs
 from ..models.formulaires import Chart_form
 
 # routes dans l'ordre:
@@ -20,6 +21,7 @@ def accueil():
 			return redirect(url_for('graphiques', visuel=form.visuel.data, dates=form.dates.data))
 		else:
 			return redirect(url_for('graphiques', visuel=form.visuel.data, dates=form.dates.data))
+
 	return render_template("pages/accueil.html", form=form)
 
 

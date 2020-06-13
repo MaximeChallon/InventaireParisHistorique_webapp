@@ -13,6 +13,7 @@ app = Flask(
 )
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+app.config['SQLALCHEMY_BINDS'] = {'users': 'sqlite:///users.sqlite'}
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = 'xxxxxxxx'
@@ -22,3 +23,4 @@ from .routes import generals
 
 def init_app():
     db.create_all()
+    db.create_all(bind="users")
