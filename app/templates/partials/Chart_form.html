@@ -1,7 +1,11 @@
 <form method="post">
     {{ form.hidden_tag() }}
+    <p style="font-size:16pt;">Configuration du graphique</p>
+    <p>Choix du type de graphique</p>
     {{ form.visuel }}
+    <p>Choix des données à utiliser</p>
     {{ form.dates }}
     {{ form.submit }}
-    <input type="submit">
+    <p style="font-size:8pt;">Par défaut, "Ligne" et "Jour par jour" sont utilisés.
+        <br>Le graphique est interactif: vous pouvez zoomer, le déplacer, et voir les données en passant la souris.</p>
 </form>

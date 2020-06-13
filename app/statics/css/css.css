@@ -7,6 +7,19 @@ html, body, p{
 	margin-bottom: 10px;
 }
 
+/*footer*/
+p.footer{
+    background-color: #a6cfb1;
+    margin-top:0px;
+    margin-bottom:0px;
+}
+
+div.footer{
+    margin-top: 0px;
+    margin-bottom:0px;
+    font-size:8pt;
+}
+
 /* barre de navigation */
 .navbar-custom{
  	background-color: #a6cfb1;
@@ -80,3 +93,5 @@ html, body, p{
     font-weight: bold;
     color: #CA1712;
 }
+
+/* les graphiques */
