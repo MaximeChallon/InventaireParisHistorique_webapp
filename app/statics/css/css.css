@@ -2,9 +2,12 @@ html, body, p{
 	background-color: #edeff2;
 }
 
+
 .container{
 	margin-top: 10px;
 	margin-bottom: 10px;
+	padding-left:0px;
+	padding-right:0px;
 }
 
 /*footer*/
