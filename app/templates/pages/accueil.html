@@ -9,11 +9,6 @@ Accueil
 <p>Ce site permet de visualiser les données de l'inventaire du Paris Historique, et d'en saisir si vous en avez l'autorisation.</p>
 <h2>Voir les graphiques statistiques</h2>
 
-<form method="post">
-    {{ form.hidden_tag() }}
-    {{ form.visuel }}
-    {{ form.dates }}
-    {{ form.submit }}
-    <input type="submit">
-</form>
+{% include "partials/Chart_form.html" %}
+
 {% endblock %}

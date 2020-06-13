@@ -4,8 +4,13 @@ from ..models.graphiques import classe_graphiques
 import pandas as pd
 from ..models.donnees import Classe_db
 from ..models.formulaires import Chart_form
-import urllib.parse
 
+# routes dans l'ordre:
+#/
+#/cartographie
+#/json_carto
+#/graphiques
+#/graphiques/temporels
 
 @app.route("/", methods=['post','get'])
 def accueil():
@@ -36,11 +41,19 @@ def json_carto():
 
 
 # les routes suivantes vont ensemble: la première gère l'affichage des graphiques, les autres contiennent seulement le JSOn nécessaire aux graphiques
-@app.route("/graphiques")
+@app.route("/graphiques", methods=['get', 'post'])
 def graphiques(visuel="line", dates='general_au_jour'):
 	visuel = request.args.get("visuel", 'line')
 	dates = request.args.get("dates", 'general_au_jour')
-	return render_template("pages/graphiques.html", visuel=visuel, dates=dates)
+
+	form = Chart_form()
+	if form.validate_on_submit():
+		if form.visuel.data == "bar":
+			return redirect(url_for('graphiques', visuel=form.visuel.data, dates=form.dates.data))
+		else:
+			return redirect(url_for('graphiques', visuel=form.visuel.data, dates=form.dates.data))
+
+	return render_template("pages/graphiques.html", visuel=visuel, dates=dates, form=form)
 
 
 @app.route("/graphiques/temporels")
