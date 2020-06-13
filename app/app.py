@@ -19,7 +19,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = 'xxxxxxxx'
 
-login = LoginManager(app)
+login_manager = LoginManager(app)
 
 from .routes import generals
 
