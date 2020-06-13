@@ -1,9 +1,9 @@
 <form method="post">
     {{ form.hidden_tag() }}
-    <p style="font-size:16pt;">Configuration du graphique</p>
-    <p>Choix du type de graphique</p>
+    <p style="font-size:16pt;margin-top:3px; margin-bottom:3px;padding-top:3px;padding-bottom:3px;">Configuration du graphique</p>
+    <p style="margin-top:3px; margin-bottom:3px;padding-top:3px;padding-bottom:3px;">Choix du type de graphique</p>
     {{ form.visuel }}
-    <p>Choix des données à utiliser</p>
+    <p style="margin-top:3px; margin-bottom:3px;padding-top:3px;padding-bottom:3px;">Choix des données à utiliser</p>
     {{ form.dates }}
     {{ form.submit }}
     <p style="font-size:8pt;">Par défaut, "Ligne" et "Jour par jour" sont utilisés.

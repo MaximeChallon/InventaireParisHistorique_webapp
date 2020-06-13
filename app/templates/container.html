@@ -1,59 +1,60 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <title>{%block titre %}{%endblock%} | Inventaire du Paris Historique</title>
-        {% include "partials/css.html" %}
-        {% include "partials/metadata.html" %}
-        {% include "partials/js.html" %}
-        {% block js %}{%endblock%}
-        {% block css %}{%endblock%}
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <title>{%block titre %}{%endblock%} | Inventaire du Paris Historique</title>
+    {% include "partials/css.html" %}
+    {% include "partials/metadata.html" %}
+    {% include "partials/js.html" %}
+    {% block js %}{%endblock%}
+    {% block css %}{%endblock%}
+</head>
+<body>
 
-      <nav class="navbar navbar-custom navbar-fixed-top">
-        <img class="navbar-img" src="https://www.paris-historique.org/wp-content/uploads/2018/10/logoPH2-300x176.png">
-        <a class="navbar-brand" href="{{ url_for('accueil') }}">Inventaire du Paris Historique</a>
+<nav class="navbar navbar-custom navbar-fixed-top">
+    <a class="navbar-brand" href="{{ url_for('accueil') }}"><img class="navbar-img" src="https://www.paris-historique.org/wp-content/uploads/2018/10/logoPH2-300x176.png"></a>
+    <a class="navbar-brand" href="{{ url_for('accueil') }}">Inventaire du Paris Historique</a>
 
-        <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="{{url_for('cartographie')}}">Cartographie</a>
-              </li>
-        </ul>
-        <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="{{url_for('graphiques')}}">Graphiques</a>
-              </li>
-        </ul>
-      </nav>
-      <div class="container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-          <div class="row">
-              <div class="col">
-                {% for category, message in messages %}
-                  <div class="alert alert-{{category}}" role="alert">{{ message }}</div>
-                {% endfor %}
-              </div>
-          </div>
-          {% endif %}
-        {% endwith %}
-        <div class="row">
-            <div class="col">
-            {% block corps %}{% endblock %}
-            </div>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('cartographie')}}">Cartographie</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('graphiques')}}">Graphiques</a>
+        </li>
+    </ul>
+</nav>
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="row">
+        <div class="col">
+            {% for category, message in messages %}
+            <div class="alert alert-{{category}}" role="alert">{{ message }}</div>
+            {% endfor %}
         </div>
-      </div>
-    </body>
+    </div>
+    {% endif %}
+    {% endwith %}
+    <div class="row">
+        <div class="col">
+            {% block corps %}{% endblock %}
+        </div>
+    </div>
+</div>
+</body>
 <footer class="blog-footer" style="background-color: #a6cfb1">
     <div class="container" style="padding: 1em; text-align: center">
         <div class="footer">
-        <p class="footer">© 2020 - <a href="https://www.paris-historique.org/">Association Paris Historique</a> - Maxime Challon</p>
-            </div>
-        <div class="footer">
-        <p class="footer">Code source disponible
-            <a href="https://www.github.com/MaximeChallon/InventaireParisHistorique">sur GitHub</a>; pour consulter les photographies, contacter l'association.</p>
-    </div>
+            <p class="footer">© 2020 - <a href="https://www.paris-historique.org/">Association Paris Historique</a> - Maxime Challon</p>
         </div>
+        <div class="footer">
+            <p class="footer">Code source disponible
+                <a href="https://www.github.com/MaximeChallon/InventaireParisHistorique">sur GitHub</a>. Pour consulter les photographies, contacter l'association.</p>
+            <p class="footer">Toutes les photographies ne sont pas en ligne. Pour consulter ces données, veuillez nous contacter ainsi que les ayants-droits.</p>
+        </div>
+    </div>
 </footer>
 </html>
