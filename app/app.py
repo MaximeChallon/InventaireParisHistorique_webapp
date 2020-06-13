@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_admin import Admin
 import os
 
 chemin_actuel = os.path.dirname(os.path.abspath(__file__))
@@ -18,6 +19,8 @@ app.config['SQLALCHEMY_BINDS'] = {'users': 'sqlite:///users.sqlite'}
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = 'xxxxxxxx'
+
+admin = Admin(app)
 
 login_manager = LoginManager(app)
 
