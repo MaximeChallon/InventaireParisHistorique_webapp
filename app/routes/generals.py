@@ -1,5 +1,6 @@
 from flask import render_template, redirect, url_for, request
-from ..app import app, db
+from flask_login import current_user, login_user, logout_user, login_required
+from ..app import app, db, login_manager
 from ..models.graphiques import classe_graphiques
 import pandas as pd
 from ..models.donnees import Classe_db
@@ -12,6 +13,9 @@ from ..models.formulaires import Chart_form
 #/json_carto
 #/graphiques
 #/graphiques/temporels
+#/inscription
+#/connexion
+#/deconnexion
 
 @app.route("/", methods=['post','get'])
 def accueil():
@@ -96,3 +100,45 @@ def temporels(visuel='line', dates='general_au_jour'):
 		chart = classe_graphiques.generate_temporels_line(donnees, "Mois et jour")
 		
 	return chart.to_json()
+
+
+@app.route("/inscription", methods=["GET", "POST"])
+@login_required
+def inscription():
+	# Si on est en POST, cela veut dire que le formulaire a été envoyé
+	if request.method == "POST":
+		statut, donnees = Classe_utilisateurs.creer(
+			nom=request.form.get("nom", None),
+			prenom=request.form.get("prenom", None),
+            motdepasse=request.form.get("motdepasse", None)
+        )
+		if statut is True:
+			return redirect("/")
+		else:
+			return render_template("pages/inscription.html")
+	else:
+		return render_template("pages/inscription.html")
+
+
+@app.route("/connexion", methods=["POST", "GET"])
+def connexion():
+	if current_user.is_authenticated is True:
+		return redirect("/")
+	if request.method == "POST":
+		utilisateur = Classe_utilisateurs.identification(
+			nom=request.form.get("nom", None),
+            motdepasse=request.form.get("motdepasse", None)
+		)
+		if utilisateur:
+			login_user(utilisateur)
+			return redirect("/")
+
+	return render_template("pages/connexion.html")
+login_manager.login_view = 'connexion'
+
+
+@app.route("/deconnexion", methods=["POST", "GET"])
+def deconnexion():
+	if current_user.is_authenticated is True:
+		logout_user()
+	return redirect("/")
