@@ -103,13 +103,13 @@ def temporels(visuel='line', dates='general_au_jour'):
 
 
 @app.route("/inscription", methods=["GET", "POST"])
-@login_required
 def inscription():
 	# Si on est en POST, cela veut dire que le formulaire a été envoyé
 	if request.method == "POST":
 		statut, donnees = Classe_utilisateurs.creer(
 			nom=request.form.get("nom", None),
 			prenom=request.form.get("prenom", None),
+			mail=request.form.get("mail", None),
             motdepasse=request.form.get("motdepasse", None)
         )
 		if statut is True:
