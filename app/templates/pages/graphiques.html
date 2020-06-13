@@ -18,6 +18,8 @@ Graphiques
 
 {% block corps %}
     <script type="text/javascript">
+    var visuel = '{{visuel}}';
+    var dates = '{{dates}}';
       function parse(url, div) {
         var opt = {
           mode: "vega-lite",
@@ -31,7 +33,7 @@ Graphiques
         });
       }
 
-      parse("{{url_for('temporels')}}", "line");
+      parse("{{url_for('temporels', visuel=visuel, dates=dates)}}", "line");
    
     </script>
 
