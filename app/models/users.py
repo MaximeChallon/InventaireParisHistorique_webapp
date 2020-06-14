@@ -115,7 +115,7 @@ class Classe_catalogage(db.Model, UserMixin):
     Cote_classement = db.Column(db.String(24))
     Date_inventaire = db.Column(db.DateTime, default=datetime.utcnow().strftime("%Y/%m/%d"))
     Auteur = db.Column(db.Integer, db.ForeignKey('utilisateurs.id_utilisateur'))
-    exporte = db.Column(db.Integer)
+    exporte = db.Column(db.Integer, default=0)
 
 
 @login_manager.user_loader
