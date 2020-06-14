@@ -2,6 +2,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_admin import Admin
+from flask_mail import Mail, Message
+from .constantes import SECRET_KEY, MAIL_PASSWORD, MAIL_USERNAME
 import os
 
 chemin_actuel = os.path.dirname(os.path.abspath(__file__))
@@ -18,7 +20,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['SQLALCHEMY_BINDS'] = {'users': 'sqlite:///users.sqlite'}
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-app.config['SECRET_KEY'] = 'xxxxxxxx'
+app.config['SECRET_KEY'] = SECRET_KEY
+
+app.config['MAIL_SERVER'] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_DEBUG'] = True
+app.config['MAIL_USERNAME'] = MAIL_USERNAME
+app.config['MAIL_PASSWORD'] = MAIL_PASSWORD
+mail = Mail(app)
 
 admin = Admin(app)
 
