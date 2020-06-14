@@ -76,7 +76,7 @@ class Classe_utilisateurs(db.Model, UserMixin):
 class Classe_catalogage(db.Model, UserMixin):
     __tablename__ = "catalogage"
     __bind_key__ = "users"
-    N_inventaire = db.Column(db.Integer, primary=True, autoincrement=False)
+    N_inventaire = db.Column(db.Integer, primary_key=True, autoincrement=False)
     Rue = db.Column(db.String(64))
     N_rue = db.Column(db.String(64))
     Nom_site = db.Column(db.String(128))
