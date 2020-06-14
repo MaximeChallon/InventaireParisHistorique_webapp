@@ -19,6 +19,7 @@ from werkzeug.security import generate_password_hash
 #/inscription
 #/connexion
 #/deconnexion
+#/reset_password
 
 @app.route("/", methods=['post','get'])
 def accueil():
