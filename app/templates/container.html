@@ -34,6 +34,21 @@
             <a class="nav-link" href="{{url_for('graphiques')}}">Graphiques</a>
         </li>
     </ul>
+    {%if current_user.is_authenticated%}
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Catalogage
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Cataloguer</a>
+          <a class="dropdown-item" href="#">Exporter</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Enregistrements récents</a>
+        </div>
+      </li>
+    </ul>
+    {%endif%}
     <ul class="navbar-nav mr-auto">
         {% if not current_user.is_authenticated %}
         <li class="nav-item">
