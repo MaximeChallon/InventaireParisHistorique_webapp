@@ -4,6 +4,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from ..constantes import SECRET_KEY
+from datetime import datetime
 
 class Classe_utilisateurs(db.Model, UserMixin):
     __tablename__ = "utilisateurs"
@@ -14,6 +15,10 @@ class Classe_utilisateurs(db.Model, UserMixin):
     password_hash = db.Column(db.String(240))
     mail = db.Column(db.String(120))
     is_admin = db.Column(db.Boolean, default=False)
+
+    photos = db.relationship("Classe_catalogage",
+                            backref='photos',
+                            lazy='dynamic')
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(SECRET_KEY, expires_sec)
@@ -108,8 +113,8 @@ class Classe_catalogage(db.Model, UserMixin):
     Notes = db.Column(db.String(512))
     Cote_base = db.Column(db.String(24))
     Cote_classement = db.Column(db.String(24))
-    Date_inventaire = db.Column(db.String(48))
-    Auteur = db.Column(db.Integer)
+    Date_inventaire = db.Column(db.DateTime, default=datetime.utcnow().strftime("%Y/%m/%d"))
+    Auteur = db.Column(db.Integer, db.ForeignKey('utilisateurs.id_utilisateur'))
     exporte = db.Column(db.Integer)
 
 
