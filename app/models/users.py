@@ -73,6 +73,46 @@ class Classe_utilisateurs(db.Model, UserMixin):
         return self.id_utilisateur
 
 
+class Classe_catalogage(db.Model, UserMixin):
+    __tablename__ = "catalogage"
+    __bind_key__ = "users"
+    N_inventaire = db.Column(db.Integer, primary=True, autoincrement=False)
+    Rue = db.Column(db.String(64))
+    N_rue = db.Column(db.String(64))
+    Nom_site = db.Column(db.String(128))
+    Arrondissement = db.Column(db.Integer)
+    Ville = db.Column(db.String(64))
+    Departement = db.Column(db.Integer)
+    Latitude_x = db.Column(db.String(64))
+    Longitude_y = db.Column(db.String(64))
+    Support = db.Column(db.String(64))
+    Couleur = db.Column(db.String(64))
+    Taille = db.Column(db.String(64))
+    Date_prise_vue = db.Column(db.String(64))
+    Photographe = db.Column(db.String(64))
+    Droits = db.Column(db.String(64))
+    Mention_don = db.Column(db.String(64))
+    Mention_collection = db.Column(db.String(64))
+    Date_construction = db.Column(db.String(64))
+    Architecte = db.Column(db.String(64))
+    Classement_MH = db.Column(db.String(64))
+    Legende = db.Column(db.String(512))
+    Generalite_architecture = db.Column(db.String(64))
+    Mot_cle1 = db.Column(db.String(24))
+    Mot_cle2 = db.Column(db.String(24))
+    Mot_cle3 = db.Column(db.String(24))
+    Mot_cle4 = db.Column(db.String(24))
+    Mot_cle5 = db.Column(db.String(24))
+    Mot_cle6 = db.Column(db.String(24))
+    Autre_adresse = db.Column(db.String(64))
+    Notes = db.Column(db.String(512))
+    Cote_base = db.Column(db.String(24))
+    Cote_classement = db.Column(db.String(24))
+    Date_inventaire = db.Column(db.String(48))
+    Auteur = db.Column(db.Integer)
+    exporte = db.Column(db.Integer)
+
+
 @login_manager.user_loader
 def get_user_by_id(id):
     return Classe_utilisateurs.query.get(int(id))
