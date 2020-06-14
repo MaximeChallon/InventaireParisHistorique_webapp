@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, request
+from flask import render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_user, logout_user, login_required
 from ..app import app, db, login_manager, mail
 from ..models.graphiques import classe_graphiques
@@ -117,16 +117,20 @@ def inscription():
             motdepasse=request.form.get("motdepasse", None)
         )
 		if statut is True:
+			flash("Inscription réussie, veuillez vous connecter", "info")
 			return redirect("/")
 		else:
+			flash("L'inscription a échoué, veuillez recommencer", "warning")
 			return render_template("pages/inscription.html")
 	else:
+		flash("L'inscription a échoué, veuillez recommencer", "warning")
 		return render_template("pages/inscription.html")
 
 
 @app.route("/connexion", methods=["POST", "GET"])
 def connexion():
 	if current_user.is_authenticated is True:
+		flash("Vous êtes déjà connecté", "info")
 		return redirect("/")
 	if request.method == "POST":
 		utilisateur = Classe_utilisateurs.identification(
@@ -135,7 +139,11 @@ def connexion():
 		)
 		if utilisateur:
 			login_user(utilisateur)
+			flash("Vous êtes maintenant connecté", "info")
 			return redirect("/")
+		else:
+			flash("La connexion a échoué, veuillez recommencer", "warning")
+			return render_template("pages/connexion.html")
 
 	return render_template("pages/connexion.html")
 login_manager.login_view = 'connexion'
@@ -145,6 +153,7 @@ login_manager.login_view = 'connexion'
 def deconnexion():
 	if current_user.is_authenticated is True:
 		logout_user()
+		flash("Vous êtes maintenant déconnecté", "info")
 	return redirect("/")
 
 
@@ -166,38 +175,31 @@ Email généré automatiquement, merci de ne pas y répondre.
 @app.route("/reset_password", methods=['get', 'post'])
 def forgot_password():
 	if current_user.is_authenticated:
+		flash("Vous êtes connecté", "info")
 		return redirect(url_for('accueil'))
 	form = Forgot_form()
 	if form.validate_on_submit():
 		user = Classe_utilisateurs.query.filter_by(mail=form.email.data).first()
 		send_reset_email(user)
-		return "Un mail a été envoyé à l'adresse " + form.email.data + " avec les instructions pour changer de mot de passe.\nPensez à vérifier les spams.\nL'expéditeur est "+MAIL_USERNAME
+		msg = "Un mail a été envoyé à l'adresse " + form.email.data + " avec les instructions pour changer de mot de passe.\nPensez à vérifier les spams.\nLe lien n'est valable que 30 minutes.\nL'expéditeur est "+MAIL_USERNAME
+		flash(msg, "info")
+		return redirect(url_for('accueil'))
 	return render_template("pages/forgot_password.html", form=form)
 
 
 @app.route("/reset_password/<token>", methods=['get', 'post'])
 def reset_token(token):
 	if current_user.is_authenticated:
+		flash("Vous êtes connecté", "info")
 		return redirect(url_for('accueil'))
 	user = Classe_utilisateurs.verify_reset_token(token)
 	if user is None:
-		return "Lien invalide ou expiré."
+		flash("Lien invalide ou expiré.", "warning")
+		return redirect(url_for('forgot_password'))
 	form = Reset_password_form()
 	if form.validate_on_submit():
 		user.password_hash = generate_password_hash(form.current_password.data)
 		db.session.commit()
+		flash("Le mot de passe a bien été modifié", "info")
 		return redirect(url_for('connexion'))
 	return render_template("pages/reset_token.html", form=form)
-
-"""
-@app.route("/mails")
-def mails():
-	try:
-		message = Message("hi!",
-						  sender="parishistorique.inventaire@gmail.com",
-						  recipients=['parishistorique.inventaire@gmail.com'])
-		message.body = "Bonjour!"
-		mail.send(message)
-		return "Mail envoyé avec succès"
-	except Exception as e:
-		return str(e)"""
