@@ -1,0 +1,18 @@
+{% extends "container.html" %}
+
+{% block titre %}
+Changement de mot de passe
+{% endblock %}
+
+{% block corps %}
+
+<form method="post">
+    {{ form.hidden_tag() }}
+    <p>Entrez votre nouveau mot de passe</p>
+    {{ form.current_password }}
+    <p>Confirmez votre mot de passe</p>
+    {{ form.confirm_password }}
+    {{ form.submit }}
+</form>
+
+{% endblock %}

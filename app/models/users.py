@@ -2,6 +2,8 @@ from ..app import db, login_manager, admin
 from flask_admin.contrib.sqla import ModelView
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from ..constantes import SECRET_KEY
 
 class Classe_utilisateurs(db.Model, UserMixin):
     __tablename__ = "utilisateurs"
@@ -12,6 +14,20 @@ class Classe_utilisateurs(db.Model, UserMixin):
     password_hash = db.Column(db.String(240))
     mail = db.Column(db.String(120))
     is_admin = db.Column(db.Boolean, default=False)
+
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(SECRET_KEY, expires_sec)
+        return s.dumps({'user_id': self.id_utilisateur}).decode('utf-8')
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(SECRET_KEY)
+        try:
+            user_id = s.loads(token)['user_id']
+        except:
+            return None
+        return Classe_utilisateurs.query.get(user_id)
+
 
     @staticmethod
     def identification(nom, motdepasse):
