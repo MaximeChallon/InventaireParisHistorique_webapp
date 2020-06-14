@@ -1,11 +1,12 @@
 from flask import render_template, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
-from ..app import app, db, login_manager
+from ..app import app, db, login_manager, mail
 from ..models.graphiques import classe_graphiques
 import pandas as pd
 from ..models.donnees import Classe_db
 from ..models.users import Classe_utilisateurs
 from ..models.formulaires import Chart_form
+from flask_mail import Message
 
 # routes dans l'ordre:
 #/
@@ -143,3 +144,16 @@ def deconnexion():
 	if current_user.is_authenticated is True:
 		logout_user()
 	return redirect("/")
+
+"""
+@app.route("/mails")
+def mails():
+	try:
+		message = Message("hi!",
+						  sender="parishistorique.inventaire@gmail.com",
+						  recipients=['parishistorique.inventaire@gmail.com'])
+		message.body = "Bonjour!"
+		mail.send(message)
+		return "Mail envoyé avec succès"
+	except Exception as e:
+		return str(e)"""
