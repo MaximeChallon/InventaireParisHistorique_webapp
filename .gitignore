@@ -3,4 +3,4 @@ __pycache__
 env
 .idea/
 .env
-app/users.sqlite
+#app/users.sqlite

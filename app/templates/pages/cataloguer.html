@@ -1,0 +1,107 @@
+{% extends "container.html" %}
+
+{% block titre %}
+Cataloguer
+{% endblock %}
+
+{% block corps %}
+<div class="container">
+    <div class="row">
+        <p>Veuillez remplir un formulaire par photographie. Vous pourrez retrouver vos photos inventoriées dans l'onglet "Enregistrements récents", pour les consulter, les modifier, ou les envoyer à la photothèque.</p>
+    </div>
+    <div class="row">
+        <form method="post">
+            {{ form.hidden_tag() }}
+            <h1 style="font-size:16pt;color:#da1916;">Informations générales sur la photographie</h1>
+            <div class="row">
+                <div class="col-4">
+                    <p>Numéro d'inventaire<br>
+                        {{ form.N_inventaire }}</p>
+                </div>
+                <div class="col-6">
+                    <p>Cote dans la base des numérisations<br>
+                        {{ form.Cote_base }}</p>
+                </div>
+            </div>
+            <h1 style="font-size:16pt;color:#da1916;">Informations concernant l'adresse</h1>
+            <p  style="font-size:8pt;">En cas de doute, ne rien mettre.</p>
+            <div class="row">
+                <div class="col-8">
+                    <p>Nom de la rue<br>
+                        {{form.Rue}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Numéro dans la rue <br>
+                        {{form.N_rue}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p>Nom du site<br>
+                        {{form.Nom_site}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <p>Arrondissement<br>
+                        {{form.Arrondissement}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Ville <br>
+                        {{form.Ville}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Département (code à deux chiffres)<br>
+                        {{form.Departement}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p>Latitude (ex:48.8534)<br>
+                        {{form.Latitude_x}}</p>
+                </div>
+                <div class="col-6">
+                    <p>Longitude (ex:2.3488)<br>
+                        {{form.Longitude_y}}</p>
+                </div>
+            </div>
+            <h1 style="font-size:16pt;color:#da1916;">Caractéristiques physiques et morales</h1>
+            <div class="row">
+                <div class="col-4">
+                    <p>Support <br>
+                    {{form.Support}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Couleur <br>
+                    {{form.Couleur}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Taille (HAUTEURxLARGEURcm) <br>
+                    {{form.Taille}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p>Date de prise de vue (AAAA/MM/JJ)<br>
+                    {{form.Date_prise_vue}}</p>
+                </div>
+                <div class="col-6">
+                    <p>Photographe<br>
+                    {{form.Photographe}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p>Mention de don<br>
+                    {{form.Mention_don}}</p>
+                </div>
+                <div class="col-6">
+                    <p>Mention de collection<br>
+                    {{form.Mention_collection}}</p>
+                </div>
+            </div>
+            {{ form.submit }}
+        </form>
+    </div>
+</div>
+{% endblock %}
