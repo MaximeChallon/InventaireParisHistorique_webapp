@@ -65,6 +65,12 @@ Cataloguer
                         {{form.Longitude_y}}</p>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-12">
+                    <p>Autre adresse (texte libre) <br>
+                        {{form.Autre_adresse(size=100)}}</p>
+                </div>
+            </div>
             <h1 style="font-size:16pt;color:#da1916;">Caractéristiques physiques et morales</h1>
             <div class="row">
                 <div class="col-4">
@@ -98,6 +104,62 @@ Cataloguer
                 <div class="col-6">
                     <p>Mention de collection<br>
                     {{form.Mention_collection}}</p>
+                </div>
+            </div>
+            <h1 style="font-size:16pt;color:#da1916;">Description du sujet</h1>
+            <div class="row">
+                <div class="col-4">
+                    <p>Date de construction<br>
+                    {{form.Date_construction}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Architecte<br>
+                    {{form.Architecte}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Généralité d'architecture (obligatoire)<br>
+                    {{form.Generalite_architecture}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p>Légende <br>
+                    {{form.Legende(size=100)}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <p>Mot-clé 1<br>
+                    {{form.Mot_cle1}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Mot-clé 2<br>
+                    {{form.Mot_cle1}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Mot-clé 3<br>
+                    {{form.Mot_cle1}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <p>Mot-clé 4<br>
+                    {{form.Mot_cle1}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Mot-clé 5<br>
+                    {{form.Mot_cle1}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Mot-clé 6<br>
+                    {{form.Mot_cle1}}</p>
+                </div>
+            </div>
+            <h1 style="font-size:16pt;color:#da1916;">Divers</h1>
+            <div class="row">
+                <div class="col-12">
+                    <p>Note libre<br>
+                    {{form.Notes(size=100)}}</p>
                 </div>
             </div>
             {{ form.submit }}
