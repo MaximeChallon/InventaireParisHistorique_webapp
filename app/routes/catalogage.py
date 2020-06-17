@@ -1,6 +1,8 @@
 from ..app import app, db
 from flask_login import login_required, current_user
-from flask import url_for, render_template, flash, redirect, abort
+from flask import url_for, render_template, flash, redirect, abort, send_file, request
+import pandas as pd
+import io
 from ..models.formulaires import Catalogage_form
 from ..models.users import Classe_catalogage
 
@@ -44,9 +46,6 @@ from ..models.users import Classe_catalogage
 	exporte	INTEGER NOT NULL
 );"""
 
-
-#créer un espace personnel pour chaque membre sur le type de Admin, où il peut:
-#exporté les données remplies entre tel jour et tel jour
 #envoyer directement à l'adresse de la photothèque le csv final de catalogage
 
 #supprimer les photos 30 jours après l'envoi ou l'export pour ne pas surcharger la base
@@ -106,10 +105,84 @@ def cataloguer(nom_user):
         flash("Photographie correctement enregistrée", "info")
     return render_template("pages/cataloguer.html", form=form)
 
-@app.route("/espace_personnel/<nom_user>/exporter")
+
+@app.route("/espace_personnel/<nom_user>/exporter", methods=['get', 'post'])
 @login_required
 def exporter(nom_user):
-    pass
+    if request.method == "POST":
+        num_debut = request.form.get("num_debut", None)
+        num_fin = request.form.get("num_fin", None)
+        flash("Le téléchargement débute", "info")
+        return redirect(url_for('exporter_csv', nom_user=nom_user, num_debut=num_debut, num_fin=num_fin))
+    return render_template("pages/exporter.html")
+
+
+@app.route("/espace_personnel/<nom_user>/exporter/<num_debut>/<num_fin>")
+@login_required
+def exporter_csv(nom_user, num_debut, num_fin):
+    i = int(num_debut)
+    liste_photos = []
+    liste_finale=[]
+    while i <= int(num_fin) and i>=int(num_debut):
+        try:
+            photo = Classe_catalogage.query.get(i)
+            if photo and photo.auteur==current_user:
+                liste_photo = []
+                liste_photos.append(photo)
+                liste_photo.append(photo.N_inventaire)
+                liste_photo.append(photo.Rue)
+                liste_photo.append(photo.N_rue)
+                liste_photo.append(photo.Nom_site)
+                liste_photo.append(photo.Arrondissement)
+                liste_photo.append(photo.Ville)
+                liste_photo.append(photo.Departement)
+                liste_photo.append(photo.Latitude_x)
+                liste_photo.append(photo.Longitude_y)
+                liste_photo.append(photo.Support)
+                liste_photo.append(photo.Couleur)
+                liste_photo.append(photo.Taille)
+                liste_photo.append(photo.Date_prise_vue)
+                liste_photo.append(photo.Photographe)
+                liste_photo.append(photo.Droits)
+                liste_photo.append(photo.Mention_don)
+                liste_photo.append(photo.Mention_collection)
+                liste_photo.append(photo.Date_construction)
+                liste_photo.append(photo.Architecte)
+                liste_photo.append(photo.Classement_MH)
+                liste_photo.append(photo.Legende)
+                liste_photo.append(photo.Generalite_architecture)
+                liste_photo.append(photo.Mot_cle1)
+                liste_photo.append(photo.Mot_cle2)
+                liste_photo.append(photo.Mot_cle3)
+                liste_photo.append(photo.Mot_cle4)
+                liste_photo.append(photo.Mot_cle5)
+                liste_photo.append(photo.Mot_cle6)
+                liste_photo.append(photo.Autre_adresse)
+                liste_photo.append(photo.Notes)
+                liste_photo.append(photo.Cote_base)
+                liste_photo.append(photo.Cote_classement)
+                liste_photo.append(photo.Date_inventaire)
+                liste_photo.append(current_user.nom.upper())
+                liste_finale.append(liste_photo)
+        except:
+            pass
+        i+=1
+    dataframe = pd.DataFrame(liste_finale)
+    proxyIO = io.StringIO()
+    dataframe.to_csv(proxyIO, index=False, header=False, encoding="utf-8")
+    mem = io.BytesIO()
+    mem.write(proxyIO.getvalue().encode("utf-8"))
+    mem.seek(0)
+
+    envoi_fichier = send_file(
+            mem,
+            mimetype="text/csv",
+            attachment_filename="inventaire" + num_debut + "-" + num_fin +".csv",
+            as_attachment=True,
+            cache_timeout=0,
+        )
+
+    return envoi_fichier
 
 @app.route("/espace_personnel/<nom_user>/enregistrements_recents")
 @login_required
