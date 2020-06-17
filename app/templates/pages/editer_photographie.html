@@ -1,0 +1,154 @@
+{% extends "container.html" %}
+
+{% block titre %}
+Cataloguer
+{% endblock %}
+
+{% block corps %}
+<div class="container">
+    <div class="row">
+        <p>Vous pouvez modifier ici les informations déjà remplies. Attention, il faut de nouveau remplir les mots-clés.</p>
+    </div>
+    <div class="row">
+        <form method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <h1 style="font-size:16pt;color:#da1916;">Informations générales sur la photographie</h1>
+            <div class="row">
+                <div class="col-4">
+                    <p>Numéro d'inventaire<br>
+                        {{ form.N_inventaire }}</p>
+                </div>
+                <div class="col-6">
+                    <p>Cote dans la base des numérisations<br>
+                        {{ form.Cote_base }}</p>
+                </div>
+            </div>
+            <h1 style="font-size:16pt;color:#da1916;">Informations concernant l'adresse</h1>
+            <p  style="font-size:8pt;">En cas de doute, ne rien mettre.</p>
+            <div class="row">
+                <div class="col-8">
+                    <p>Nom de la rue<br>
+                        {{form.Rue}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Numéro dans la rue <br>
+                        {{form.N_rue}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p>Nom du site<br>
+                        {{form.Nom_site}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <p>Arrondissement<br>
+                        {{form.Arrondissement}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Ville <br>
+                        {{form.Ville}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Département (code à deux chiffres)<br>
+                        {{form.Departement}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p>Latitude (ex:48.8534)<br>
+                        {{form.Latitude_x}}</p>
+                </div>
+                <div class="col-6">
+                    <p>Longitude (ex:2.3488)<br>
+                        {{form.Longitude_y}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p>Autre adresse (texte libre) <br>
+                        {{form.Autre_adresse(size=100)}}</p>
+                </div>
+            </div>
+            <h1 style="font-size:16pt;color:#da1916;">Caractéristiques physiques et morales</h1>
+            <div class="row">
+                <div class="col-4">
+                    <p>Support <br>
+                    {{form.Support}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Couleur <br>
+                    {{form.Couleur}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Taille (HAUTEURxLARGEURcm) <br>
+                    {{form.Taille}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <p>Date de prise de vue (AAAA/MM/JJ)<br>
+                    {{form.Date_prise_vue}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Photographe<br>
+                    {{form.Photographe}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Droits<br>
+                    {{form.Droits}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p>Mention de don<br>
+                    {{form.Mention_don}}</p>
+                </div>
+                <div class="col-6">
+                    <p>Mention de collection<br>
+                    {{form.Mention_collection}}</p>
+                </div>
+            </div>
+            <h1 style="font-size:16pt;color:#da1916;">Description du sujet</h1>
+            <div class="row">
+                <div class="col-4">
+                    <p>Date de construction<br>
+                    {{form.Date_construction}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Architecte<br>
+                    {{form.Architecte}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Généralité d'architecture (obligatoire)<br>
+                    {{form.Generalite_architecture}}</p>
+                </div>
+            </div>
+            <div class="row"><div class="col-6">
+                    <p>Classement MH <br>
+                    {{form.Classement_MH}}</p>
+                </div>
+                <div class="col-6">
+                    <p>Légende <br>
+                    {{form.Legende(size=50)}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <p>Mot-clés (maximum 6, maintenir la touche CTRL pour sélectionner plusieurs mots) <br>
+                    {{form.Mot_cle}}</p>
+                </div>
+            </div>
+            <h1 style="font-size:16pt;color:#da1916;">Divers</h1>
+            <div class="row">
+                <div class="col-12">
+                    <p>Note libre<br>
+                    {{form.Notes(size=100)}}</p>
+                </div>
+            </div>
+            {{ form.submit }}
+        </form>
+    </div>
+</div>
+{% endblock %}

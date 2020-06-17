@@ -1,0 +1,33 @@
+{% extends "container.html" %}
+
+{% block titre %}
+Mes enregistrements récents
+{% endblock %}
+
+{% block corps %}
+<div class="container">
+    {%for photo in photos%}
+    <div class="row">
+        <div class="col-12">
+            <h1 style="font-size:14pt;color:#da1916;">{{photo.N_inventaire}} {{photo.Nom_site}}
+            <a href="{{ url_for('editer_photographie',nom_user=current_user.nom, id_photo=photo.N_inventaire_index) }}">
+            <span class="label label-default" style="font-size:10pt;">Mettre à jour</span>
+            </a></h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <ul>
+                <li>Adresse: {{photo.N_rue}} {{photo.Rue}}, {{photo.Ville}} ({{photo.Departement}})</li>
+                <li>Caractéristiques physiques: {{photo.Support}}, {{photo.Couleur}}, {{photo.Taille}} (prise le {{photo.Date_prise_vue}})</li>
+                <li>Sujet: {{photo.Generalite_architecture}}</li>
+                <li>Légende: {{photo.Legende}}</li>
+                <li>Mots clés: {{photo.Mot_cle1}},{{photo.Mot_cle2}},{{photo.Mot_cle3}},{{photo.Mot_cle4}},{{photo.Mot_cle5}},{{photo.Mot_cle6}},</li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+{%endfor%}
+</div>
+{% endblock %}

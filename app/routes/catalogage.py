@@ -1,6 +1,6 @@
 from ..app import app, db
 from flask_login import login_required, current_user
-from flask import url_for, render_template, flash, redirect
+from flask import url_for, render_template, flash, redirect, abort
 from ..models.formulaires import Catalogage_form
 from ..models.users import Classe_catalogage
 
@@ -111,6 +111,92 @@ def cataloguer(nom_user):
 #@login_required
 #def exporter(nom_user):
 
-#@app.route("/espace_personnel/<nom_user>/enregistrements_recents")
-#@login_required
-#def enregistrements_recents(nom_user):
+@app.route("/espace_personnel/<nom_user>/enregistrements_recents")
+@login_required
+def enregistrements_recents(nom_user):
+    photos = Classe_catalogage.query.filter_by(auteur=current_user).all()
+    return render_template("pages/enregistrements_recents.html", photos=photos)
+
+
+@app.route("/espace_personnel/<nom_user>/editer_photographie/<id_photo>", methods=['GET', "POST"])
+@login_required
+def editer_photographie(nom_user, id_photo):
+    form = Catalogage_form()
+    photo = Classe_catalogage.query.get_or_404(id_photo)
+    mots_cles = form.Mot_cle.data
+    i = 0
+    j = 6 - len(mots_cles)
+    if len(mots_cles) < 6:
+        while i != j:
+            mots_cles.append("")
+            i += 1
+    if form.validate_on_submit():
+        photo.N_inventaire_index = form.N_inventaire.data
+        photo.N_inventaire = form.N_inventaire.data
+        photo.Rue = form.Rue.data
+        photo.N_rue = form.N_rue.data
+        photo.Nom_site = form.Nom_site.data
+        photo.Arrondissement = form.Arrondissement.data
+        photo.Ville = form.Ville.data
+        photo.Departement = form.Departement.data
+        photo.Latitude_x = form.Latitude_x.data
+        photo.Longitude_y = form.Longitude_y.data
+        photo.Support = form.Support.data
+        photo.Couleur = form.Couleur.data
+        photo.Taille = form.Taille.data
+        photo.Date_prise_vue = form.Date_prise_vue.data
+        photo.Photographe = form.Photographe.data
+        photo.Droits = form.Droits.data
+        photo.Mention_don = form.Mention_don.data
+        photo.Mention_collection = form.Mention_collection.data
+        photo.Date_construction = form.Date_construction.data
+        photo.Architecte = form.Architecte.data
+        photo.Classement_MH = form.Classement_MH.data
+        photo.Legende = form.Legende.data
+        photo.Generalite_architecture = form.Generalite_architecture.data
+        photo.Mot_cle1 = form.Mot_cle.data[0]
+        photo.Mot_cle2 = form.Mot_cle.data[1]
+        photo.Mot_cle3 = form.Mot_cle.data[2]
+        photo.Mot_cle4 = form.Mot_cle.data[3]
+        photo.Mot_cle5 = form.Mot_cle.data[4]
+        photo.Mot_cle6 = form.Mot_cle.data[5]
+        photo.Autre_adresse = form.Autre_adresse.data
+        photo.Notes = form.Notes.data
+        photo.Cote_base = form.Cote_base.data
+        photo.Auteur = current_user.id_utilisateur
+        db.session.add(photo)
+        db.session.commit()
+        flash("La photographie a bien été mise à jour", "info")
+    form.N_inventaire.data = photo.N_inventaire_index
+    form.N_inventaire.data = photo.N_inventaire
+    form.Rue.data = photo.Rue
+    form.N_rue.data = photo.N_rue
+    form.Nom_site.data = photo.Nom_site
+    form.Arrondissement.data = photo.Arrondissement
+    form.Ville.data = photo.Ville
+    form.Departement.data = photo.Departement
+    form.Latitude_x.data = photo.Latitude_x
+    form.Longitude_y.data = photo.Longitude_y
+    form.Support.data = photo.Support
+    form.Couleur.data = photo.Couleur
+    form.Taille.data = photo.Taille
+    form.Date_prise_vue.data = photo.Date_prise_vue
+    form.Photographe.data = photo.Photographe
+    form.Droits.data = photo.Droits
+    form.Mention_don.data = photo.Mention_don
+    form.Mention_collection.data = photo.Mention_collection
+    form.Date_construction.data = photo.Date_construction
+    form.Architecte.data = photo.Architecte
+    form.Classement_MH.data = photo.Classement_MH
+    form.Legende.data = photo.Legende
+    form.Generalite_architecture.data = photo.Generalite_architecture
+    form.Mot_cle.data[0] = photo.Mot_cle1
+    form.Mot_cle.data[1] = photo.Mot_cle2
+    form.Mot_cle.data[2] = photo.Mot_cle3
+    form.Mot_cle.data[3] = photo.Mot_cle4
+    form.Mot_cle.data[4] = photo.Mot_cle5
+    form.Mot_cle.data[5] = photo.Mot_cle6
+    form.Autre_adresse.data = photo.Autre_adresse
+    form.Notes.data = photo.Notes
+    form.Cote_base.data = photo.Cote_base
+    return render_template("pages/editer_photographie.html", form=form)
