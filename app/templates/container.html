@@ -41,7 +41,7 @@
           Catalogage
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Cataloguer</a>
+          <a class="dropdown-item" href="{{url_for('cataloguer', nom_user=current_user.nom)}}">Cataloguer</a>
           <a class="dropdown-item" href="#">Exporter</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Enregistrements récents</a>
