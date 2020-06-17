@@ -16,8 +16,8 @@ class Classe_utilisateurs(db.Model, UserMixin):
     mail = db.Column(db.String(120))
     is_admin = db.Column(db.Boolean, default=False)
 
-    photos = db.relationship("Classe_catalogage",
-                            backref='photos',
+    Auteur = db.relationship("Classe_catalogage",
+                            backref='auteur',
                             lazy='dynamic')
 
     def get_reset_token(self, expires_sec=1800):
@@ -81,7 +81,8 @@ class Classe_utilisateurs(db.Model, UserMixin):
 class Classe_catalogage(db.Model, UserMixin):
     __tablename__ = "catalogage"
     __bind_key__ = "users"
-    N_inventaire = db.Column(db.Integer, primary_key=True, autoincrement=False)
+    N_inventaire_index = db.Column(db.Integer, primary_key=True, autoincrement=False)
+    N_inventaire = db.Column(db.Integer)
     Rue = db.Column(db.String(64))
     N_rue = db.Column(db.String(64))
     Nom_site = db.Column(db.String(128))
@@ -103,17 +104,17 @@ class Classe_catalogage(db.Model, UserMixin):
     Classement_MH = db.Column(db.String(64))
     Legende = db.Column(db.String(512))
     Generalite_architecture = db.Column(db.String(64))
-    Mot_cle1 = db.Column(db.String(24))
-    Mot_cle2 = db.Column(db.String(24))
-    Mot_cle3 = db.Column(db.String(24))
-    Mot_cle4 = db.Column(db.String(24))
-    Mot_cle5 = db.Column(db.String(24))
-    Mot_cle6 = db.Column(db.String(24))
+    Mot_cle1 = db.Column(db.String(24), default="")
+    Mot_cle2 = db.Column(db.String(24), default="")
+    Mot_cle3 = db.Column(db.String(24), default="")
+    Mot_cle4 = db.Column(db.String(24), default="")
+    Mot_cle5 = db.Column(db.String(24), default="")
+    Mot_cle6 = db.Column(db.String(24), default="")
     Autre_adresse = db.Column(db.String(64))
     Notes = db.Column(db.String(512))
     Cote_base = db.Column(db.String(24))
     Cote_classement = db.Column(db.String(24))
-    Date_inventaire = db.Column(db.DateTime, default=datetime.utcnow().strftime("%Y/%m/%d"))
+    Date_inventaire = db.Column(db.String(24), default=datetime.utcnow().strftime("%Y/%m/%d"))
     Auteur = db.Column(db.Integer, db.ForeignKey('utilisateurs.id_utilisateur'))
     exporte = db.Column(db.Integer, default=0)
 

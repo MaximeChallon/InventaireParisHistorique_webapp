@@ -1,7 +1,7 @@
-from wtforms import RadioField, SubmitField, StringField, validators, PasswordField, SelectField, IntegerField
+from wtforms import RadioField, SubmitField, StringField, validators, PasswordField, SelectField, IntegerField, SelectMultipleField
 from flask_wtf import FlaskForm
 from .users import Classe_utilisateurs
-from ..constantes import RUE, NOM_SITE, VILLE, MOT_CLE, GENERALITE_ARHITECTURE, PHOTOGRAPHE, SUPPORT, DROITS, COULEUR, COLLECTION
+from ..constantes import RUE, NOM_SITE, VILLE, CLASSEMENT_MH, MOT_CLE, GENERALITE_ARHITECTURE, PHOTOGRAPHE, SUPPORT, DROITS, COULEUR, COLLECTION
 
 class Chart_form(FlaskForm):
     visuel = RadioField('Visuel', choices=[('line', 'En ligne'), ('bar', 'En barres')])
@@ -44,15 +44,10 @@ class Catalogage_form(FlaskForm):
     Mention_collection = SelectField("Collection", choices=COLLECTION)
     Date_construction = StringField("Date de construction")
     Architecte = StringField("Architecte")
-    Classement_MH = StringField("Classement MH")
+    Classement_MH = SelectField("Classement MH", choices=CLASSEMENT_MH)
     Legende = StringField("Date de prise de vue")
     Generalite_architecture = SelectField("Généralité architecture", choices=GENERALITE_ARHITECTURE)
-    Mot_cle1 = SelectField("Mot clé", choices=MOT_CLE)
-    Mot_cle2 = SelectField("Mot clé", choices=MOT_CLE)
-    Mot_cle3 = SelectField("Mot clé", choices=MOT_CLE)
-    Mot_cle4 = SelectField("Mot clé", choices=MOT_CLE)
-    Mot_cle5 = SelectField("Mot clé", choices=MOT_CLE)
-    Mot_cle6 = SelectField("Mot clé", choices=MOT_CLE)
+    Mot_cle = SelectMultipleField(choices = MOT_CLE, default = ['', ''])
     Autre_adresse = StringField("Autre adresse")
     Notes = StringField("Notes")
     Cote_base = StringField("Cote de la base")

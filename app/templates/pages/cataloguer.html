@@ -10,7 +10,7 @@ Cataloguer
         <p>Veuillez remplir un formulaire par photographie. Vous pourrez retrouver vos photos inventoriées dans l'onglet "Enregistrements récents", pour les consulter, les modifier, ou les envoyer à la photothèque.</p>
     </div>
     <div class="row">
-        <form method="post">
+        <form method="post" novalidate>
             {{ form.hidden_tag() }}
             <h1 style="font-size:16pt;color:#da1916;">Informations générales sur la photographie</h1>
             <div class="row">
@@ -87,13 +87,17 @@ Cataloguer
                 </div>
             </div>
             <div class="row">
-                <div class="col-6">
+                <div class="col-4">
                     <p>Date de prise de vue (AAAA/MM/JJ)<br>
                     {{form.Date_prise_vue}}</p>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <p>Photographe<br>
                     {{form.Photographe}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Droits<br>
+                    {{form.Droits}}</p>
                 </div>
             </div>
             <div class="row">
@@ -121,38 +125,19 @@ Cataloguer
                     {{form.Generalite_architecture}}</p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
+            <div class="row"><div class="col-6">
+                    <p>Classement MH <br>
+                    {{form.Classement_MH}}</p>
+                </div>
+                <div class="col-6">
                     <p>Légende <br>
-                    {{form.Legende(size=100)}}</p>
+                    {{form.Legende(size=50)}}</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-4">
-                    <p>Mot-clé 1<br>
-                    {{form.Mot_cle1}}</p>
-                </div>
-                <div class="col-4">
-                    <p>Mot-clé 2<br>
-                    {{form.Mot_cle1}}</p>
-                </div>
-                <div class="col-4">
-                    <p>Mot-clé 3<br>
-                    {{form.Mot_cle1}}</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                    <p>Mot-clé 4<br>
-                    {{form.Mot_cle1}}</p>
-                </div>
-                <div class="col-4">
-                    <p>Mot-clé 5<br>
-                    {{form.Mot_cle1}}</p>
-                </div>
-                <div class="col-4">
-                    <p>Mot-clé 6<br>
-                    {{form.Mot_cle1}}</p>
+                    <p>Mot-clés (maximum 6, maintenir la touche CTRL pour sélectionner plusieurs mots) <br>
+                    {{form.Mot_cle}}</p>
                 </div>
             </div>
             <h1 style="font-size:16pt;color:#da1916;">Divers</h1>
