@@ -46,7 +46,6 @@ from ..models.users import Classe_catalogage
 
 
 #créer un espace personnel pour chaque membre sur le type de Admin, où il peut:
-#voir ce qu'il a catalogué
 #exporté les données remplies entre tel jour et tel jour
 #envoyer directement à l'adresse de la photothèque le csv final de catalogage
 
@@ -107,9 +106,10 @@ def cataloguer(nom_user):
         flash("Photographie correctement enregistrée", "info")
     return render_template("pages/cataloguer.html", form=form)
 
-#@app.route("/espace_personnel/<nom_user>/exporter")
-#@login_required
-#def exporter(nom_user):
+@app.route("/espace_personnel/<nom_user>/exporter")
+@login_required
+def exporter(nom_user):
+    pass
 
 @app.route("/espace_personnel/<nom_user>/enregistrements_recents")
 @login_required
