@@ -46,12 +46,6 @@ from ..models.users import Classe_catalogage
 	exporte	INTEGER NOT NULL
 );"""
 
-#envoyer directement à l'adresse de la photothèque le csv final de catalogage
-
-#supprimer les photos 30 jours après l'envoi ou l'export pour ne pas surcharger la base
-
-#proposer le gps lors du catalogage avec une recherche sur cette api: https://api-adresse.data.gouv.fr/search/?q=34+poissonniers+rue+des+paris .
-#les résultats semblent bons: les intégrer dans une minimap pour que l'utilisateur clique sur oui ou non
 
 @app.route("/espace_personnel/<nom_user>/cataloguer", methods=['GET', 'POST'])
 @login_required
