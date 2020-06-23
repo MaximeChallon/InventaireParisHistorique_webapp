@@ -3,6 +3,8 @@ from flask_wtf import FlaskForm
 from .users import Classe_utilisateurs
 from ..constantes import RUE, NOM_SITE, VILLE, CLASSEMENT_MH, MOT_CLE, GENERALITE_ARHITECTURE, PHOTOGRAPHE, SUPPORT, DROITS, COULEUR, COLLECTION
 
+# classes contenant les formulaires utilisés dans l'application
+
 class Chart_form(FlaskForm):
     visuel = RadioField('Visuel', choices=[('line', 'En ligne'), ('bar', 'En barres')])
     dates = RadioField('Dates', choices=[('general_au_jour', 'Jour par jour'), ('data_mois', 'Mois par mois')])
@@ -13,6 +15,12 @@ class Forgot_form(FlaskForm):
     submit = SubmitField('Envoyer')
 
     def validate_email(self, email):
+        """
+        Permet de vréifier la présence d'une adresse email dasns la base de données des utilisateurs
+        :param email: chaîne de caractères de l'email
+        :type email: str
+        :return: bool
+        """
         user = Classe_utilisateurs.query.filter_by(mail=email.data)
         if user is None:
             raise AssertionError("Aucun compte avec cette adresse mail")

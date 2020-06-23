@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_admin import Admin
-from flask_mail import Mail, Message
+from flask_mail import Mail
 from .constantes import SECRET_KEY, MAIL_PASSWORD, MAIL_USERNAME
 import os
 

@@ -7,6 +7,7 @@ from flask import abort, flash, redirect, url_for
 
 
 class Classe_admin_controller(ModelView):
+    # classe de contrôle de l'authentification de l'utilisateur pour avoir accès au panneau d'administration
     def is_accessible(self):
         if current_user.is_admin == True:
             return current_user.is_authenticated

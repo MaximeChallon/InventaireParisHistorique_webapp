@@ -1,6 +1,7 @@
 from ..app import db
 
 class Classe_db(db.Model):
+    # table de db contenant les métadonnées des photographies inventoriées
     N_inventaire = db.Column(db.Integer, primary_key=True)
     Rue = db.Column(db.String(120))
     N_rue = db.Column(db.String(120))
@@ -29,6 +30,11 @@ class Classe_db(db.Model):
     Date_inventaire = db.Column(db.String(120))
 
     def to_json(self):
+        """
+        Transforme les données extraites en JSON
+        :return: dictionnaire
+        :rtype: dict
+        """
         return {"N_inventaire" : str(self.N_inventaire),
                 "Rue": self.Rue,
                 "N_rue": self.N_rue,

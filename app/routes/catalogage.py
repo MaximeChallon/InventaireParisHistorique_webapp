@@ -58,6 +58,7 @@ from ..models.users import Classe_catalogage
 def cataloguer(nom_user):
     form = Catalogage_form()
     if form.validate_on_submit():
+        # gestion des  mots-clés, remplissage par des chaînes vides si les  champs ne sont pas remplis
         mots_cles = form.Mot_cle.data
         i=0
         j=6-len(mots_cles)
@@ -109,6 +110,11 @@ def cataloguer(nom_user):
 @app.route("/espace_personnel/<nom_user>/exporter", methods=['get', 'post'])
 @login_required
 def exporter(nom_user):
+    """
+    Fonction d'exportation des données générées par l'utilisateur, dans l'intervalle de dexu numéros d'inventaire
+    :param nom_user: nom de l'utiliateur
+    :return: template
+    """
     if request.method == "POST":
         num_debut = request.form.get("num_debut", None)
         num_fin = request.form.get("num_fin", None)

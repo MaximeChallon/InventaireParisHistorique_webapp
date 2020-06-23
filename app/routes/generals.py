@@ -106,6 +106,7 @@ def temporels(visuel='line', dates='general_au_jour'):
 	return chart.to_json()
 
 
+# routes de gestion des utilisateurs, et de modification des mots de passe
 @app.route("/inscription", methods=["GET", "POST"])
 @login_required
 def inscription():

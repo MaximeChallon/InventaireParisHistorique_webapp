@@ -1,5 +1,4 @@
-from ..app import db, login_manager, admin
-from flask_admin.contrib.sqla import ModelView
+from ..app import db, login_manager
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -20,12 +19,23 @@ class Classe_utilisateurs(db.Model, UserMixin):
                             backref='auteur',
                             lazy='dynamic')
 
+    # fonctions de modification du mot de passe
     def get_reset_token(self, expires_sec=1800):
+        """
+        Permet de générer un identifiant unique
+        :param expires_sec: nombre de secondes de validité du code généré
+        :return: str
+        """
         s = Serializer(SECRET_KEY, expires_sec)
         return s.dumps({'user_id': self.id_utilisateur}).decode('utf-8')
 
     @staticmethod
     def verify_reset_token(token):
+        """
+        Permet de vérifier l'identifiant
+        :param token: identifiant
+        :return: utilisateur
+        """
         s = Serializer(SECRET_KEY)
         try:
             user_id = s.loads(token)['user_id']
@@ -36,6 +46,14 @@ class Classe_utilisateurs(db.Model, UserMixin):
 
     @staticmethod
     def identification(nom, motdepasse):
+        """
+        Permet de vérifier l'utilisateur et de lui permettre l'accès aux pages à la connexion requise
+        :param nom: nom de famille de l'utilisateur
+        :type nom: str
+        :param motdepasse: mot de passe entré dans le formulaire
+        :type motdepasse: str
+        :return: utilisateur
+        """
         utilisateur = Classe_utilisateurs.query.filter(Classe_utilisateurs.nom == nom).first()
         if utilisateur and check_password_hash(utilisateur.password_hash, motdepasse):
             return utilisateur
@@ -43,6 +61,9 @@ class Classe_utilisateurs(db.Model, UserMixin):
 
     @staticmethod
     def creer(nom, prenom, mail, motdepasse):
+        """
+        Permet de créer un utilisateur, fonction non utilisée dans l'application, mais créée si le besoin se présente
+        """
         erreurs = []
         if not nom:
             erreurs.append("Le login fourni est vide")
