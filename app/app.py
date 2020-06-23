@@ -34,7 +34,7 @@ admin = Admin(app)
 
 login_manager = LoginManager(app)
 
-from .routes import generals, catalogage
+from .routes import generals, catalogage, api
 
 def init_app():
     db.create_all()
