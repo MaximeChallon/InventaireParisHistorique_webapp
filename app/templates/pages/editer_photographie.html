@@ -4,6 +4,30 @@
 Cataloguer
 {% endblock %}
 
+{%block js%}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+            // Création de la carte à l'id "map"
+            var map = L.map('map', {
+        zoomControl: true
+    }).setView(new L.LatLng(48.8542, 2.3484), 12);
+
+            // Usage des tuiles de carte d'OpenStreetMap puis ajout à la carte map
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '<a href="openstreetmap.org">OpenStreetMap</a> | <a href="www.paris-historique.org">Association Paris Historique</a> | Maxime Challon',
+                maxNativeZoom: 100
+            }).addTo(map);
+            // récupération de la latitude et de la longitude lors d'un clic sur la carte
+    map.on('click', function(e) {
+  var lat = e.latlng.lat;
+  document.getElementById('Latitude_x').value = lat;
+  var long = e.latlng.lng;
+  document.getElementById('Longitude_y').value = long;});
+});
+        </script>
+{%endblock%}
+
 {% block corps %}
 <div class="container">
     <div class="row">
@@ -63,6 +87,10 @@ Cataloguer
                 <div class="col-6">
                     <p>Longitude (ex:2.3488)<br>
                         {{form.Longitude_y}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div id="map" style="height:500px;">
                 </div>
             </div>
             <div class="row">
