@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_admin import Admin
 from flask_mail import Mail
-from .constantes import SECRET_KEY, MAIL_PASSWORD, MAIL_USERNAME
+from .constantes import SECRET_KEY, MAIL_PASSWORD, MAIL_USERNAME, SQLALCHEMY_DATABASE_URI, SQLALCHEMY_BINDS
 import os
 
 chemin_actuel = os.path.dirname(os.path.abspath(__file__))
@@ -16,8 +16,8 @@ app = Flask(
     static_folder=statics
 )
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-app.config['SQLALCHEMY_BINDS'] = {'users': 'sqlite:///users.sqlite'}
+app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
+app.config['SQLALCHEMY_BINDS'] = {'users': SQLALCHEMY_BINDS}
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = SECRET_KEY

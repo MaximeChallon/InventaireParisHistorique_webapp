@@ -1,8 +1,14 @@
 import os
+import dotenv
 
-SECRET_KEY = os.getenv("SECRET_KEY")
-MAIL_USERNAME = os.getenv("MAIL_USERNAME")
-MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+dotenv.load_dotenv(os.path.join(BASE_DIR, '.env'))
+
+SECRET_KEY = os.environ['SECRET_KEY']
+MAIL_USERNAME = os.environ["MAIL_USERNAME"]
+MAIL_PASSWORD = os.environ["MAIL_PASSWORD"]
+SQLALCHEMY_DATABASE_URI = os.environ["SQLALCHEMY_DATABASE_URI"]
+SQLALCHEMY_BINDS = os.environ["SQLALCHEMY_BINDS"]
 CHEMIN_API = "/api"
 
 #listes pour le catalogage
