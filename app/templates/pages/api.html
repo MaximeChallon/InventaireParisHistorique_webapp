@@ -23,7 +23,7 @@ API
         <br>
         <div class="row" style="margin-left: 20px;">
             <h5>Recherche par adresse</h5>
-            <p>Idéalement, pour une meilleure recherche, la requête se compose: Numéro de la rue (optionnel) Rue Code postal (optionnel) Ville (optionnel)</p>
+            <p>Idéalement, pour une meilleure recherche, la requête se compose: Numéro de la rue (optionnel) Rue (ne pas mettre ville et code postal)</p>
             <form class="form-inline my-2 my-lg-0" style="margin-left: 30px;" action="{{url_for('recherche_photo_adresse')}}" method="GET">
                 <input type="search" name="q" class="form-control mr-sm-10" type="text" placeholder="Recherche par adresse">
                 <button type="button" class="btn btn-primary">Rechercher</button>

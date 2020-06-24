@@ -27,8 +27,12 @@ def extract_adresse(requete):
         requete=requete
     else:
         requete = requete
-    bloc_rue = re.sub("[0-9]{5}.*", "", requete)
-    bloc_ville = re.match("^[0-9]{0,4}.*([0-9]{5}[a-zA-Z éèàùêôî-]{0,})$", requete).group(1)
+    if re.match("^[0-9]{0,4}.*[0-9]{5}[a-zA-Z éèàùêôî-]{0,}$", requete):
+        bloc_rue = re.sub("[0-9]{5}.*", "", requete)
+        bloc_ville = re.match("^[0-9]{0,4}.*([0-9]{5}[a-zA-Z éèàùêôî-]{0,})$", requete).group(1)
+    elif re.match("^[0-9]{0,4}.*$", requete):
+        bloc_rue = re.sub("[0-9]{5}.*", "", requete)
+        bloc_ville = None
     return (bloc_rue, bloc_ville)
 
 
@@ -76,34 +80,32 @@ def recherche_photo_adresse():
     # de préférence, la synatxe de la recherche est N_rue rue Code_postal? Ville?
     bloc_rue, bloc_ville = extract_adresse(recherche)
     regex_rue = '( ?PARIS ?|(AVENUE|IMPASSE|QUAI|VOIE|RUELLE|BOULEVARD|RUE)( D(E(S?| LA)|U))? )'
-    N_rue = re.match("([0-9]+)", bloc_rue).group(1)
-    Rue = re.sub(regex_rue, "", re.sub("[0-9]+ ?","", bloc_rue.upper()))
-    Code_postal = re.match("([0-9]{5})", bloc_ville).group(1)
-    Code_postal_dpt = re.sub('[0-9]{3}$', '', str(Code_postal))
-    Ville = re.sub("[0-9]{5} ?", "", bloc_ville)
-    if "PARIS" in Rue or re.match('^75[0-9]{3}', str(Code_postal)):
-        Arrondissement = re.sub('^0+', '', Code_postal.replace('75', ''))
+    if re.match("([0-9]+)", bloc_rue):
+        N_rue = str(re.match("([0-9]+)", bloc_rue).group(1))
     else:
+        N_rue = str(-1)
+    Rue = re.sub(regex_rue, "", re.sub("[0-9]+ ?","", bloc_rue.upper()))
+    if re.match("[0-9]{5}", str(bloc_ville)):
+        Code_postal = re.match("([0-9]{5})", bloc_ville).group(1)
+        Code_postal_dpt = re.sub('[0-9]{3}$', '', str(Code_postal))
+        Ville = re.sub("[0-9]{5} ?", "", bloc_ville)
+        if "PARIS" in Rue or re.match('^75[0-9]{3}', str(Code_postal)):
+            Arrondissement = int(re.sub("^0+", "", Code_postal.replace('75', '')))
+        else:
+            Arrondissement = -1
+    else:
+        Code_postal = -1
+        Code_postal_dpt = -1
+        Ville = ""
         Arrondissement = -1
 
-    if recherche and N_rue != -1:
+    if recherche and N_rue != "-1":
         query = Classe_db.query.filter(and_(
             Classe_db.Rue.like("%{}%".format(Rue)), Classe_db.N_rue.like(N_rue))
         )
-    elif recherche and N_rue != -1 and Arrondissement != -1:
-        query = Classe_db.query.filter(and_(
-            Classe_db.Rue.like("%{}%".format(Rue)), Classe_db.N_rue.like(N_rue), Classe_db.Arrondissement.like(Arrondissement))
-        )
-    elif recherche and N_rue == -1:
+    elif recherche and N_rue == "-1":
         query = Classe_db.query.filter(
             Classe_db.Rue.like("%{}%".format(Rue))
-        )
-    elif recherche and N_rue == -1 and Arrondissement != -1:
-        query = Classe_db.query.filter(and_(
-            Classe_db.Rue.like("%{}%".format(Rue)), Classe_db.Arrondissement.like(Arrondissement))
-        )
-    elif recherche and Arrondissement != -1:
-        query = Classe_db.query.filter(Classe_db.Arrondissement.like(Arrondissement)
         )
     else:
         query = Classe_db.query
