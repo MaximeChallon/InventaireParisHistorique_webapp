@@ -1,11 +1,10 @@
-from ..app import app, db
+from ..app import app
 from flask import render_template, request, url_for, jsonify
 from urllib.parse import urlencode
 from flask_login import login_required
 from..models.donnees import Classe_db
 from ..constantes import CHEMIN_API
 import re
-from address_parser import Parser
 from sqlalchemy import and_, or_
 
 
@@ -21,22 +20,35 @@ def extract_adresse(requete):
     :param requete: requête faite dans l'api
     :return: str
     """
-    parser = Parser()
-    adr = parser.parse(requete)
-    return adr
+    if re.match("^[0-9]{5}[a-zA-Z éèàùêôî-]{0,}[0-9]{0,4}.*$", requete):
+        pattern = "^([0-9]{5}[a-zA-Z éèàùêôî-]{0,})([0-9]{0,4}.*)$"
+        requete = re.match(pattern, requete).group(2) + re.match(pattern, requete).group(1)
+    elif re.match("^[0-9]{0,4}.*[0-9]{5}[a-zA-Z éèàùêôî-]{0,}$", requete):
+        requete=requete
+    else:
+        requete = requete
+    bloc_rue = re.sub("[0-9]{5}.*", "", requete)
+    bloc_ville = re.match("^[0-9]{0,4}.*([0-9]{5}[a-zA-Z éèàùêôî-]{0,})$", requete).group(1)
+    return (bloc_rue, bloc_ville)
 
 
-@app.route(CHEMIN_API + "/photographie/numero_inventaire/<photo_id>")
+@app.route(CHEMIN_API)
 @login_required
-def single_photo_id(photo_id):
+def api():
+    return render_template("pages/api.html")
+
+
+@app.route(CHEMIN_API + "/photographie/numero_inventaire")
+@login_required
+def single_photo_id():
     """
     Permet d'obtenir les données d'une photographie précise
-    :param photo_id: numéro d'inventaire de la photo
     :return: dict
     """
     try:
-        query = Classe_db.query.get(photo_id)
-        dict_json = {"data": {str(query.N_inventaire) : query.to_json()}
+        recherche = request.args.get("q", None)
+        query = Classe_db.query.get(recherche)
+        dict_json = {"data": {str(query.N_inventaire): query.to_json()}
         }
         return jsonify(dict_json)
     except:
@@ -62,12 +74,13 @@ def recherche_photo_adresse():
 
     # scission de la recherche en plusieurs termes
     # de préférence, la synatxe de la recherche est N_rue rue Code_postal? Ville?
-    adresse = extract_adresse(recherche)
+    bloc_rue, bloc_ville = extract_adresse(recherche)
     regex_rue = '( ?PARIS ?|(AVENUE|IMPASSE|QUAI|VOIE|RUELLE|BOULEVARD|RUE)( D(E(S?| LA)|U))? )'
-    N_rue = adresse.number.number
-    Rue = re.sub(regex_rue, '', adresse.road.name.upper())
-    Code_postal = adresse.locality.zip
+    N_rue = re.match("([0-9]+)", bloc_rue).group(1)
+    Rue = re.sub(regex_rue, "", re.sub("[0-9]+ ?","", bloc_rue.upper()))
+    Code_postal = re.match("([0-9]{5})", bloc_ville).group(1)
     Code_postal_dpt = re.sub('[0-9]{3}$', '', str(Code_postal))
+    Ville = re.sub("[0-9]{5} ?", "", bloc_ville)
     if "PARIS" in Rue or re.match('^75[0-9]{3}', str(Code_postal)):
         Arrondissement = re.sub('^0+', '', Code_postal.replace('75', ''))
     else:
