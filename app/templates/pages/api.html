@@ -1,0 +1,42 @@
+{% extends "container.html" %}
+
+{% block titre %}
+API
+{% endblock %}
+
+{% block corps %}
+<div class="row">
+
+    <div class="col-sm-6">
+        <h3>L'<a href="{{ url_for('accueil') }}">Inventaire du Paris Historique</a> ouvre ses données !</h3>
+        <p>Chaque utilisateur connecté peut consulter et récupérer les données de l'inventaire au format JSON.</p>
+    </div>
+
+    <div class="col-sm-5">
+        <div class="row" style="margin-left: 20px;">
+            <h5>Recherche par numéro d'inventaire</h5>
+            <form class="form-inline my-2 my-lg-0" style="margin-left: 30px;" action="{{url_for('single_photo_id')}}" method="GET">
+                <input type="search" name="q" class="form-control mr-sm-10" type="text" placeholder="Recherche par numéro d'inventaire">
+                <button type="button" class="btn btn-primary">Rechercher</button>
+            </form>
+        </div>
+        <br>
+        <div class="row" style="margin-left: 20px;">
+            <h5>Recherche par adresse</h5>
+            <p>Idéalement, pour une meilleure recherche, la requête se compose: Numéro de la rue (optionnel) Rue Code postal (optionnel) Ville (optionnel)</p>
+            <form class="form-inline my-2 my-lg-0" style="margin-left: 30px;" action="{{url_for('recherche_photo_adresse')}}" method="GET">
+                <input type="search" name="q" class="form-control mr-sm-10" type="text" placeholder="Recherche par adresse">
+                <button type="button" class="btn btn-primary">Rechercher</button>
+            </form>
+        </div>
+        <br>
+        <div class="row" style="margin-left: 20px;">
+            <h5>Recherche par mot clé</h5>
+            <form class="form-inline my-2 my-lg-0" style="margin-left: 30px;" action="{{url_for('recherche_photo_mot_cle')}}" method="GET">
+                <input type="search" name="q" class="form-control mr-sm-10" type="text" placeholder="Recherche par mot clé">
+                <button type="button" class="btn btn-primary">Rechercher</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
