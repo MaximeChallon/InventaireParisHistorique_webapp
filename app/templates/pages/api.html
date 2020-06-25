@@ -7,16 +7,25 @@ API
 {% block corps %}
 <div class="row">
 
-    <div class="col-sm-6">
+    <div class="col-sm-5">
         <h3>L'<a href="{{ url_for('accueil') }}">Inventaire du Paris Historique</a> ouvre ses données !</h3>
         <p>Chaque utilisateur connecté peut consulter et récupérer les données de l'inventaire au format JSON.</p>
     </div>
 
-    <div class="col-sm-5">
+    <div class="col-sm-6">
         <div class="row" style="margin-left: 20px;">
-            <h5>Recherche par numéro d'inventaire</h5>
+            <h5>Recherche par numéro d'inventaire simple</h5>
             <form class="form-inline my-2 my-lg-0" style="margin-left: 30px;" action="{{url_for('single_photo_id')}}" method="GET">
                 <input type="search" name="q" class="form-control mr-sm-10" type="text" placeholder="Recherche par numéro d'inventaire">
+                <button type="button" class="btn btn-primary">Rechercher</button>
+            </form>
+        </div>
+        <br>
+        <div class="row" style="margin-left: 20px;">
+            <h5>Recherche par numéros d'inventaire en intervalle</h5>
+            <p>Séparer les deux numéros d'inventaire extrêmes par tout sauf un chiffre</p>
+            <form class="form-inline my-2 my-lg-0" style="margin-left: 30px;" action="{{url_for('multiple_photo_id')}}" method="GET">
+                <input type="search" name="q" class="form-control mr-sm-10" type="text" placeholder="Recherche par numéros d'inventaire">
                 <button type="button" class="btn btn-primary">Rechercher</button>
             </form>
         </div>
