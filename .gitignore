@@ -4,3 +4,4 @@ env
 .idea/
 .env
 app/users.sqlite
+app/db.sqlite
