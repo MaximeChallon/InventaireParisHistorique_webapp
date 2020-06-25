@@ -37,13 +37,11 @@ def extract_adresse(requete):
 
 
 @app.route(CHEMIN_API)
-@login_required
 def api():
     return render_template("pages/api.html")
 
 
 @app.route(CHEMIN_API + "/photographie/numero_inventaire")
-@login_required
 def single_photo_id():
     """
     Permet d'obtenir les données d'une photographie précise
@@ -60,7 +58,6 @@ def single_photo_id():
 
 
 @app.route(CHEMIN_API + "/photographie/numeros_inventaire")
-@login_required
 def multiple_photo_id():
     """
     Permet d'obtenir les données des photograohies comprises dans l'intervalle donné en requête (le séparateur peut être tout sauf un chiffre)
@@ -91,7 +88,6 @@ def multiple_photo_id():
 
 
 @app.route(CHEMIN_API+"/photographie/adresse")
-@login_required
 def recherche_photo_adresse():
     recherche = request.args.get("q", None)
     page = request.args.get("p", 1)
@@ -183,7 +179,6 @@ def recherche_photo_adresse():
 
 
 @app.route(CHEMIN_API + "/photographie/mot_cle")
-@login_required
 def recherche_photo_mot_cle():
     recherche = request.args.get("q", None)
     page = request.args.get("p", 1)
