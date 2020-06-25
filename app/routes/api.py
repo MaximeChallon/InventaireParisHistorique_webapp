@@ -59,6 +59,37 @@ def single_photo_id():
         return Json_404()
 
 
+@app.route(CHEMIN_API + "/photographie/numeros_inventaire")
+@login_required
+def multiple_photo_id():
+    """
+    Permet d'obtenir les données des photograohies comprises dans l'intervalle donné en requête (le séparateur peut être tout sauf un chiffre)
+    :return: dict
+    """
+    recherche = request.args.get("q", None)
+    _from = int(re.sub("[^0-9]+[0-9]+$", "", recherche))
+    _to = int(re.sub("[0-9]+[^0-9]+", "", recherche))
+    liste_results = []
+    while _from <= _to:
+        query = Classe_db.query.get(_from)
+        # ne retourner que les numéros d'inventaire qui ont des métadonnées; s'il est absent, il n'est pas retourné
+        if query != None:
+            liste_results.append(query)
+        _from += 1
+    #structuration des données de sortie
+    dict_results = {
+            "data": [
+                {str(photo.N_inventaire): photo.to_json()}
+                for photo in liste_results
+            ],
+            "meta": {
+                "copyright": "2020 - Association Paris Historique",
+                "total results": len(liste_results)
+            }
+        }
+    return jsonify(dict_results)
+
+
 @app.route(CHEMIN_API+"/photographie/adresse")
 @login_required
 def recherche_photo_adresse():
