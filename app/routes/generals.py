@@ -6,7 +6,7 @@ import pandas as pd
 from ..models.donnees import Classe_db
 from ..models.users import Classe_utilisateurs
 from ..models.formulaires import Chart_form, Reset_password_form, Forgot_form
-from flask_mail import Message
+from ..models.mails import Classe_mails
 from ..constantes import MAIL_USERNAME
 from werkzeug.security import generate_password_hash
 
@@ -159,21 +159,6 @@ def deconnexion():
 	return redirect("/")
 
 
-def send_reset_email(user):
-	token = user.get_reset_token()
-	msg = Message("Changement de mot de passe",
-				  sender=MAIL_USERNAME,
-				  recipients=[user.mail])
-	msg.body = f'''Pour modifier votre mot de passe, cliquez sur le lien suivant:
-	{url_for('reset_token', token=token, _external=True)}
-
-Si vous n'êtes pas à l'origine de cette demande, veuillez ne pas tenir compte de cet email.
-
-Email généré automatiquement, merci de ne pas y répondre.
-'''
-	mail.send(msg)
-
-
 @app.route("/reset_password", methods=['get', 'post'])
 def forgot_password():
 	if current_user.is_authenticated:
@@ -182,7 +167,7 @@ def forgot_password():
 	form = Forgot_form()
 	if form.validate_on_submit():
 		user = Classe_utilisateurs.query.filter_by(mail=form.email.data).first()
-		send_reset_email(user)
+		Classe_mails.send_reset_email(user)
 		msg = "Un mail a été envoyé à l'adresse " + form.email.data + " avec les instructions pour changer de mot de passe.\nPensez à vérifier les spams.\nLe lien n'est valable que 30 minutes.\nL'expéditeur est "+MAIL_USERNAME
 		flash(msg, "info")
 		return redirect(url_for('accueil'))
