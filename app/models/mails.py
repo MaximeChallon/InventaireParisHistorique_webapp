@@ -4,6 +4,7 @@ from flask import url_for
 from ..app import mail
 
 class Classe_mails():
+    @staticmethod
     def send_reset_email(user):
         token = user.get_reset_token()
         msg = Message("Changement de mot de passe",
@@ -16,4 +17,15 @@ class Classe_mails():
 
     Email généré automatiquement, merci de ne pas y répondre.
     '''
+        mail.send(msg)
+
+    @staticmethod
+    def send_cataloguer_contact_mail(user, numero_inventaire, objet, message, copie):
+        recipients = [MAIL_USERNAME]
+        if copie == True:
+            recipients.append(user.mail)
+        msg = Message(str(numero_inventaire) + " -- " + objet,
+                      sender=MAIL_USERNAME,
+                      recipients=recipients)
+        msg.body = message
         mail.send(msg)
