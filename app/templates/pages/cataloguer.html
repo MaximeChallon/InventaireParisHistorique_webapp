@@ -32,6 +32,10 @@ Cataloguer
 <div class="container">
     <div class="row">
         <p>Veuillez remplir un formulaire par photographie. Vous pourrez retrouver vos photos inventoriées dans l'onglet "Enregistrements récents", pour les consulter, les modifier, ou les envoyer à la photothèque.</p>
+        <br>
+        <p style="font-size=6pt;">En cas de remarque, de problème, ou de mot-clé, rue, site manquants, vous pouvez le signaler ici:
+            <a href="{{url_for('cataloguer_contact', nom_user=current_user.nom)}}">contact</a>
+        </p>
     </div>
     <div class="row">
         <form method="post" novalidate>
@@ -164,7 +168,7 @@ Cataloguer
             </div>
             <div class="row">
                 <div class="col-4">
-                    <p>Mot-clés (maximum 6, maintenir la touche CTRL pour sélectionner plusieurs mots) <br>
+                    <p>Mots-clés (maximum 6, maintenir la touche CTRL pour sélectionner plusieurs mots) <br>
                         {{form.Mot_cle}}</p>
                 </div>
             </div>
