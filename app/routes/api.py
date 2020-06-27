@@ -106,7 +106,7 @@ def recherche_photo_adresse():
     # scission de la recherche en plusieurs termes
     # de préférence, la synatxe de la recherche est N_rue rue Code_postal? Ville?
     bloc_rue, bloc_ville = extract_adresse(recherche)
-    regex_rue = '( ?PARIS ?|(AVENUE|IMPASSE|QUAI|VOIE|RUELLE|BOULEVARD|RUE)( D(E(S?| LA)|U))? )'
+    regex_rue = '( ?PARIS ?|(AVENUE|IMPASSE|QUAI|VOIE|RUELLE|PLACE|BOULEVARD|RUE)( D(E(S?| LA)|U))? )'
     if re.match("([0-9]+)", bloc_rue):
         N_rue = str(re.match("([0-9]+)", bloc_rue).group(1))
     else:
