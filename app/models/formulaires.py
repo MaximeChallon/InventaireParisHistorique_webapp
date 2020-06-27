@@ -1,4 +1,4 @@
-from wtforms import RadioField, SubmitField, StringField, validators, PasswordField, SelectField, IntegerField, SelectMultipleField
+from wtforms import RadioField, SubmitField, BooleanField, StringField, validators, PasswordField, SelectField, IntegerField, SelectMultipleField
 from flask_wtf import FlaskForm
 from .users import Classe_utilisateurs
 from ..constantes import RUE, NOM_SITE, VILLE, CLASSEMENT_MH, MOT_CLE, GENERALITE_ARHITECTURE, PHOTOGRAPHE, SUPPORT, DROITS, COULEUR, COLLECTION
@@ -61,3 +61,10 @@ class Catalogage_form(FlaskForm):
     Cote_base = StringField("Cote de la base")
 
     submit = SubmitField('Enregistrer')
+
+class CataloguerContactForm(FlaskForm):
+    Numero_inventaire = IntegerField("Numéro d'inventaire",  [validators.DataRequired()])
+    Objet = StringField("Objet", [validators.DataRequired()])
+    Message = StringField("Message", [validators.DataRequired()])
+    Copie = BooleanField("Envoyer une copie à mon adresse mail ?")
+    submit = SubmitField('Envoyer')
