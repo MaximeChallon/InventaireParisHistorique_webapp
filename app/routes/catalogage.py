@@ -50,6 +50,11 @@ from ..models.users import Classe_catalogage
 @app.route("/espace_personnel/<nom_user>/cataloguer", methods=['GET', 'POST'])
 @login_required
 def cataloguer(nom_user):
+    """
+    Permet de remplir le formulaire de catalogage et d'inscrire les données dans la base users.sqlite et la table catalogage
+    :param nom_user: nom de famille de l'utilisateur
+    :return: template
+    """
     form = Catalogage_form()
     if form.validate_on_submit():
         # gestion des  mots-clés, remplissage par des chaînes vides si les  champs ne sont pas remplis
@@ -60,6 +65,7 @@ def cataloguer(nom_user):
             while i!=j:
                 mots_cles.append("")
                 i += 1
+
         nouvelle_photo = Classe_catalogage(
             N_inventaire_index=form.N_inventaire.data,
             N_inventaire=form.N_inventaire.data,
@@ -120,9 +126,18 @@ def exporter(nom_user):
 @app.route("/espace_personnel/<nom_user>/exporter/<num_debut>/<num_fin>")
 @login_required
 def exporter_csv(nom_user, num_debut, num_fin):
+    """
+    Permet d'exporter au format CSV les données remplies de l'utilisateur entre les numéros d'inventaire donnés en URL
+    :param nom_user: nom de famille de l'utilisateur
+    :param num_debut: numéro d'inventaire de début d'export
+    :param num_fin: numéro d'inventaire de fin d'export
+    :return: file
+    """
+    # initialisation du nombre de début d'incrémentation, et des listes d'accueil des données
     i = int(num_debut)
     liste_photos = []
     liste_finale=[]
+    # pour chaque numéro d'inventaire donné, requête SQL puis vérification que l'auteur est bien le demandeur de l'export, puis export des données
     while i <= int(num_fin) and i>=int(num_debut):
         try:
             photo = Classe_catalogage.query.get(i)
@@ -167,9 +182,11 @@ def exporter_csv(nom_user, num_debut, num_fin):
         except:
             pass
         i+=1
+    # passage de la liste_finale dans un dataframe Pandas
     dataframe = pd.DataFrame(liste_finale)
     proxyIO = io.StringIO()
     dataframe.to_csv(proxyIO, index=False, header=False, encoding="utf-8")
+    # transformation du dataframe en fichier CSV
     mem = io.BytesIO()
     mem.write(proxyIO.getvalue().encode("utf-8"))
     mem.seek(0)
@@ -187,6 +204,11 @@ def exporter_csv(nom_user, num_debut, num_fin):
 @app.route("/espace_personnel/<nom_user>/enregistrements_recents")
 @login_required
 def enregistrements_recents(nom_user):
+    """
+    Permet de visualiser les photos récemment cataloguées par l'utilisateur
+    :param nom_user:  nom de famille de l'utilisateur
+    :return: template
+    """
     photos = Classe_catalogage.query.filter_by(auteur=current_user).all()
     return render_template("pages/enregistrements_recents.html", photos=photos)
 
@@ -194,8 +216,16 @@ def enregistrements_recents(nom_user):
 @app.route("/espace_personnel/<nom_user>/editer_photographie/<id_photo>", methods=['GET', "POST"])
 @login_required
 def editer_photographie(nom_user, id_photo):
+    """
+    Permet d'éditer une photographie avec un pré-remplissage des champs
+    :param nom_user: nom de famille de l'utilisateur
+    :param id_photo: numéro d'inventaire de la photographie à éditer
+    :return: template
+    """
     form = Catalogage_form()
+    # récupération des données de la photo, 404 si elle n'existe pas
     photo = Classe_catalogage.query.get_or_404(id_photo)
+    # traitement des 6 mots clés et remplisage par des chaînes vides s'ils ne sont pas remplis
     mots_cles = form.Mot_cle.data
     i = 0
     j = 6 - len(mots_cles)
@@ -203,6 +233,7 @@ def editer_photographie(nom_user, id_photo):
         while i != j:
             mots_cles.append("")
             i += 1
+    # lors de la validation du formulaire, intégration des données dans la base
     if form.validate_on_submit():
         photo.N_inventaire_index = form.N_inventaire.data
         photo.N_inventaire = form.N_inventaire.data
@@ -240,6 +271,7 @@ def editer_photographie(nom_user, id_photo):
         db.session.add(photo)
         db.session.commit()
         flash("La photographie a bien été mise à jour", "info")
+    # pré-remplissage du formulaire avec les données existantes
     form.N_inventaire.data = photo.N_inventaire_index
     form.N_inventaire.data = photo.N_inventaire
     form.Rue.data = photo.Rue

@@ -6,6 +6,11 @@ from ..app import mail
 class Classe_mails():
     @staticmethod
     def send_reset_email(user):
+        """
+        Envoi d'un mail de renouvellement du mot de passe
+        :param user: objet de l'utilisateur
+        :return: None après envoi du mail
+        """
         token = user.get_reset_token()
         msg = Message("Changement de mot de passe",
                       sender=MAIL_USERNAME,
@@ -21,6 +26,15 @@ class Classe_mails():
 
     @staticmethod
     def send_cataloguer_contact_mail(user, numero_inventaire, objet, message, copie):
+        """
+        Envoi un mail à l'administrateur en cas de problème sur la page de catalogage
+        :param user: objet utilisateur
+        :param numero_inventaire: numéro d'inventaire de la photo concernée
+        :param objet: objet du mail
+        :param message: corps du mail
+        :param copie: booléen pour le saouhait ou non de recevoir une copie du mail envoyé à l'adminstrateur
+        :return: None après envoi du mail
+        """
         recipients = [MAIL_USERNAME]
         if copie == True:
             recipients.append(user.mail)

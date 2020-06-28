@@ -20,13 +20,18 @@ def extract_adresse(requete):
     :param requete: requête faite dans l'api
     :return: str
     """
+    # retournement de l'adresse donnée en requête pour la mettre sous la forme Numéro_rue Rue Code_postal Ville
+    # si le code postal est au début
     if re.match("^[0-9]{5}[a-zA-Z éèàùêôî-]{0,}[0-9]{0,4}.*$", requete):
         pattern = "^([0-9]{5}[a-zA-Z éèàùêôî-]{0,})([0-9]{0,4}.*)$"
         requete = re.match(pattern, requete).group(2) + re.match(pattern, requete).group(1)
+    # si le code postal est en deuxième partie
     elif re.match("^[0-9]{0,4}.*[0-9]{5}[a-zA-Z éèàùêôî-]{0,}$", requete):
         requete=requete
     else:
         requete = requete
+
+    # à partir de l'adresse normalisée, extraction des différents blocs d'information
     if re.match("^[0-9]{0,4}.*[0-9]{5}[a-zA-Z éèàùêôî-]{0,}$", requete):
         bloc_rue = re.sub("[0-9]{5}.*", "", requete)
         bloc_ville = re.match("^[0-9]{0,4}.*([0-9]{5}[a-zA-Z éèàùêôî-]{0,})$", requete).group(1)
@@ -38,6 +43,10 @@ def extract_adresse(requete):
 
 @app.route(CHEMIN_API)
 def api():
+    """
+    Route d'accueil de l'api
+    :return: template
+    """
     return render_template("pages/api.html")
 
 
@@ -45,7 +54,7 @@ def api():
 def single_photo_id():
     """
     Permet d'obtenir les données d'une photographie précise
-    :return: dict
+    :return: JSON
     """
     try:
         recherche = request.args.get("q", None)
@@ -61,7 +70,7 @@ def single_photo_id():
 def multiple_photo_id():
     """
     Permet d'obtenir les données des photograohies comprises dans l'intervalle donné en requête (le séparateur peut être tout sauf un chiffre)
-    :return: dict
+    :return: JSON
     """
     recherche = request.args.get("q", None)
     _from = int(re.sub("[^0-9]+[0-9]+$", "", recherche))
@@ -89,10 +98,16 @@ def multiple_photo_id():
 
 @app.route(CHEMIN_API+"/photographie/adresse")
 def recherche_photo_adresse():
+    """
+    Recherche de photographie par adresse
+    :return: JSON
+    """
+    # récupération des données de l'URL
     recherche = request.args.get("q", None)
     page = request.args.get("p", 1)
     results_per_page = request.args.get("n", 10)
 
+    # gestion de la pagination et du noimbre de résultats par page
     if isinstance(page, str) and page.isdigit():
         page = int(page)
     else:
@@ -104,14 +119,17 @@ def recherche_photo_adresse():
         results_per_page = 10
 
     # scission de la recherche en plusieurs termes
-    # de préférence, la synatxe de la recherche est N_rue rue Code_postal? Ville?
+    # de préférence, la syntaxe de la recherche est N_rue rue Code_postal? Ville?
     bloc_rue, bloc_ville = extract_adresse(recherche)
     regex_rue = '( ?PARIS ?|(AVENUE|IMPASSE|QUAI|VOIE|RUELLE|PLACE|BOULEVARD|RUE)( D(E(S?| LA)|U))? )'
+    # traitement du bloc de la rue
     if re.match("([0-9]+)", bloc_rue):
         N_rue = str(re.match("([0-9]+)", bloc_rue).group(1))
     else:
         N_rue = str(-1)
     Rue = re.sub(regex_rue, "", re.sub("[0-9]+ ?","", bloc_rue.upper()))
+
+    # traitement du bloc de la ville
     if re.match("[0-9]{5}", str(bloc_ville)):
         Code_postal = re.match("([0-9]{5})", bloc_ville).group(1)
         Code_postal_dpt = re.sub('[0-9]{3}$', '', str(Code_postal))
@@ -126,6 +144,7 @@ def recherche_photo_adresse():
         Ville = ""
         Arrondissement = -1
 
+    # requêtes SQL via SQLAlchemy en fonction des données disponibles récupérées dans l'URL
     if recherche and N_rue != "-1":
         query = Classe_db.query.filter(and_(
             Classe_db.Rue.like("%{}%".format(Rue)), Classe_db.N_rue.like(N_rue))
@@ -142,6 +161,7 @@ def recherche_photo_adresse():
     except Exception:
         return Json_404()
 
+    # initialisation du dictionnaire de retour des résultats
     dict_resultats = {
         "links": {
             "self": request.url
@@ -156,6 +176,7 @@ def recherche_photo_adresse():
         }
     }
 
+    # remplissage des clés de pagination du dictionnaire
     if resultats.has_next:
         arguments = {
             "p": resultats.next_num,
@@ -180,10 +201,16 @@ def recherche_photo_adresse():
 
 @app.route(CHEMIN_API + "/photographie/mot_cle")
 def recherche_photo_mot_cle():
+    """
+    Recherche de photographie par mot clé
+    :return: JSON
+    """
+    # récupération des données transmises dans l'URL
     recherche = request.args.get("q", None)
     page = request.args.get("p", 1)
     results_per_page = request.args.get("n", 10)
 
+    # gestion de la pagination et du nombre de résultats par page
     if isinstance(page, str) and page.isdigit():
         page = int(page)
     else:
@@ -196,6 +223,7 @@ def recherche_photo_mot_cle():
 
     mot_cle = recherche.upper()
 
+    # requête dans la base de donéees avec un OR_
     if recherche:
         query = Classe_db.query.filter(or_(
             Classe_db.Mot_cle1.like("%{}%".format(mot_cle)),
@@ -208,11 +236,13 @@ def recherche_photo_mot_cle():
     else:
         query = Classe_db.query
 
+    # gestion de la pagination des résultats
     try:
         resultats = query.paginate(page=page, per_page=results_per_page)
     except Exception:
         return Json_404()
 
+    # dictionnaire d'accueil des résultats
     dict_resultats = {
         "links": {
             "self": request.url
@@ -227,6 +257,7 @@ def recherche_photo_mot_cle():
         }
     }
 
+    # remplissage de la clé de pagination dans le dictionnaire
     if resultats.has_next:
         arguments = {
             "p": resultats.next_num,

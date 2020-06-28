@@ -23,6 +23,10 @@ from werkzeug.security import generate_password_hash
 
 @app.route("/", methods=['post','get'])
 def accueil():
+	"""
+	Route de la page d'accueil
+	:return: template
+	"""
 	compteur_catalogueurs = Classe_utilisateurs.query.count()
 	compteur_photos_inventoriees = Classe_db.query.count()
 	compteur_photos_geolocalisees = db.session.query(Classe_db).filter(Classe_db.Latitude_x != "").count()
@@ -36,11 +40,19 @@ def accueil():
 #les routes cratographie et json_carto vont ensemble: la première affiche le html, la seconde fournit à Ajax de la première le JSON nécessaire
 @app.route("/cartographie")
 def cartographie():
+	"""
+	Route de la page de la cartographie
+	:return: template
+	"""
 	return render_template("pages/cartographie.html")
 
 
 @app.route("/json_carto")
 def json_carto():
+	"""
+	Permet de renvoyer le JSON de la cartographie
+	:return: JSON
+	"""
 	data = {}
 	i = 0
 	for photo in Classe_db.query.all():
@@ -53,9 +65,17 @@ def json_carto():
 # les routes suivantes vont ensemble: la première gère l'affichage des graphiques, les autres contiennent seulement le JSOn nécessaire aux graphiques
 @app.route("/graphiques", methods=['get', 'post'])
 def graphiques(visuel="line", dates='general_au_jour'):
+	"""
+	Permet de visualiser les graphiques des données
+	:param visuel: type de graphique (bar ou line)
+	:param dates: type de données à utiliser (mensuelles ou quotidiennes)
+	:return: template
+	"""
+	# récupération des données d'URL
 	visuel = request.args.get("visuel", 'line')
 	dates = request.args.get("dates", 'general_au_jour')
 
+	# construction des graphiques en fonction des paramètres donnés
 	form = Chart_form()
 	if form.validate_on_submit():
 		if form.visuel.data == "bar":
@@ -68,11 +88,20 @@ def graphiques(visuel="line", dates='general_au_jour'):
 
 @app.route("/graphiques/temporels")
 def temporels(visuel='line', dates='general_au_jour'):
+	"""
+	Retourne le JSON du graphique demandé
+	:param visuel: type de graphique (bar ou line)
+	:param dates: type de données à utiliser (mensuelles ou quotidiennes)
+	:return: JSON
+	"""
+	# récupération des paramètres d'URL
 	visuel = request.args.get("visuel", 'line')
 	dates = request.args.get("amp;dates", 'general_au_jour')
 
+	# récupération des dates de chaque photographie
 	liste = [[x.Date_inventaire] for x in Classe_db.query.all()]
 
+	# construction des graphiques selon le type de date
 	if dates == 'general_au_jour':
 		data_jour = pd.DataFrame(liste, columns=["Date_inventaire"])
 		data_jour["Date_inventaire"] = pd.to_datetime(data_jour["Date_inventaire"], format="%Y/%m/%d")
@@ -110,6 +139,10 @@ def temporels(visuel='line', dates='general_au_jour'):
 @app.route("/inscription", methods=["GET", "POST"])
 @login_required
 def inscription():
+	"""
+	Permet l'inscription d'un utilisateur et le hashage du mot de passe (pas mis dans la navbar pour éviter les utilisateurs non désirables)
+	:return: template
+	"""
 	# Si on est en POST, cela veut dire que le formulaire a été envoyé
 	if request.method == "POST":
 		statut, donnees = Classe_utilisateurs.creer(
@@ -131,6 +164,10 @@ def inscription():
 
 @app.route("/connexion", methods=["POST", "GET"])
 def connexion():
+	"""
+	Permet la connexion de l'utilisateur
+	:return:  template
+	"""
 	if current_user.is_authenticated is True:
 		flash("Vous êtes déjà connecté", "info")
 		return redirect("/")
@@ -153,6 +190,10 @@ login_manager.login_view = 'connexion'
 
 @app.route("/deconnexion", methods=["POST", "GET"])
 def deconnexion():
+	"""
+	Permet la déconnexion de l'utilisateur
+	:return: template
+	"""
 	if current_user.is_authenticated is True:
 		logout_user()
 		flash("Vous êtes maintenant déconnecté", "info")
@@ -161,6 +202,10 @@ def deconnexion():
 
 @app.route("/reset_password", methods=['get', 'post'])
 def forgot_password():
+	"""
+	Permet de demander un lien de changement de mot de passe
+	:return:template
+	"""
 	if current_user.is_authenticated:
 		flash("Vous êtes connecté", "info")
 		return redirect(url_for('accueil'))
@@ -176,6 +221,11 @@ def forgot_password():
 
 @app.route("/reset_password/<token>", methods=['get', 'post'])
 def reset_token(token):
+	"""
+	Permet de changer le mot de passe à partir du token reçu par mail
+	:param token: chaîne de caractère limitée dans le temps
+	:return: template
+	"""
 	if current_user.is_authenticated:
 		flash("Vous êtes connecté", "info")
 		return redirect(url_for('accueil'))
