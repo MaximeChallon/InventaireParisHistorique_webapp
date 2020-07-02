@@ -1,7 +1,8 @@
 from flask_mail import Message
 from ..constantes import MAIL_USERNAME
 from flask import url_for
-from ..app import mail
+from ..app import mail, app
+from datetime import datetime
 
 class Classe_mails():
     @staticmethod
@@ -46,7 +47,15 @@ class Classe_mails():
 
     @staticmethod
     def daily_db_backup():
+        """
+        Envoi automatique d'une copie de la base users à l'adresse de la photothèque
+        :return: None
+        """
         recipients = [MAIL_USERNAME]
-        msg = Message("backup", sender=MAIL_USERNAME, recipients=recipients)
-        msg.body = "ca marche"
+        msg = Message("Backup du " + str(datetime.utcnow()),
+                      sender=MAIL_USERNAME,
+                      recipients=recipients)
+        msg.body = ""
+        with app.open_resource("users.sqlite") as fp:
+            msg.attach("users.sqlite", "application/x-sqlite", fp.read())
         mail.send(msg)
