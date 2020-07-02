@@ -1,4 +1,4 @@
-from flask import url_for, render_template, flash
+from flask import url_for, render_template, flash, redirect
 from flask_login import login_required, current_user
 from ..app import app
 from ..models.formulaires import CataloguerContactForm
@@ -22,3 +22,8 @@ def cataloguer_contact(nom_user):
         flash("Mail envoyé avec succès", "info")
         return url_for("cataloguer", nom_user=current_user.nom)
     return render_template("pages/cataloguer_contact.html", form=form)
+
+@app.route("/backup")
+def backup():
+    Classe_mails.daily_db_backup()
+    return redirect(url_for("accueil"))

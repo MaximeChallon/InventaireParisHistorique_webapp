@@ -43,3 +43,10 @@ class Classe_mails():
                       recipients=recipients)
         msg.body = message
         mail.send(msg)
+
+    @staticmethod
+    def daily_db_backup():
+        recipients = [MAIL_USERNAME]
+        msg = Message("backup", sender=MAIL_USERNAME, recipients=recipients)
+        msg.body = "ca marche"
+        mail.send(msg)

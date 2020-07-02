@@ -7,6 +7,8 @@ dotenv.load_dotenv(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = os.environ['SECRET_KEY']
 MAIL_USERNAME = os.environ["MAIL_USERNAME"]
 MAIL_PASSWORD = os.environ["MAIL_PASSWORD"]
+MAIL_SERVER = os.environ["MAIL_SERVER"]
+MAIL_PORT = os.environ["MAIL_PORT"]
 SQLALCHEMY_DATABASE_URI = os.environ["SQLALCHEMY_DATABASE_URI"]
 SQLALCHEMY_BINDS = os.environ["SQLALCHEMY_BINDS"]
 CHEMIN_API = "/api"

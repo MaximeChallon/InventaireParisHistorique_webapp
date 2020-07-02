@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_admin import Admin
 from flask_mail import Mail
-from .constantes import SECRET_KEY, MAIL_PASSWORD, MAIL_USERNAME, SQLALCHEMY_DATABASE_URI, SQLALCHEMY_BINDS
+from .constantes import SECRET_KEY, MAIL_PASSWORD, MAIL_USERNAME, SQLALCHEMY_DATABASE_URI, SQLALCHEMY_BINDS, MAIL_SERVER, MAIL_PORT
 import os
 
 chemin_actuel = os.path.dirname(os.path.abspath(__file__))
@@ -22,8 +22,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 app.config['SECRET_KEY'] = SECRET_KEY
 
-app.config['MAIL_SERVER'] = "smtp.gmail.com"
-app.config["MAIL_PORT"] = 465
+app.config['MAIL_SERVER'] = MAIL_SERVER
+app.config["MAIL_PORT"] = MAIL_PORT
 app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_DEBUG'] = True
 app.config['MAIL_USERNAME'] = MAIL_USERNAME
