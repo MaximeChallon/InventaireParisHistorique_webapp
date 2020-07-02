@@ -5,7 +5,7 @@ from ..constantes import RUE, NOM_SITE, VILLE, CLASSEMENT_MH, MOT_CLE, GENERALIT
 
 # classes contenant les formulaires utilisés dans l'application
 
-class Chart_form(FlaskForm):
+class Chart_rythme_catalogage_form(FlaskForm):
     visuel = RadioField('Visuel', choices=[('line', 'En ligne'), ('bar', 'En barres')])
     dates = RadioField('Dates', choices=[('general_au_jour', 'Jour par jour'), ('data_mois', 'Mois par mois')])
     submit = SubmitField('Voir')

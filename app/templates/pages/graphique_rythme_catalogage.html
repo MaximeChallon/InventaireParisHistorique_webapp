@@ -1,7 +1,7 @@
 {% extends "container.html" %}
 
 {% block titre %}
-Graphiques
+Rythme de catalogage
 {% endblock %}
 
 {% block js %}
@@ -17,6 +17,8 @@ Graphiques
 
 
 {% block corps %}
+<h1 style="font-size:14pt;">Rythme de catalogage des photographies</h1>
+
 <script type="text/javascript">
     var visuel = '{{visuel}}';
     var dates = '{{dates}}';
@@ -33,7 +35,7 @@ Graphiques
         });
       }
 
-      parse("{{url_for('temporels', visuel=visuel, dates=dates)}}", "line");
+      parse("{{url_for('temporels_rythme_catalogage', visuel=visuel, dates=dates)}}", "line");
    
     </script>
 
@@ -44,7 +46,7 @@ Graphiques
             <div id="vis-tooltip" class="vg-tooltip"></div>
         </div>
         <div class="col-sm-3">
-            {% include "partials/Chart_form.html" %}
+            {% include "partials/Chart_rythme_catalogage_form.html" %}
         </div>
     </div>
 </div>

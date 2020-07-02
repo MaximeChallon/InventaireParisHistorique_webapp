@@ -5,7 +5,7 @@ from ..models.graphiques import classe_graphiques
 import pandas as pd
 from ..models.donnees import Classe_db
 from ..models.users import Classe_utilisateurs
-from ..models.formulaires import Chart_form, Reset_password_form, Forgot_form
+from ..models.formulaires import Chart_rythme_catalogage_form, Reset_password_form, Forgot_form
 from ..models.mails import Classe_mails
 from ..constantes import MAIL_USERNAME
 from werkzeug.security import generate_password_hash
@@ -63,8 +63,8 @@ def json_carto():
 
 
 # les routes suivantes vont ensemble: la première gère l'affichage des graphiques, les autres contiennent seulement le JSOn nécessaire aux graphiques
-@app.route("/graphiques", methods=['get', 'post'])
-def graphiques(visuel="line", dates='general_au_jour'):
+@app.route("/rythme_catalogage", methods=['get', 'post'])
+def rythme_catalogage(visuel="line", dates='general_au_jour'):
 	"""
 	Permet de visualiser les graphiques des données
 	:param visuel: type de graphique (bar ou line)
@@ -76,18 +76,18 @@ def graphiques(visuel="line", dates='general_au_jour'):
 	dates = request.args.get("dates", 'general_au_jour')
 
 	# construction des graphiques en fonction des paramètres donnés
-	form = Chart_form()
+	form = Chart_rythme_catalogage_form()
 	if form.validate_on_submit():
 		if form.visuel.data == "bar":
-			return redirect(url_for('graphiques', visuel=form.visuel.data, dates=form.dates.data))
+			return redirect(url_for('rythme_catalogage', visuel=form.visuel.data, dates=form.dates.data))
 		else:
-			return redirect(url_for('graphiques', visuel=form.visuel.data, dates=form.dates.data))
+			return redirect(url_for('rythme_catalogage', visuel=form.visuel.data, dates=form.dates.data))
 
-	return render_template("pages/graphiques.html", visuel=visuel, dates=dates, form=form)
+	return render_template("pages/graphique_rythme_catalogage.html", visuel=visuel, dates=dates, form=form)
 
 
-@app.route("/graphiques/temporels")
-def temporels(visuel='line', dates='general_au_jour'):
+@app.route("/graphiques/temporels_rythme_catalogage")
+def temporels_rythme_catalogage(visuel='line', dates='general_au_jour'):
 	"""
 	Retourne le JSON du graphique demandé
 	:param visuel: type de graphique (bar ou line)
@@ -133,6 +133,10 @@ def temporels(visuel='line', dates='general_au_jour'):
 		chart = classe_graphiques.generate_temporels_line(donnees, "Mois et jour")
 		
 	return chart.to_json()
+
+@app.route("/graphiques/repartition_arrondissements")
+def arrondissements():
+	return render_template("pages/graphique_chloropleth_arrondissements.html", map=map)
 
 
 # routes de gestion des utilisateurs, et de modification des mots de passe

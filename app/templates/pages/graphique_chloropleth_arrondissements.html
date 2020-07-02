@@ -1,0 +1,22 @@
+{% extends "container.html" %}
+
+{% block titre %}
+Répartition par arrondissement
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-tooltip@0.16.0/build/vega-tooltip.min.js"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stlesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/vega-tooltip@0.16.0/vega-tooltip.scss">
+{% endblock %}
+
+
+{% block corps %}
+<h1 style="font-size:14pt;">Répartition des photographies par arrondissements</h1>
+
+{% endblock %}
