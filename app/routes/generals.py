@@ -136,6 +136,7 @@ def temporels_rythme_catalogage(visuel='line', dates='general_au_jour'):
 
 @app.route("/graphiques/repartition_arrondissements")
 def arrondissements():
+	#data :https://github.com/joelgombin/scpocodingweek/blob/master/slides/data/arrondissements.geojson
 	return render_template("pages/graphique_chloropleth_arrondissements.html", map=map)
 
 
