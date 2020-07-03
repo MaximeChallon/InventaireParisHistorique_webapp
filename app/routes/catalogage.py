@@ -101,9 +101,12 @@ def cataloguer(nom_user):
             Cote_base = form.Cote_base.data,
             Auteur = current_user.id_utilisateur
         )
-        db.session.add(nouvelle_photo)
-        db.session.commit()
-        flash("Photographie correctement enregistrée", "info")
+        try:
+            db.session.add(nouvelle_photo)
+            db.session.commit()
+            flash("Photographie correctement enregistrée", "info")
+        except:
+            flash("Echec de l'enregistrement, veuillez vérifier que les champs sont remplis correctement", "warning")
     return render_template("pages/cataloguer.html", form=form)
 
 
