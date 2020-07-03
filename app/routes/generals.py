@@ -133,7 +133,7 @@ def temporels_rythme_catalogage(visuel='line', dates='general_au_jour'):
 		chart = classe_graphiques.generate_temporels_bar(donnees, "Mois et jour")
 	elif visuel == "line":
 		chart = classe_graphiques.generate_temporels_line(donnees, "Mois et jour")
-		
+
 	return chart.to_json()
 
 
@@ -145,13 +145,14 @@ def repartition_arrondissements():
 @app.route("/graphiques/geojson_arrondissements")
 def geojson_arrondissements():
 	# ouverture du fichier geojson des arrondissements pour lui ajouter le nombre de photos du PH dans ses propriétés
-	with open("app/statics/data/arrondissements.geojson", "r") as jsonfile:
-		data = json.load(jsonfile)
-		for ardt in data["features"]:
-			nombre_photos = Classe_db.query.filter(Classe_db.Arrondissement == str(ardt["properties"]["c_ar"])).count()
-			ardt["properties"]["nombre_photos"] = nombre_photos
+	# "/home/ParisHistoriqueInventaire/InventaireParisHistorique/app/statics/data/arrondissements.geojson"
+    with open("InventaireParisHistorique/app/statics/data/arrondissements.geojson", "r") as jsonfile:
+        data = json.load(jsonfile)
+        for ardt in data["features"]:
+            nombre_photos = Classe_db.query.filter(Classe_db.Arrondissement == str(ardt["properties"]["c_ar"])).count()
+            ardt["properties"]["nombre_photos"] = nombre_photos
 
-	return json.dumps(data)
+    return json.dumps(data)
 
 
 # routes de gestion des utilisateurs, et de modification des mots de passe
