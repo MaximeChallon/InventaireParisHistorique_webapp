@@ -33,10 +33,10 @@
     <ul class="navbar-nav mr-auto">
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Graphiques
+          Quelques chiffres
         </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color:#a6cfb1;">
-          <a class="dropdown-item" href="{{url_for('arrondissements', nom_user=current_user.nom)}}">Répartition par arrondissements</a>
+          <a class="dropdown-item" href="{{url_for('repartition_arrondissements', nom_user=current_user.nom)}}">Répartition par arrondissements</a>
           <a class="dropdown-item" href="{{url_for('rythme_catalogage', nom_user=current_user.nom)}}">Rythme de catalogage</a>
         </div>
       </li>

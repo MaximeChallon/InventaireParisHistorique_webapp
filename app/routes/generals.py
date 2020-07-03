@@ -9,6 +9,8 @@ from ..models.formulaires import Chart_rythme_catalogage_form, Reset_password_fo
 from ..models.mails import Classe_mails
 from ..constantes import MAIL_USERNAME
 from werkzeug.security import generate_password_hash
+import json
+import requests
 
 # routes dans l'ordre:
 #/
@@ -134,10 +136,22 @@ def temporels_rythme_catalogage(visuel='line', dates='general_au_jour'):
 		
 	return chart.to_json()
 
+
 @app.route("/graphiques/repartition_arrondissements")
-def arrondissements():
-	#data :https://github.com/joelgombin/scpocodingweek/blob/master/slides/data/arrondissements.geojson
-	return render_template("pages/graphique_chloropleth_arrondissements.html", map=map)
+def repartition_arrondissements():
+	return render_template("pages/repartition_arrondissements.html")
+
+
+@app.route("/graphiques/geojson_arrondissements")
+def geojson_arrondissements():
+	# ouverture du fichier geojson des arrondissements pour lui ajouter le nombre de photos du PH dans ses propriétés
+	with open("app/statics/data/arrondissements.geojson", "r") as jsonfile:
+		data = json.load(jsonfile)
+		for ardt in data["features"]:
+			nombre_photos = Classe_db.query.filter(Classe_db.Arrondissement == str(ardt["properties"]["c_ar"])).count()
+			ardt["properties"]["nombre_photos"] = nombre_photos
+
+	return json.dumps(data)
 
 
 # routes de gestion des utilisateurs, et de modification des mots de passe
