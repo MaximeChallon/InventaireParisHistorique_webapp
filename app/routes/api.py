@@ -6,39 +6,13 @@ from..models.donnees import Classe_db
 from ..constantes import CHEMIN_API
 import re
 from sqlalchemy import and_, or_
+from AdresseParser import AdresseParser
 
 
 def Json_404():
     response = jsonify({"erreur": "Requête impossible"})
     response.status_code = 404
     return response
-
-
-def extract_adresse(requete):
-    """
-    Permet d'extraire l'adresse' de la requête de l'utilisateur
-    :param requete: requête faite dans l'api
-    :return: str
-    """
-    # retournement de l'adresse donnée en requête pour la mettre sous la forme Numéro_rue Rue Code_postal Ville
-    # si le code postal est au début
-    if re.match("^[0-9]{5}[a-zA-Z éèàùêôî-]{0,}[0-9]{0,4}.*$", requete):
-        pattern = "^([0-9]{5}[a-zA-Z éèàùêôî-]{0,})([0-9]{0,4}.*)$"
-        requete = re.match(pattern, requete).group(2) + re.match(pattern, requete).group(1)
-    # si le code postal est en deuxième partie
-    elif re.match("^[0-9]{0,4}.*[0-9]{5}[a-zA-Z éèàùêôî-]{0,}$", requete):
-        requete=requete
-    else:
-        requete = requete
-
-    # à partir de l'adresse normalisée, extraction des différents blocs d'information
-    if re.match("^[0-9]{0,4}.*[0-9]{5}[a-zA-Z éèàùêôî-]{0,}$", requete):
-        bloc_rue = re.sub("[0-9]{5}.*", "", requete)
-        bloc_ville = re.match("^[0-9]{0,4}.*([0-9]{5}[a-zA-Z éèàùêôî-]{0,})$", requete).group(1)
-    elif re.match("^[0-9]{0,4}.*$", requete):
-        bloc_rue = re.sub("[0-9]{5}.*", "", requete)
-        bloc_ville = None
-    return (bloc_rue, bloc_ville)
 
 
 @app.route(CHEMIN_API)
@@ -106,31 +80,10 @@ def recherche_photo_adresse():
 
     page, results_per_page = Classe_API.check_n_p(page, results_per_page)
 
-    # scission de la recherche en plusieurs termes
-    # de préférence, la syntaxe de la recherche est N_rue rue Code_postal? Ville?
-    bloc_rue, bloc_ville = extract_adresse(recherche)
-    regex_rue = '( ?PARIS ?|(AVENUE|IMPASSE|QUAI|VOIE|RUELLE|PLACE|BOULEVARD|RUE)( D(E(S?| LA)|U))? )'
-    # traitement du bloc de la rue
-    if re.match("([0-9]+)", bloc_rue):
-        N_rue = str(re.match("([0-9]+)", bloc_rue).group(1))
-    else:
-        N_rue = str(-1)
-    Rue = re.sub(regex_rue, "", re.sub("[0-9]+ ?","", bloc_rue.upper()))
-
-    # traitement du bloc de la ville
-    if re.match("[0-9]{5}", str(bloc_ville)):
-        Code_postal = re.match("([0-9]{5})", bloc_ville).group(1)
-        Code_postal_dpt = re.sub('[0-9]{3}$', '', str(Code_postal))
-        Ville = re.sub("[0-9]{5} ?", "", bloc_ville)
-        if "PARIS" in Rue or re.match('^75[0-9]{3}', str(Code_postal)):
-            Arrondissement = int(re.sub("^0+", "", Code_postal.replace('75', '')))
-        else:
-            Arrondissement = -1
-    else:
-        Code_postal = -1
-        Code_postal_dpt = -1
-        Ville = ""
-        Arrondissement = -1
+    # récupération de l'adresse parsée
+    adresse_parser = AdresseParser()
+    N_rue = str(adresse_parser.parse(recherche)["numero"])
+    Rue = adresse_parser.parse(recherche)["rue"]["nom"]
 
     if recherche and N_rue != "-1":
         query = Classe_db.query.filter(and_(
