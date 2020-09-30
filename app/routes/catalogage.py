@@ -188,7 +188,7 @@ def exporter_csv(nom_user, num_debut, num_fin):
         i+=1
     output.seek(0)
 
-    titre = "inventaire" + num_debut + "-" + num_fin +".csv"
+    titre = "inventaire" + num_debut + "-" + num_fin + "_" + nom_user + ".csv"
 
     return Response(output, mimetype="text/csv",
                     headers={'Content-Disposition': 'attachment; filename="{}"'.format(titre)}
