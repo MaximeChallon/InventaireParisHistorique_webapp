@@ -20,7 +20,7 @@ API
             <h5>Recherche par numéro d'inventaire simple</h5>
             <form class="form-inline my-2 my-lg-0" style="margin-left: 30px;" action="{{url_for('single_photo_id')}}" method="GET">
                 <input type="search" name="q" class="form-control mr-sm-10" type="text" placeholder="Recherche par numéro d'inventaire">
-                <button type="button" class="btn btn-primary">Rechercher</button>
+                <button type="submit" class="btn btn-primary">Rechercher</button>
             </form>
         </div>
         <br>
@@ -29,7 +29,7 @@ API
             <p>Séparer les deux numéros d'inventaire extrêmes par tout sauf un chiffre</p>
             <form class="form-inline my-2 my-lg-0" style="margin-left: 30px;" action="{{url_for('multiple_photo_id')}}" method="GET">
                 <input type="search" name="q" class="form-control mr-sm-10" type="text" placeholder="Recherche par numéros d'inventaire">
-                <button type="button" class="btn btn-primary">Rechercher</button>
+                <button type="submit" class="btn btn-primary">Rechercher</button>
             </form>
         </div>
         <br>
@@ -38,7 +38,7 @@ API
             <p>Idéalement, pour une meilleure recherche, la requête se compose: Numéro de la rue (optionnel) Rue (ne pas mettre ville et code postal)</p>
             <form class="form-inline my-2 my-lg-0" style="margin-left: 30px;" action="{{url_for('recherche_photo_adresse')}}" method="GET">
                 <input type="search" name="q" class="form-control mr-sm-10" type="text" placeholder="Recherche par adresse">
-                <button type="button" class="btn btn-primary">Rechercher</button>
+                <button type="submit" class="btn btn-primary">Rechercher</button>
             </form>
         </div>
         <br>
@@ -46,7 +46,7 @@ API
             <h5>Recherche par mot clé</h5>
             <form class="form-inline my-2 my-lg-0" style="margin-left: 30px;" action="{{url_for('recherche_photo_mot_cle')}}" method="GET">
                 <input type="search" name="q" class="form-control mr-sm-10" type="text" placeholder="Recherche par mot clé">
-                <button type="button" class="btn btn-primary">Rechercher</button>
+                <button type="submit" class="btn btn-primary">Rechercher</button>
             </form>
         </div>
     </div>
