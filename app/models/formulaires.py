@@ -11,7 +11,7 @@ class Chart_rythme_catalogage_form(FlaskForm):
     submit = SubmitField('Voir')
 
 class Forgot_form(FlaskForm):
-    email = StringField('Email Address', [validators.DataRequired(), validators.Length(min=6, max=35), validators.Email()])
+    email = StringField('Email Address', [validators.DataRequired(), validators.Length(min=6, max=75), validators.Email()])
     submit = SubmitField('Envoyer')
 
     def validate_email(self, email):
