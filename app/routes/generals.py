@@ -263,8 +263,10 @@ def reset_token(token):
 		return redirect(url_for('connexion'))
 	return render_template("pages/reset_token.html", form=form)
 
+"""
 @app.route("/get_latlg_adresses")
 @login_required
 def get_latlg_adresses():
 	fonctions = get_latlg_addresses.run()
 	return fonctions
+"""
