@@ -11,7 +11,7 @@ from ..constantes import MAIL_USERNAME
 from werkzeug.security import generate_password_hash
 import json
 import requests
-from ..utils import get_latlg_addresses
+#from ..utils import get_latlg_addresses
 
 # routes dans l'ordre:
 #/
