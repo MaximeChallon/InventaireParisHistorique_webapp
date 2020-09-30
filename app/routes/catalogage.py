@@ -1,10 +1,12 @@
 from ..app import app, db
 from flask_login import login_required, current_user
-from flask import url_for, render_template, flash, redirect, abort, send_file, request
+from flask import url_for, render_template, flash, redirect, abort, send_file, request, Response
 import pandas as pd
 import io
 from ..models.formulaires import Catalogage_form
 from ..models.users import Classe_catalogage
+from werkzeug.wsgi import FileWrapper
+import csv
 
 #SQL creation table ds db users
 """CREATE TABLE catalogage (
@@ -138,15 +140,14 @@ def exporter_csv(nom_user, num_debut, num_fin):
     """
     # initialisation du nombre de début d'incrémentation, et des listes d'accueil des données
     i = int(num_debut)
-    liste_photos = []
-    liste_finale=[]
+    output = io.StringIO()
+    writer = csv.writer(output)
     # pour chaque numéro d'inventaire donné, requête SQL puis vérification que l'auteur est bien le demandeur de l'export, puis export des données
     while i <= int(num_fin) and i>=int(num_debut):
         try:
             photo = Classe_catalogage.query.get(i)
             if photo and photo.auteur==current_user:
                 liste_photo = []
-                liste_photos.append(photo)
                 liste_photo.append(photo.N_inventaire)
                 liste_photo.append(photo.Rue)
                 liste_photo.append(photo.N_rue)
@@ -181,28 +182,18 @@ def exporter_csv(nom_user, num_debut, num_fin):
                 liste_photo.append(photo.Cote_classement)
                 liste_photo.append(photo.Date_inventaire)
                 liste_photo.append(current_user.nom.upper())
-                liste_finale.append(liste_photo)
+                writer.writerow(liste_photo)
         except:
             pass
         i+=1
-    # passage de la liste_finale dans un dataframe Pandas
-    dataframe = pd.DataFrame(liste_finale)
-    proxyIO = io.StringIO()
-    dataframe.to_csv(proxyIO, index=False, header=False, encoding="utf-8")
-    # transformation du dataframe en fichier CSV
-    mem = io.BytesIO()
-    mem.write(proxyIO.getvalue().encode("utf-8"))
-    mem.seek(0)
+    output.seek(0)
 
-    envoi_fichier = send_file(
-            mem,
-            mimetype="text/csv",
-            attachment_filename="inventaire" + num_debut + "-" + num_fin +".csv",
-            as_attachment=True,
-            cache_timeout=0,
-        )
+    titre = "inventaire" + num_debut + "-" + num_fin +".csv"
 
-    return envoi_fichier
+    return Response(output, mimetype="text/csv",
+                    headers={'Content-Disposition': 'attachment; filename="{}"'.format(titre)}
+                    )
+
 
 @app.route("/espace_personnel/<nom_user>/enregistrements_recents")
 @login_required

@@ -11,6 +11,7 @@ from ..constantes import MAIL_USERNAME
 from werkzeug.security import generate_password_hash
 import json
 import requests
+from ..utils import get_latlg_addresses
 
 # routes dans l'ordre:
 #/
@@ -22,6 +23,7 @@ import requests
 #/connexion
 #/deconnexion
 #/reset_password
+#/get_latlg_addresses
 
 @app.route("/", methods=['post','get'])
 def accueil():
@@ -260,3 +262,9 @@ def reset_token(token):
 		flash("Le mot de passe a bien été modifié", "info")
 		return redirect(url_for('connexion'))
 	return render_template("pages/reset_token.html", form=form)
+
+@app.route("/get_latlg_adresses")
+@login_required
+def get_latlg_adresses():
+	fonctions = get_latlg_addresses.run()
+	return fonctions
