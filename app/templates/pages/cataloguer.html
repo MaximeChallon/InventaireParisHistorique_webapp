@@ -60,7 +60,7 @@ Cataloguer
                 </div>
                 <div class="col-4">
                     <p>Numéro dans la rue <br>
-                        {{form.N_rue}}</p>
+                        {{form.N_rue(size=5)}}</p>
                 </div>
             </div>
             <div class="row">
@@ -71,25 +71,28 @@ Cataloguer
             </div>
             <div class="row">
                 <div class="col-4">
-                    <p>Arrondissement<br>
-                        {{form.Arrondissement}}</p>
+                    <p>Arrondissement (2 chiffres. Ex: 02)<br>
+                        {{form.Arrondissement(size=5, maxlenth=2)}}</p>
                 </div>
                 <div class="col-4">
                     <p>Ville <br>
                         {{form.Ville}}</p>
                 </div>
                 <div class="col-4">
-                    <p>Département (code à deux chiffres)<br>
-                        {{form.Departement}}</p>
+                    <p>Département (code à 2 chiffres)<br>
+                        {{form.Departement(size=5, maxlength=2)}}</p>
                 </div>
             </div>
             <div class="row">
+                <p style="font-size:8pt;">Il n'est pas obligatoire d'indiquer la localisation GPS. Si vous souhaitez l'indiquer, cliquez sur l'adresse, les champs se rempliront automatiquement.</p>
+            </div>
+            <div class="row">
                 <div class="col-6">
-                    <p>Latitude (ex:48.8534, ou clic sur la carte)<br>
+                    <p>Latitude (clic sur la carte)<br>
                         {{form.Latitude_x}}</p>
                 </div>
                 <div class="col-6">
-                    <p>Longitude (ex:2.3488, ou clic sur la carte)<br>
+                    <p>Longitude (clic sur la carte)<br>
                         {{form.Longitude_y}}</p>
                 </div>
             </div>

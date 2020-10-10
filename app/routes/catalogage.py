@@ -76,7 +76,7 @@ def cataloguer(nom_user):
             Nom_site=form.Nom_site.data,
             Arrondissement = form.Arrondissement.data,
             Ville = form.Ville.data,
-            Departement = form.Departement.data,
+            Departement = int(form.Departement.data),
             Latitude_x = form.Latitude_x.data,
             Longitude_y = form.Longitude_y.data,
             Support = form.Support.data,
