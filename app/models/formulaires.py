@@ -53,7 +53,7 @@ class Catalogage_form(FlaskForm):
     Date_construction = StringField("Date de construction", default="")
     Architecte = StringField("Architecte", default="")
     Classement_MH = SelectField("Classement MH", choices=CLASSEMENT_MH, default="INCONNU")
-    Legende = StringField("Date de prise de vue", default="")
+    Legende = TextAreaField("Date de prise de vue", default="", render_kw={"rows": 6, "cols": 40})
     Generalite_architecture = SelectField("Généralité architecture", choices=GENERALITE_ARHITECTURE, default="PRIVEE")
     Mot_cle1 = SelectField(choices = MOT_CLE, default = ['', ''])
     Mot_cle2 = SelectField(choices=MOT_CLE, default=['', ''])
@@ -62,7 +62,7 @@ class Catalogage_form(FlaskForm):
     Mot_cle5 = SelectField(choices=MOT_CLE, default=['', ''])
     Mot_cle6 = SelectField(choices=MOT_CLE, default=['', ''])
     Autre_adresse = StringField("Autre adresse", default="")
-    Notes = StringField("Notes", default="")
+    Notes = TextAreaField("Notes", default="", render_kw={"rows": 6, "cols": 100})
     Cote_base = StringField("Cote de la base", default="")
 
     submit = SubmitField('Enregistrer')
