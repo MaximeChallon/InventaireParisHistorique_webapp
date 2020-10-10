@@ -21,12 +21,17 @@ Cataloguer
 
             // récupération de la latitude et de la longitude lors d'un clic sur la carte
             map.on('click', function(e) {
-                var lat = e.latlng.lat;
-                document.getElementById('Latitude_x').value = lat;
-                var long = e.latlng.lng;
-                document.getElementById('Longitude_y').value = long;
-                marker = L.marker([lat, long]);
-                marker.addTo(map);
+                if (confirm("Valider cette position?"))
+                    {
+                    var lat = e.latlng.lat;
+                    document.getElementById('Latitude_x').value = lat;
+                    var long = e.latlng.lng;
+                    document.getElementById('Longitude_y').value = long;
+
+                    // ajout d'un marqueur à l'endroit du clic
+                    marker = L.marker([lat, long]);
+                    marker.addTo(map);
+                    }
                 });
 });
         </script>
