@@ -107,6 +107,7 @@ def cataloguer(nom_user):
             db.session.add(nouvelle_photo)
             db.session.commit()
             flash("Photographie correctement enregistrée", "info")
+            return redirect(url_for('cataloguer', nom_user=nom_user))
         except:
             flash("Echec de l'enregistrement, veuillez vérifier que les champs sont remplis correctement", "warning")
     return render_template("pages/cataloguer.html", form=form)
