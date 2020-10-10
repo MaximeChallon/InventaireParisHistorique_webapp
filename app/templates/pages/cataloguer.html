@@ -10,20 +10,29 @@ Cataloguer
     $(document).ready(function() {
             // Création de la carte à l'id "map"
             var map = L.map('map', {
-        zoomControl: true
-    }).setView(new L.LatLng(48.8542, 2.3484), 12);
+                zoomControl: true
+                }).setView(new L.LatLng(48.8542, 2.3484), 12);
 
             // Usage des tuiles de carte d'OpenStreetMap puis ajout à la carte map
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '<a href="openstreetmap.org">OpenStreetMap</a> | <a href="www.paris-historique.org">Association Paris Historique</a> | Maxime Challon',
                 maxNativeZoom: 100
             }).addTo(map);
+
             // récupération de la latitude et de la longitude lors d'un clic sur la carte
-    map.on('click', function(e) {
-  var lat = e.latlng.lat;
-  document.getElementById('Latitude_x').value = lat;
-  var long = e.latlng.lng;
-  document.getElementById('Longitude_y').value = long;});
+            map.on('click', function(e) {
+                if (confirm("Valider cette position?"))
+                    {
+                    var lat = e.latlng.lat;
+                    document.getElementById('Latitude_x').value = lat;
+                    var long = e.latlng.lng;
+                    document.getElementById('Longitude_y').value = long;
+
+                    // ajout d'un marqueur à l'endroit du clic
+                    marker = L.marker([lat, long]);
+                    marker.addTo(map);
+                    }
+                });
 });
         </script>
 {%endblock%}
@@ -43,7 +52,7 @@ Cataloguer
             <h1 style="font-size:16pt;color:#da1916;">Informations générales sur la photographie</h1>
             <div class="row">
                 <div class="col-4">
-                    <p>Numéro d'inventaire<br>
+                    <p>Numéro d'inventaire (requis)<br>
                         {{ form.N_inventaire }}</p>
                 </div>
                 <div class="col-6">
@@ -60,7 +69,7 @@ Cataloguer
                 </div>
                 <div class="col-4">
                     <p>Numéro dans la rue <br>
-                        {{form.N_rue}}</p>
+                        {{form.N_rue(size=5)}}</p>
                 </div>
             </div>
             <div class="row">
@@ -71,25 +80,28 @@ Cataloguer
             </div>
             <div class="row">
                 <div class="col-4">
-                    <p>Arrondissement<br>
-                        {{form.Arrondissement}}</p>
+                    <p>Arrondissement (2 chiffres. Ex: 02)<br>
+                        {{form.Arrondissement(size=5, maxlenth=2)}}</p>
                 </div>
                 <div class="col-4">
                     <p>Ville <br>
                         {{form.Ville}}</p>
                 </div>
                 <div class="col-4">
-                    <p>Département (code à deux chiffres)<br>
-                        {{form.Departement}}</p>
+                    <p>Département (code à 2 chiffres)<br>
+                        {{form.Departement(size=5, maxlength=2)}}</p>
                 </div>
             </div>
             <div class="row">
+                <p style="font-size:8pt;">Il n'est pas obligatoire d'indiquer la localisation GPS. Si vous souhaitez l'indiquer, cliquez sur l'adresse, les champs se rempliront automatiquement.</p>
+            </div>
+            <div class="row">
                 <div class="col-6">
-                    <p>Latitude (ex:48.8534, ou clic sur la carte)<br>
+                    <p>Latitude (clic sur la carte)<br>
                         {{form.Latitude_x}}</p>
                 </div>
                 <div class="col-6">
-                    <p>Longitude (ex:2.3488, ou clic sur la carte)<br>
+                    <p>Longitude (clic sur la carte)<br>
                         {{form.Longitude_y}}</p>
                 </div>
             </div>
@@ -115,7 +127,7 @@ Cataloguer
                 </div>
                 <div class="col-4">
                     <p>Taille (HAUTEURxLARGEURcm) <br>
-                        {{form.Taille}}</p>
+                        {{form.Taille(size=7)}}</p>
                 </div>
             </div>
             <div class="row">
@@ -167,16 +179,37 @@ Cataloguer
                 </div>
             </div>
             <div class="row">
+                <div class="col-12">
+                    <p>Mots-clés (maximum 6)</p>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-4">
-                    <p>Mots-clés (maximum 6, maintenir la touche CTRL pour sélectionner plusieurs mots) <br>
-                        {{form.Mot_cle}}</p>
+                    <p>{{form.Mot_cle1}}</p>
+                </div>
+                <div class="col-4">
+                    <p>{{form.Mot_cle2}}</p>
+                </div>
+                <div class="col-4">
+                    <p>{{form.Mot_cle3}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <p>{{form.Mot_cle4}}</p>
+                </div>
+                <div class="col-4">
+                    <p>{{form.Mot_cle5}}</p>
+                </div>
+                <div class="col-4">
+                    <p>{{form.Mot_cle6}}</p>
                 </div>
             </div>
             <h1 style="font-size:16pt;color:#da1916;">Divers</h1>
             <div class="row">
                 <div class="col-12">
                     <p>Note libre<br>
-                        {{form.Notes(size=100)}}</p>
+                        {{form.Notes}}</p>
                 </div>
             </div>
             {{ form.submit }}
