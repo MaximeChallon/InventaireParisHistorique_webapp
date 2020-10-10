@@ -59,6 +59,7 @@ def cataloguer(nom_user):
     """
     form = Catalogage_form()
     if form.validate_on_submit():
+        """
         # gestion des  mots-clés, remplissage par des chaînes vides si les  champs ne sont pas remplis
         mots_cles = form.Mot_cle.data
         i=0
@@ -67,6 +68,7 @@ def cataloguer(nom_user):
             while i!=j:
                 mots_cles.append("")
                 i += 1
+        """
 
         nouvelle_photo = Classe_catalogage(
             N_inventaire_index=form.N_inventaire.data,
@@ -92,12 +94,12 @@ def cataloguer(nom_user):
             Classement_MH = form.Classement_MH.data,
             Legende = form.Legende.data,
             Generalite_architecture = form.Generalite_architecture.data,
-            Mot_cle1 = form.Mot_cle.data[0],
-            Mot_cle2=form.Mot_cle.data[1],
-            Mot_cle3=form.Mot_cle.data[2],
-            Mot_cle4=form.Mot_cle.data[3],
-            Mot_cle5=form.Mot_cle.data[4],
-            Mot_cle6=form.Mot_cle.data[5],
+            Mot_cle1 = form.Mot_cle1.data,
+            Mot_cle2=form.Mot_cle2.data,
+            Mot_cle3=form.Mot_cle3.data,
+            Mot_cle4=form.Mot_cle4.data,
+            Mot_cle5=form.Mot_cle5.data,
+            Mot_cle6=form.Mot_cle6.data,
             Autre_adresse = form.Autre_adresse.data,
             Notes = form.Notes.data,
             Cote_base = form.Cote_base.data,
