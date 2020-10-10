@@ -4,7 +4,7 @@ import csv
 # il permet simplement de remplir la bse de données db.sqlite quand de nouvelles données ont été catalogué
 
 with open('/home/maxime/Documents/PH/Inventaire/inventaire_complet_pipe.csv', 'r') as f:
-	with open('/home/maxime/Bureau/inventaire_complet.csv', "w") as f_e:
+	with open('/home/maxime/Documents/PH/Inventaire/inventaire_complet.csv', "w") as f_e:
 		f_csv = csv.writer(f_e)
 		f_o = csv.reader(f, delimiter='|')
 		next(f_o)
