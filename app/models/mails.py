@@ -3,6 +3,7 @@ from ..constantes import MAIL_USERNAME
 from flask import url_for
 from ..app import mail, app
 from datetime import datetime
+import csv
 
 class Classe_mails():
     @staticmethod
@@ -58,4 +59,23 @@ class Classe_mails():
         msg.body = ""
         with app.open_resource("users.sqlite") as fp:
             msg.attach("users.sqlite", "application/x-sqlite", fp.read())
+        mail.send(msg)
+
+    @staticmethod
+    def envoyer_export(donnees_export, destinataires):
+        """
+        Envoi automatique du fichier d'export au mail de travail de la photothèque
+        :param donnees_export: liste
+        :param destinataires: liste de desutinataires
+        :return: None
+        """
+        recipients = destinataires
+        msg = Message("Inventaire du " + str(datetime.utcnow()),
+                      sender=MAIL_USERNAME,
+                      recipients=recipients)
+        msg.body = f''''''
+        for line in donnees_export:
+            msg.body = msg.body + '''
+            
+''' + line
         mail.send(msg)

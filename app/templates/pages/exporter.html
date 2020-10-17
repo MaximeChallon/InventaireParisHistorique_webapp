@@ -19,7 +19,15 @@ Exporter
       <input type="text" class="form-control" id="num_fin" name="num_fin" placeholder="Numéro d'inventaire de fin">
     </div>
     </div>
-  <div>
+  <div class="form-group row">
+      <p>Je souhaite:
+      <ul>
+          <li><input type="checkbox" id="envoyer" name="envoyer" value="oui"> Envoyer directement à la photothèque</li>
+          <li><input type="checkbox" id="copie" name="copie" value="oui"> Recevoir une copie</li>
+      </ul>
+      </p>
+  </div>
+    <div class="form-group row">
     <button type="submit" class="btn btn-primary">Exporter</button>
   </div>
 </form>
