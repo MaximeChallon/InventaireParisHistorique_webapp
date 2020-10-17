@@ -4,12 +4,11 @@ from ..app import app
 from ..models.formulaires import CataloguerContactForm
 from ..models.mails import Classe_mails
 
-@app.route("/espace_personnel/<nom_user>/cataloguer/contact", methods=['get', 'post'])
+@app.route("/espace_personnel/cataloguer/contact", methods=['get', 'post'])
 @login_required
-def cataloguer_contact(nom_user):
+def cataloguer_contact():
     """
     Permet d'envoyer un mail à l'adinistrateur
-    :param nom_user: nom de famille de l'utilisateur
     :return: template
     """
     form = CataloguerContactForm()
@@ -20,7 +19,7 @@ def cataloguer_contact(nom_user):
                                                   message=form.Message.data,
                                                   copie=form.Copie.data)
         flash("Mail envoyé avec succès", "info")
-        return url_for("cataloguer", nom_user=current_user.nom)
+        return url_for("cataloguer")
     return render_template("pages/cataloguer_contact.html", form=form)
 
 @app.route("/backup")

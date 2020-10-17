@@ -47,9 +47,9 @@ from ..constantes import *
 );"""
 
 
-@app.route("/espace_personnel/<nom_user>/cataloguer", methods=['GET', 'POST'])
+@app.route("/espace_personnel/cataloguer", methods=['GET', 'POST'])
 @login_required
-def cataloguer(nom_user):
+def cataloguer():
     """
     Permet de remplir le formulaire de catalogage et d'inscrire les données dans la base users.sqlite et la table catalogage
     :param nom_user: nom de famille de l'utilisateur
@@ -57,17 +57,6 @@ def cataloguer(nom_user):
     """
     form = Catalogage_form()
     if form.validate_on_submit():
-        """
-        # gestion des  mots-clés, remplissage par des chaînes vides si les  champs ne sont pas remplis
-        mots_cles = form.Mot_cle.data
-        i=0
-        j=6-len(mots_cles)
-        if len(mots_cles)<6:
-            while i!=j:
-                mots_cles.append("")
-                i += 1
-        """
-
         nouvelle_photo = Classe_catalogage(
             N_inventaire_index=form.N_inventaire.data,
             N_inventaire=form.N_inventaire.data,
@@ -107,15 +96,15 @@ def cataloguer(nom_user):
             db.session.add(nouvelle_photo)
             db.session.commit()
             flash("Photographie correctement enregistrée", "info")
-            return redirect(url_for('cataloguer', nom_user=nom_user))
+            return redirect(url_for('cataloguer'))
         except:
             flash("Echec de l'enregistrement, veuillez vérifier que les champs sont remplis correctement", "warning")
     return render_template("pages/cataloguer.html", form=form)
 
 
-@app.route("/espace_personnel/<nom_user>/exporter", methods=['get', 'post'])
+@app.route("/espace_personnel/exporter", methods=['get', 'post'])
 @login_required
-def exporter(nom_user):
+def exporter():
     """
     Fonction d'exportation des données générées par l'utilisateur, dans l'intervalle de dexu numéros d'inventaire
     :param nom_user: nom de l'utiliateur
@@ -131,9 +120,9 @@ def exporter(nom_user):
     return render_template("pages/exporter.html")
 
 
-@app.route("/espace_personnel/<nom_user>/enregistrements_recents")
+@app.route("/espace_personnel/enregistrements_recents")
 @login_required
-def enregistrements_recents(nom_user):
+def enregistrements_recents():
     """
     Permet de visualiser les photos récemment cataloguées par l'utilisateur
     :param nom_user:  nom de famille de l'utilisateur
@@ -143,9 +132,9 @@ def enregistrements_recents(nom_user):
     return render_template("pages/enregistrements_recents.html", photos=photos)
 
 
-@app.route("/espace_personnel/<nom_user>/editer_photographie/<id_photo>", methods=['GET', "POST"])
+@app.route("/espace_personnel/editer_photographie/<id_photo>", methods=['GET', "POST"])
 @login_required
-def editer_photographie(nom_user, id_photo):
+def editer_photographie( id_photo):
     """
     Permet d'éditer une photographie avec un pré-remplissage des champs
     :param nom_user: nom de famille de l'utilisateur
