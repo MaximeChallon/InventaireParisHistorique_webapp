@@ -10,6 +10,7 @@ Mon profil
         <h1 style="font-size:16pt;color:#da1916;">Mon profil</h1>
     </div>
     <div class="row">
+        <div class="col-sm-5">
         <form method="post" novalidate>
             {{ form.hidden_tag() }}
             <p>Prénom {{ form.Prenom }}</p>
@@ -17,6 +18,15 @@ Mon profil
             <p>Adresse e-mail {{ form.Mail }}</p>
             {{ form.submit }}
         </form>
+        </div>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-5">
+            <p>Mes chiffres
+            <ul>
+            <li>{{ compteur_photos_ok }} photographies inventoriées</li>
+            <li>{{ compteur_photos_attente }} photographies en attente d'entrée dans l'inventaire</li>
+        </ul></p>
+        </div>
     </div>
     <div>
         <p>Pour changer le mot de passe, <a href="{{url_for('forgot_password')}}">cliquer ici</a></p>

@@ -28,6 +28,7 @@ class Classe_db(db.Model):
     Cote_base = db.Column(db.String(120))
     Cote_classement = db.Column(db.String(120))
     Date_inventaire = db.Column(db.String(120))
+    Auteur = db.Column(db.String(120))
 
     def to_json(self):
         """

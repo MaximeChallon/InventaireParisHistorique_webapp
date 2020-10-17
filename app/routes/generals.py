@@ -148,13 +148,12 @@ def repartition_arrondissements():
 def geojson_arrondissements():
 	# ouverture du fichier geojson des arrondissements pour lui ajouter le nombre de photos du PH dans ses propriétés
 	# "/home/ParisHistoriqueInventaire/InventaireParisHistorique/app/statics/data/arrondissements.geojson"
-    with open("InventaireParisHistorique/app/statics/data/arrondissements.geojson", "r") as jsonfile:
-        data = json.load(jsonfile)
-        for ardt in data["features"]:
-            nombre_photos = Classe_db.query.filter(Classe_db.Arrondissement == str(ardt["properties"]["c_ar"])).count()
-            ardt["properties"]["nombre_photos"] = nombre_photos
-
-    return json.dumps(data)
+	with open("InventaireParisHistorique/app/statics/data/arrondissements.geojson", "r") as jsonfile:
+		data = json.load(jsonfile)
+		for ardt in data["features"]:
+			nombre_photos = Classe_db.query.filter(Classe_db.Arrondissement == str(ardt["properties"]["c_ar"])).count()
+			ardt["properties"]["nombre_photos"] = nombre_photos
+	return json.dumps(data)
 
 
 # routes de gestion des utilisateurs, et de modification des mots de passe
