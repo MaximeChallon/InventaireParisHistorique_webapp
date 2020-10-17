@@ -1,5 +1,6 @@
 from wtforms import RadioField, SubmitField, TextAreaField, BooleanField, StringField, validators, PasswordField, SelectField, IntegerField, SelectMultipleField
 from flask_wtf import FlaskForm
+from flask_login import current_user
 from .users import Classe_utilisateurs
 from ..constantes import RUE, NOM_SITE, VILLE, CLASSEMENT_MH, MOT_CLE, GENERALITE_ARHITECTURE, PHOTOGRAPHE, SUPPORT, DROITS, COULEUR, COLLECTION
 
@@ -73,3 +74,10 @@ class CataloguerContactForm(FlaskForm):
     Message = TextAreaField("Message", [validators.DataRequired()])
     Copie = BooleanField("Envoyer une copie à mon adresse mail ?")
     submit = SubmitField('Envoyer')
+
+
+class ModifierInformationsPersonnelles(FlaskForm):
+    Prenom = StringField("Prénom")
+    Nom = StringField("Nom", [validators.DataRequired()])
+    Mail = StringField("Adresse e-mail", [validators.DataRequired()])
+    submit = SubmitField('Modifier')

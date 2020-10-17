@@ -1,0 +1,25 @@
+{% extends "container.html" %}
+
+{% block titre %}
+Mon profil
+{% endblock %}
+
+{% block corps %}
+<div class="container">
+    <div class="row">
+        <h1 style="font-size:16pt;color:#da1916;">Mon profil</h1>
+    </div>
+    <div class="row">
+        <form method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>Prénom {{ form.Prenom }}</p>
+            <p>Nom {{ form.Nom }}</p>
+            <p>Adresse e-mail {{ form.Mail }}</p>
+            {{ form.submit }}
+        </form>
+    </div>
+    <div>
+        <p>Pour changer le mot de passe, <a href="{{url_for('forgot_password')}}">cliquer ici</a></p>
+    </div>
+</div>
+{% endblock %}
