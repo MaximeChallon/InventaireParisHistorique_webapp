@@ -24,6 +24,7 @@ import requests
 #/deconnexion
 #/reset_password
 #/get_latlg_addresses
+#/catalogue
 
 @app.route("/", methods=['post','get'])
 def accueil():
@@ -269,3 +270,50 @@ def get_latlg_adresses():
 	fonctions = get_latlg_addresses.run()
 	return fonctions
 """
+
+
+def json_catalogue():
+	photos = Classe_db.query.all()
+	data = []
+	for photo in photos:
+		une = {}
+		une["N_i"]: photo.N_inventaire
+		une["Rue"]: photo.Rue
+		une["N_r"]: photo.N_rue
+		une["Sit"]: photo.Nom_site
+		une["Arr"]: photo.Arrondissement
+		une["Vil"]: photo.Ville
+		une["L_x"]: photo.Latitude_x
+		une["L_y"]: photo.Longitude_y
+		une["Sup"]: photo.Support
+		une["Cou"]: photo.Couleur
+		une["Tai"]: photo.Taille
+		une["D_p"]: photo.Date_prise_vue
+		une["Pho"]: photo.Photographe
+		une["D_c"]: photo.Date_construction
+		une["Arc"]: photo.Architecte
+		une["CMH"]: photo.Classement_MH
+		une["G_a"]: photo.Generalite_architecture
+		une["M_c"]: [photo.Mot_cle1, photo.Mot_cle2, photo.Mot_cle3, photo.Mot_cle4, photo.Mot_cle5, photo.Mot_cle6]
+		une["C_b"]: photo.Cote_base
+		une["C_c"]: photo.Cote_classement
+		une["D_i"]: photo.Date_inventaire
+		data.append(une)
+	json_final = data
+	return json_final
+
+@app.route("/catalogue", methods=['GET', 'POST'])
+def catalogue():
+	return render_template("pages/catalogue.html")
+
+
+@app.route("/get_json_final",methods=['GET', 'POST'])
+def get_json_final():
+	photos = []
+	i = 0
+	for photo in Classe_db.query.all():
+		photos.append(photo.to_json())
+		i += 1
+	json_final = (json.dumps(photos))
+	return json_final
+
