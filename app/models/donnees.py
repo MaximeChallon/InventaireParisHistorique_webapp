@@ -58,3 +58,22 @@ class Classe_db(db.Model):
                 "Cote_base": self.Cote_base,
                 "Cote_classement": self.Cote_classement
                 }
+
+    def to_json_catalogue(self):
+        return {"N_inventaire": str(self.N_inventaire),
+                "Rue": self.Rue,
+                "N_rue": self.N_rue,
+                "Nom_site": self.Nom_site,
+                "Arrondissement": str(self.Arrondissement),
+                "Ville": self.Ville,
+                "Latitude_x": self.Latitude_x,
+                "Longitude_y": self.Longitude_y,
+                "Support": self.Support,
+                "Couleur": self.Couleur,
+                "Taille": self.Taille,
+                "Date_prise_vue": self.Date_prise_vue,
+                "Photographe": self.Photographe,
+                "Mots_cles": [self.Mot_cle1, self.Mot_cle2, self.Mot_cle3, self.Mot_cle4, self.Mot_cle5, self.Mot_cle6],
+                "Cote_base": self.Cote_base,
+                "Cote_classement": self.Cote_classement
+                }

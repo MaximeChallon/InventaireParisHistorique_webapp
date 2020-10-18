@@ -31,7 +31,7 @@ $.ajax({
   searchableFields: ['Support', 'Taille'],
   sortings: {
     name_asc: {
-      field: 'Numero_inventaire',
+      field: 'N_inventaire',
       order: 'asc'
     }
   },
@@ -95,14 +95,14 @@ const vm = new Vue({
 
 <div class="container" style="margin-top: 50px;" id="el">
 
-    <h1>List of items (${ searchResult.pagination.total }%)</h1>
+    <h1 style="font-size:16pt;color:#da1916;">Liste globale des photographies (${ searchResult.pagination.total }%)</h1>
 
-    <p class="text-muted">Search performed in ${ searchResult.timings.search }% ms, facets in ${ searchResult.timings.facets }% ms</p>
+    <p class="text-muted">Facettes créées en ${ searchResult.timings.facets }% ms</p>
 
     <div class="row">
       <div class="col-md-2 col-xs-2">
         <div v-for="facet in searchResult.data.aggregations">
-          <h5 style="margin-bottom: 5px;"><strong style="color: #337ab7;">${ facet.N_i }%</strong></h5>
+          <h5 style="margin-bottom: 5px;"><strong style="color: #337ab7;">${ facet.name }%</strong></h5>
 
           <ul class="browse-list list-unstyled long-list" style="margin-bottom: 0;">
             <li v-for="bucket in facet.buckets">
@@ -120,7 +120,6 @@ const vm = new Vue({
       <div class="col-md-10 col-xs-10">
         <div class="breadcrumbs"></div>
         <div class="clearfix"></div>
-        <!--<h3>List of items (${ searchResult.pagination.total }%)</h3>-->
         <table class="table table-striped">
           <tbody>
           <tr v-for="item of searchResult.data.items">
@@ -131,7 +130,7 @@ const vm = new Vue({
             </td>
             <td></td>
             <td>
-              <span style="font-size: 12px; display: block; float: left; background-color: #dbebf2; border-radius: 5px; padding: 1px 3px 1px 3px; margin: 2px;" v-for="tag in item.M_c">${ tag }%</span>
+              <span style="font-size: 12px; display: block; float: left; background-color: #dbebf2; border-radius: 5px; padding: 1px 3px 1px 3px; margin: 2px;" v-for="tag in item.Mots_cles">${ tag }%</span>
             </td>
           </tr>
           </tbody>
