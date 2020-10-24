@@ -28,7 +28,7 @@ $.ajax({
 
 
         var configuration = {
-  searchableFields: ['Support', 'Taille'],
+  searchableFields: ['Support', 'Taille', 'Mots-cles', 'Arrondissement'],
   sortings: {
     name_asc: {
       field: 'N_inventaire',
@@ -43,6 +43,14 @@ $.ajax({
     Taille: {
       title: 'Taille',
       size: 10
+    },
+    Mots_cles: {
+      title: 'Mots clés',
+      size: 30
+    },
+    Arrondissement: {
+      title: 'Arrondissement',
+      size: 20
     }
   }
 };
@@ -100,24 +108,30 @@ const vm = new Vue({
     <p class="text-muted">Facettes créées en ${ searchResult.timings.facets }% ms</p>
 
     <div class="row">
-      <div class="col-md-2 col-xs-2">
-        <div v-for="facet in searchResult.data.aggregations">
-          <h5 style="margin-bottom: 5px;"><strong style="color: #337ab7;">${ facet.name }%</strong></h5>
 
-          <ul class="browse-list list-unstyled long-list" style="margin-bottom: 0;">
-            <li v-for="bucket in facet.buckets">
-            <div class="checkbox block" style="margin-top: 0; margin-bottom: 0;">
-              <label>
-                  <input class="checkbox" type="checkbox" v-model="filters[facet.name]" v-bind:value="bucket.key">
+
+      <div class="btn-group" v-for="facet in searchResult.data.aggregations" style="margin-left:15px;margin-bottom:15px;">
+  <button type="button" class="btn btn-danger">${ facet.title }%</button>
+  <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="sr-only">${ facet.title }%</span>
+  </button>
+  <div class="dropdown-menu">
+    <div class="dropdown-item" v-for="bucket in facet.buckets">
+            <label>
+             <input class="checkbox" type="checkbox" v-model="filters[facet.name]" v-bind:value="bucket.key">
                 ${ bucket.key }% (${ bucket.doc_count }%)
-              </label>
-            </div>
-            </li>
-          </ul>
-        </div>
-      </div>
+            </label>
+          </div>
+  </div>
+</div>
 
-      <div class="col-md-10 col-xs-10">
+
+
+
+    </div>
+
+    <div class="row">
+    <div class="col-md-12 col-xs-12">
         <div class="breadcrumbs"></div>
         <div class="clearfix"></div>
         <table class="table table-striped">
