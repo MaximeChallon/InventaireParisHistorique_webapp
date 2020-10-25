@@ -67,14 +67,14 @@ class Classe_export():
 
         destinataires = [MAIL_USERNAME, MAIL_TRAVAIL_PHOTOTHEQUE]
 
-        if envoyer == "oui":
+        if copie == "oui" and envoyer == "oui":
+            destinataires.append(current_user.mail)
+            Classe_mails.envoyer_export(liste_globale, destinataires)
+            flash("Mails correctement envoyés", "info")
+        elif envoyer == "oui":
             Classe_mails.envoyer_export(liste_globale, destinataires)
             flash("Mail correctement envoyé", "info")
         elif copie == "oui":
-            destinataires.append(current_user.mail)
-            Classe_mails.envoyer_export(liste_globale, destinataires)
-            flash("Mail correctement envoyé", "info")
-        elif copie == "oui" and envoyer == "oui":
             destinataires.append(current_user.mail)
             Classe_mails.envoyer_export(liste_globale, destinataires)
             flash("Mail correctement envoyé", "info")
