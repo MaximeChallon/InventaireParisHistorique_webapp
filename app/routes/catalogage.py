@@ -144,14 +144,6 @@ def editer_photographie( id_photo):
     form = Catalogage_form()
     # récupération des données de la photo, 404 si elle n'existe pas
     photo = Classe_catalogage.query.get_or_404(id_photo)
-    # traitement des 6 mots clés et remplisage par des chaînes vides s'ils ne sont pas remplis
-    mots_cles = form.Mot_cle.data
-    i = 0
-    j = 6 - len(mots_cles)
-    if len(mots_cles) < 6:
-        while i != j:
-            mots_cles.append("")
-            i += 1
     # lors de la validation du formulaire, intégration des données dans la base
     if form.validate_on_submit():
         photo.N_inventaire_index = form.N_inventaire.data
