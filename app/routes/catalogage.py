@@ -182,6 +182,7 @@ def editer_photographie( id_photo):
         db.session.add(photo)
         db.session.commit()
         flash("La photographie a bien été mise à jour", "info")
+        return redirect(url_for("cataloguer"))
     # pré-remplissage du formulaire avec les données existantes
     form.N_inventaire.data = photo.N_inventaire_index
     form.N_inventaire.data = photo.N_inventaire
