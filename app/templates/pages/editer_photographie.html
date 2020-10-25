@@ -39,7 +39,7 @@ Cataloguer
             <h1 style="font-size:16pt;color:#da1916;">Informations générales sur la photographie</h1>
             <div class="row">
                 <div class="col-4">
-                    <p>Numéro d'inventaire<br>
+                    <p>Numéro d'inventaire (requis)<br>
                         {{ form.N_inventaire }}</p>
                 </div>
                 <div class="col-6">
@@ -56,7 +56,7 @@ Cataloguer
                 </div>
                 <div class="col-4">
                     <p>Numéro dans la rue <br>
-                        {{form.N_rue}}</p>
+                        {{form.N_rue(size=5)}}</p>
                 </div>
             </div>
             <div class="row">
@@ -67,25 +67,28 @@ Cataloguer
             </div>
             <div class="row">
                 <div class="col-4">
-                    <p>Arrondissement<br>
-                        {{form.Arrondissement}}</p>
+                    <p>Arrondissement (2 chiffres. Ex: 02)<br>
+                        {{form.Arrondissement(size=5, maxlenth=2)}}</p>
                 </div>
                 <div class="col-4">
                     <p>Ville <br>
                         {{form.Ville}}</p>
                 </div>
                 <div class="col-4">
-                    <p>Département (code à deux chiffres)<br>
-                        {{form.Departement}}</p>
+                    <p>Département (code à 2 chiffres)<br>
+                        {{form.Departement(size=5, maxlength=2)}}</p>
                 </div>
             </div>
             <div class="row">
+                <p style="font-size:8pt;">Il n'est pas obligatoire d'indiquer la localisation GPS. Si vous souhaitez l'indiquer, cliquez sur l'adresse, les champs se rempliront automatiquement.</p>
+            </div>
+            <div class="row">
                 <div class="col-6">
-                    <p>Latitude (ex:48.8534)<br>
+                    <p>Latitude (clic sur la carte)<br>
                         {{form.Latitude_x}}</p>
                 </div>
                 <div class="col-6">
-                    <p>Longitude (ex:2.3488)<br>
+                    <p>Longitude (clic sur la carte)<br>
                         {{form.Longitude_y}}</p>
                 </div>
             </div>
@@ -103,76 +106,97 @@ Cataloguer
             <div class="row">
                 <div class="col-4">
                     <p>Support <br>
-                    {{form.Support}}</p>
+                        {{form.Support}}</p>
                 </div>
                 <div class="col-4">
                     <p>Couleur <br>
-                    {{form.Couleur}}</p>
+                        {{form.Couleur}}</p>
                 </div>
                 <div class="col-4">
                     <p>Taille (HAUTEURxLARGEURcm) <br>
-                    {{form.Taille}}</p>
+                        {{form.Taille(size=7)}}</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-4">
                     <p>Date de prise de vue (AAAA/MM/JJ)<br>
-                    {{form.Date_prise_vue}}</p>
+                        {{form.Date_prise_vue}}</p>
                 </div>
                 <div class="col-4">
                     <p>Photographe<br>
-                    {{form.Photographe}}</p>
+                        {{form.Photographe}}</p>
                 </div>
                 <div class="col-4">
                     <p>Droits<br>
-                    {{form.Droits}}</p>
+                        {{form.Droits}}</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6">
                     <p>Mention de don<br>
-                    {{form.Mention_don}}</p>
+                        {{form.Mention_don}}</p>
                 </div>
                 <div class="col-6">
                     <p>Mention de collection<br>
-                    {{form.Mention_collection}}</p>
+                        {{form.Mention_collection}}</p>
                 </div>
             </div>
             <h1 style="font-size:16pt;color:#da1916;">Description du sujet</h1>
             <div class="row">
                 <div class="col-4">
                     <p>Date de construction<br>
-                    {{form.Date_construction}}</p>
+                        {{form.Date_construction}}</p>
                 </div>
                 <div class="col-4">
                     <p>Architecte<br>
-                    {{form.Architecte}}</p>
+                        {{form.Architecte}}</p>
                 </div>
                 <div class="col-4">
                     <p>Généralité d'architecture (obligatoire)<br>
-                    {{form.Generalite_architecture}}</p>
+                        {{form.Generalite_architecture}}</p>
                 </div>
             </div>
             <div class="row"><div class="col-6">
-                    <p>Classement MH <br>
+                <p>Classement MH <br>
                     {{form.Classement_MH}}</p>
-                </div>
+            </div>
                 <div class="col-6">
                     <p>Légende <br>
-                    {{form.Legende(size=50)}}</p>
+                        {{form.Legende(size=50)}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p>Mots-clés (maximum 6)</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-4">
-                    <p>Mot-clés (maximum 6, maintenir la touche CTRL pour sélectionner plusieurs mots) <br>
-                    {{form.Mot_cle}}</p>
+                    <p>{{form.Mot_cle1}}</p>
+                </div>
+                <div class="col-4">
+                    <p>{{form.Mot_cle2}}</p>
+                </div>
+                <div class="col-4">
+                    <p>{{form.Mot_cle3}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <p>{{form.Mot_cle4}}</p>
+                </div>
+                <div class="col-4">
+                    <p>{{form.Mot_cle5}}</p>
+                </div>
+                <div class="col-4">
+                    <p>{{form.Mot_cle6}}</p>
                 </div>
             </div>
             <h1 style="font-size:16pt;color:#da1916;">Divers</h1>
             <div class="row">
                 <div class="col-12">
                     <p>Note libre<br>
-                    {{form.Notes(size=100)}}</p>
+                        {{form.Notes}}</p>
                 </div>
             </div>
             {{ form.submit }}
