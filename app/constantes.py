@@ -4,6 +4,7 @@ import dotenv
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 dotenv.load_dotenv(os.path.join(BASE_DIR, '.env'))
 
+DEBUG = os.environ['DEBUG']
 SECRET_KEY = os.environ['SECRET_KEY']
 MAIL_USERNAME = os.environ["MAIL_USERNAME"]
 MAIL_PASSWORD = os.environ["MAIL_PASSWORD"]
