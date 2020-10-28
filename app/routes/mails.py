@@ -19,7 +19,7 @@ def cataloguer_contact():
                                                   message=form.Message.data,
                                                   copie=form.Copie.data)
         flash("Mail envoyé avec succès", "info")
-        return url_for("cataloguer")
+        return redirect(url_for("cataloguer"))
     return render_template("pages/cataloguer_contact.html", form=form)
 
 @app.route("/backup")
