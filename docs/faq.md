@@ -94,7 +94,7 @@ Vous trouverez sur cette page l'ensemble des informations qu'il est possible de 
 
 Le catalogage des photographies est très souple et s'adapte aux photographies que vous avez sous les yeux: ainsi, peu de champs seront bloquants s'ils ne sont pas remplis.
 
-Seul le **numéro d'inventaire** est absolument nécessaire. L'ensemble des autres champs peut ne pas être rempli si vous n'avez pas les informations pour le faire.
+Le **numéro d'inventaire** est absolument nécessaire, tout comme l'un des dix descripteurs de **"Généralité architecture"**. L'ensemble des autres champs peut ne pas être rempli si vous n'avez pas les informations pour le faire.
 
 Cependant, n'oubliez pas que le but de l'inventaire est la description des photographies. S'il peut arriver fréquemment que l'on ne connaissance ni l'adresse ni les informations comme les droits ou le photographe, il est normalement toujours possible de poser au moins un ou deux **mots-clés** puisqu'ils sont décidés en fonction du contenu de la photographie.
 
@@ -109,10 +109,25 @@ Il arrivera certainement que vous ne trouviez pas le nom d'une rue, d'un site, d
 Afin que je puisse rajouter le terme dans la liste concernée, vous pouvez me le faire savoir en m'envoyant un mail. 
 
 Sinon, une autre solution est de remplir le formulaire [http://parishistoriqueinventaire.eu.pythonanywhere.com/espace_personnel/cataloguer/contact?nom_user=VOTRE_NOM](http://parishistoriqueinventaire.eu.pythonanywhere.com/espace_personnel/cataloguer/contact) dont le lien est disponible en haut de la page de catalogage. N'oubliez pas d'indiquer le numéro d'inventaire de la photographie qui a besoin de ce nouveau terme, je le rajouterai en même temps dans les informations que vous avez déjà remplies pour ne pas vous faire perdre votre temps!
-![contact_catalogage](img/contact_catalogage.png){:width="750px"}
+![contact_catalogage](img/contact_cataloguer.png){:width="750px"}
 
 #### ![question](img/question.png){:height="25px"}Les mots-clés sont vraiment importants, j'aimerais connaître comment les utiliser, existe-t-il une documentation spécifique?
+
+Vous avez raison, les mots-clés et les descripteurs sont le coeur de l'inventaire. Leur liste exhaustive, et la description de leur utilisation, est disponible sur ce lien: [POST A VENIR]().
+
+Si vous ne trouvez pas le mot-clé nécessaire, voir le sujet [Je ne trouve pas la rue, la ville, le site, ou toute autre information, dans les menus déroulants, comment puis-je faire?](#je-ne-trouve-pas-la-rue-la-ville-le-site-ou-toute-autre-information-dans-les-menus-déroulants-comment-puis-je-faire).
+
 #### ![question](img/question.png){:height="25px"}J'ai enregistré les informations, mais je souhaite les modifier, comment faire?
+
+Pour accéder à la modification d'une photographie, il faut se rendre sur la page qui recense tous vos enregistrements récents dans l'onglet "Mon espace" > "Enregistrements récents". Vous arriverez alors sur la page [http://parishistoriqueinventaire.eu.pythonanywhere.com/espace_personnel/enregistrements_recents?nom_user=VOTRE_NOM](http://parishistoriqueinventaire.eu.pythonanywhere.com/espace_personnel/enregistrements_recents).
+![enregistrements_recents](img/enregistrements_recents.png){:width="750px"}
+
+Cette page des enregistrements récents vous donne un aperçu des photographies inventoriées, et vous permet de les modifier.
+![enr_recents](img/enr_recents.png){:width="750px"}
+
+En cliquant sur le bouton "Mettre à jour", vous pourrez alors modifier les informations que vous aviez remplies auparavant.
+![bouton_maj](img/bouton_maj.png){:width="750px"}
+
 #### ![question](img/question.png){:height="25px"}J'ai terminé mon lot de photographies, que faire désormais?
 
 ### Les données de l'inventaire
