@@ -1,0 +1,219 @@
+{% extends "container.html" %}
+
+{% block titre %}
+Cataloguer
+{% endblock %}
+
+{%block js%}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+            // Création de la carte à l'id "map"
+            var map = L.map('map', {
+                zoomControl: true
+                }).setView(new L.LatLng(48.8542, 2.3484), 12);
+
+            // Usage des tuiles de carte d'OpenStreetMap puis ajout à la carte map
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '<a href="openstreetmap.org">OpenStreetMap</a> | <a href="www.paris-historique.org">Association Paris Historique</a> | Maxime Challon',
+                maxNativeZoom: 100
+            }).addTo(map);
+
+            // récupération de la latitude et de la longitude lors d'un clic sur la carte
+            map.on('click', function(e) {
+                if (confirm("Valider cette position?"))
+                    {
+                    var lat = e.latlng.lat;
+                    document.getElementById('Latitude_x').value = lat;
+                    var long = e.latlng.lng;
+                    document.getElementById('Longitude_y').value = long;
+
+                    // ajout d'un marqueur à l'endroit du clic
+                    marker = L.marker([lat, long]);
+                    marker.addTo(map);
+                    }
+                });
+});
+        </script>
+{%endblock%}
+
+{% block corps %}
+<div class="container">
+    <div class="row">
+        <p>Veuillez remplir un formulaire par photographie. Vous pourrez retrouver vos photos inventoriées dans l'onglet "Enregistrements récents", pour les consulter, les modifier, ou les envoyer à la photothèque.</p>
+        <br>
+        <p style="font-size=6pt;">En cas de remarque, de problème, ou de mot-clé, rue, site manquants, vous pouvez le signaler ici:
+            <a href="{{url_for('cataloguer_contact', nom_user=current_user.nom)}}">contact</a>
+        </p>
+    </div>
+    <div class="row">
+        <form method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <h1 style="font-size:16pt;color:#da1916;">Informations générales sur la photographie</h1>
+            <div class="row">
+                <div class="col-4">
+                    <p>Numéro d'inventaire (requis)<br>
+                        {{ form.N_inventaire }}</p>
+                </div>
+                <div class="col-6">
+                    <p>Cote dans la base des numérisations<br>
+                        {{ form.Cote_base }}</p>
+                </div>
+            </div>
+            <h1 style="font-size:16pt;color:#da1916;">Informations concernant l'adresse</h1>
+            <p  style="font-size:8pt;">En cas de doute, ne rien mettre.</p>
+            <div class="row">
+                <div class="col-8">
+                    <p>Nom de la rue<br>
+                        {{form.Rue}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Numéro dans la rue <br>
+                        {{form.N_rue(size=5)}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p>Nom du site<br>
+                        {{form.Nom_site}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <p>Arrondissement (2 chiffres. Ex: 02)<br>
+                        {{form.Arrondissement(size=5, maxlenth=2)}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Ville <br>
+                        {{form.Ville}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Département (code à 2 chiffres)<br>
+                        {{form.Departement(size=5, maxlength=2)}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <p style="font-size:8pt;">Il n'est pas obligatoire d'indiquer la localisation GPS. Si vous souhaitez l'indiquer, cliquez sur l'adresse, les champs se rempliront automatiquement.</p>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p>Latitude (clic sur la carte)<br>
+                        {{form.Latitude_x}}</p>
+                </div>
+                <div class="col-6">
+                    <p>Longitude (clic sur la carte)<br>
+                        {{form.Longitude_y}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div id="map" style="height:500px;">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p>Autre adresse (texte libre) <br>
+                        {{form.Autre_adresse(size=100)}}</p>
+                </div>
+            </div>
+            <h1 style="font-size:16pt;color:#da1916;">Caractéristiques physiques et morales</h1>
+            <div class="row">
+                <div class="col-4">
+                    <p>Support <br>
+                        {{form.Support}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Couleur <br>
+                        {{form.Couleur}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Taille (HAUTEURxLARGEURcm) <br>
+                        {{form.Taille(size=7)}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <p>Date de prise de vue (AAAA/MM/JJ)<br>
+                        {{form.Date_prise_vue}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Photographe<br>
+                        {{form.Photographe}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Droits<br>
+                        {{form.Droits}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p>Mention de don<br>
+                        {{form.Mention_don}}</p>
+                </div>
+                <div class="col-6">
+                    <p>Mention de collection<br>
+                        {{form.Mention_collection}}</p>
+                </div>
+            </div>
+            <h1 style="font-size:16pt;color:#da1916;">Description du sujet</h1>
+            <div class="row">
+                <div class="col-4">
+                    <p>Date de construction<br>
+                        {{form.Date_construction}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Architecte<br>
+                        {{form.Architecte}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Généralité d'architecture (obligatoire)<br>
+                        {{form.Generalite_architecture}}</p>
+                </div>
+            </div>
+            <div class="row"><div class="col-6">
+                <p>Classement MH <br>
+                    {{form.Classement_MH}}</p>
+            </div>
+                <div class="col-6">
+                    <p>Légende <br>
+                        {{form.Legende(size=50)}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p>Mots-clés (maximum 6)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <p>{{form.Mot_cle1}}</p>
+                </div>
+                <div class="col-4">
+                    <p>{{form.Mot_cle2}}</p>
+                </div>
+                <div class="col-4">
+                    <p>{{form.Mot_cle3}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <p>{{form.Mot_cle4}}</p>
+                </div>
+                <div class="col-4">
+                    <p>{{form.Mot_cle5}}</p>
+                </div>
+                <div class="col-4">
+                    <p>{{form.Mot_cle6}}</p>
+                </div>
+            </div>
+            <h1 style="font-size:16pt;color:#da1916;">Divers</h1>
+            <div class="row">
+                <div class="col-12">
+                    <p>Note libre<br>
+                        {{form.Notes}}</p>
+                </div>
+            </div>
+            {{ form.submit }}
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "container.html" %}
+
+{% block titre %}
+Contact
+{% endblock %}
+
+{% block corps %}
+<div class="container">
+    <form method="post" action="{{url_for('cataloguer_contact', nom_user=current_user.nom)}}">
+        {{ form.hidden_tag() }}
+        <div class="row">
+            <p>Numéro d'inventaire</p>
+            {{ form.Numero_inventaire }}
+        </div>
+        <div class="row">
+            <p>Sujet</p>
+            {{ form.Objet }}
+        </div>
+        <div class="row">
+            <p>Message</p>
+            {{ form.Message }}
+        </div>
+        <div class="row">
+            <p>Souhaitez-vous recevoir une copie de ce mail?</p>
+            {{ form.Copie }}
+        </div>
+        <div class="row">
+            {{ form.submit }}
+        </div>
+    </form>
+</div>
+{% endblock %}

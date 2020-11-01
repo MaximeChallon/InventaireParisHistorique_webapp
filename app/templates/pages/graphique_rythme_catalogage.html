@@ -1,0 +1,54 @@
+{% extends "container.html" %}
+
+{% block titre %}
+Rythme de catalogage
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-tooltip@0.16.0/build/vega-tooltip.min.js"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stlesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/vega-tooltip@0.16.0/vega-tooltip.scss">
+{% endblock %}
+
+
+{% block corps %}
+<h1 style="font-size:14pt;">Rythme de catalogage des photographies</h1>
+
+<script type="text/javascript">
+    var visuel = '{{visuel}}';
+    var dates = '{{dates}}';
+      function parse(url, div) {
+        var opt = {
+          mode: "vega-lite",
+          renderer: "svg",
+          actions: {export: true, source: false, editor: false}
+        };
+
+        vegaEmbed("#"+div, url, opt, function(error, result) {
+          // result.view is the Vega View, url is the original Vega-Lite specification
+          vegaTooltip.vegaLite(result.view, url);
+        });
+      }
+
+      parse("{{url_for('temporels_rythme_catalogage', visuel=visuel, dates=dates)}}", "line");
+   
+    </script>
+
+<div class="container">
+    <div class="row align-items-center">
+        <div class="charts text-center col-sm-9">
+            <div class="row"><div id="line"></div></div><hr>
+            <div id="vis-tooltip" class="vg-tooltip"></div>
+        </div>
+        <div class="col-sm-3">
+            {% include "partials/Chart_rythme_catalogage_form.html" %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
