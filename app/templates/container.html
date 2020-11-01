@@ -87,6 +87,19 @@
         </li>
     </ul>
     {% endif %}
+
+<ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Aide
+        </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color:#a6cfb1;">
+          <a class="dropdown-item" href="https://maximechallon.github.io/InventaireParisHistorique/home">Documentation</a>
+          <a class="dropdown-item" href="https://maximechallon.github.io/InventaireParisHistorique/faq">FAQ</a>
+        </div>
+      </li>
+    </ul>
+
 </nav>
 <div class="container">
     {% with messages = get_flashed_messages(with_categories=true) %}
