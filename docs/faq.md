@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "FAQ"
+title: "Foire aux Questions"
 permalink: /faq
 ---
 
