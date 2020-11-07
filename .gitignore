@@ -5,6 +5,6 @@ env
 .env
 app/users.sqlite
 app/db.sqlite
-app/utils/get*
+app/utils/get_l*
 sitemap.xml
 docs/
