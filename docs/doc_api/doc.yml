@@ -1,0 +1,265 @@
+swagger: '2.0'
+info:
+  description: >-
+    Ceci est la documentation de l'API de la photothèque de l'association Paris
+    Historique.
+  version: 1.0.0
+  title: API de la photothèque de l'association Paris Historique
+  contact:
+    email: maxime.challon@gmail.com
+  license:
+    name: GNU/GPL-3.0+
+    url: 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+host: parishistoriqueinventaire.eu.pythonanywhere.com
+basePath: /api
+tags:
+  - name: photographie
+    description: Informations des photographies
+schemes:
+  - http
+paths:
+  /photographie/adresse:
+    get:
+      tags:
+        - photographie
+      summary: Recherche par adresse
+      description: >-
+        Effectue une recherche sur l'adresse. Exemples: 80 rue de Rivoli 75001
+        Paris; rue de Rivoli
+      operationId: getAdresse
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          type: string
+          name: q
+          description: Adresse
+          required: true
+        - in: query
+          type: string
+          name: p
+          description: Numéro de la page
+          required: false
+          default: '1'
+        - in: query
+          type: string
+          name: 'n'
+          description: Nombre de résultats par page
+          required: false
+          default: '10'
+      responses:
+        '200':
+          description: Opération réussie avec succès
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/adresse'
+        '400':
+          description: Valeur invalide
+        '404':
+          description: Aucun résultat
+  /photographie/mot_cle:
+    get:
+      tags:
+        - photographie
+      summary: Recherche par mot-clé
+      description: Effectue une recherche sur les mots-clés
+      operationId: getMotcle
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          type: string
+          name: q
+          description: Adresse
+          required: true
+        - in: query
+          type: string
+          name: p
+          description: Numéro de la page
+          required: false
+          default: '1'
+        - in: query
+          type: string
+          name: 'n'
+          description: Nombre de résultats par page
+          required: false
+          default: '10'
+      responses:
+        '200':
+          description: Opération réussie avec succès
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/adresse'
+        '400':
+          description: Valeur invalide
+        '404':
+          description: Aucun résultat
+  /photographie/numero_inventaire:
+    get:
+      tags:
+        - photographie
+      summary: Recherche par numéro d'inventaire
+      description: Effectue une recherche sur le numéro d'inventaire demandé.
+      operationId: getNumero_inventaire
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          type: string
+          name: q
+          description: Adresse
+          required: true
+        - in: query
+          type: string
+          name: p
+          description: Numéro de la page
+          required: false
+          default: '1'
+        - in: query
+          type: string
+          name: 'n'
+          description: Nombre de résultats par page
+          required: false
+          default: '10'
+      responses:
+        '200':
+          description: Opération réussie avec succès
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/adresse'
+        '400':
+          description: Valeur invalide
+        '404':
+          description: Aucun résultat
+  /photographie/numeros_inventaire:
+    get:
+      tags:
+        - photographie
+      summary: Recherche par numéros d'inventaire
+      description: >-
+        Effectue une recherche sur les numéros d'inventaire demandés et séparés
+        par n'importe quel caractère sauf un chiffre.
+      operationId: getNumeros_inventaire
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          type: string
+          name: q
+          description: Adresse
+          required: true
+        - in: query
+          type: string
+          name: p
+          description: Numéro de la page
+          required: false
+          default: '1'
+        - in: query
+          type: string
+          name: 'n'
+          description: Nombre de résultats par page
+          required: false
+          default: '10'
+      responses:
+        '200':
+          description: Opération réussie avec succès
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/adresse'
+        '400':
+          description: Valeur invalide
+        '404':
+          description: Aucun résultat
+definitions:
+  links:
+    type: object
+    properties:
+      next:
+        type: string
+      self:
+        type: string
+  meta:
+    type: object
+    properties:
+      copyright:
+        type: string
+      total results:
+        type: integer
+  adresse:
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/numeros_inventaire'
+      links:
+        type: object
+        $ref: '#/definitions/links'
+      meta:
+        type: object
+        $ref: '#/definitions/meta'
+    xml:
+      name: Adresse
+  numeros_inventaire:
+    type: object
+    properties:
+      numero:
+        type: object
+        properties:
+          Arrondissement:
+            type: string
+          Cote_base:
+            type: string
+          Cote_classement:
+            type: string
+          Couleur:
+            type: string
+          Date_prise_vue:
+            type: string
+          Latitude_x:
+            type: string
+          Longitude_y:
+            type: string
+          Mot_cle1:
+            type: string
+          Mot_cle2:
+            type: string
+          Mot_cle3:
+            type: string
+          Mot_cle4:
+            type: string
+          Mot_cle5:
+            type: string
+          Mot_cle6:
+            type: string
+          N_inventaire:
+            type: string
+          N_rue:
+            type: string
+          Nom_site:
+            type: string
+          Photographe:
+            type: string
+          Rue:
+            type: string
+          Support:
+            type: string
+          Taille:
+            type: string
+          Ville:
+            type: string
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
