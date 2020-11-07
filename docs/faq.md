@@ -6,6 +6,13 @@ permalink: /faq
 
 
 1. [L\'inventaire](#linventaire)
+	* [Qu'est-ce que l'inventaire de la photothèque de l'association du Paris Historique?](#quest-ce-que-linventaire-de-la-photothèque-de-lassociation-du-paris-historique)
+    * [Combien y-a-t-il de photographies à l'association?](#combien-y-a-t-il-de-photographies-à-lassociation)
+	* [Quels sont les différents fonds photographiques conservés?](#quels-sont-les-différents-fonds-photographiques-conservés)
+    * [Quelle est la méthode d'inventaire?](#quelle-est-la-méthode-dinventaire)
+    * [Comment se passe l'inventaire au quotidien?](#comment-se-passe-linventaire-au-quotidien)
+    * [Où puis-je retrouver l'intégralité de l'inventaire final?](#o-puis-je-retrouver-lintégralité-de-linventaire-final)
+    * [Je souhaite participer, comment faire?](#je-souhaite-participer-comment-faire)
 2. [Site de l\'inventaire](#site-de-linventaire)
     * [Mon compte](#mon-compte)
         * [Comment me connecter et me déconnecter de mon compte?](#comment-me-connecter-et-me-déconnecter-de-mon-compte)
@@ -19,17 +26,80 @@ permalink: /faq
         * [Les mots-clés sont vraiment importants, j'aimerais connaître comment les utiliser, existe-t-il une documentation spécifique?](#les-mots-clés-sont-vraiment-importants-jaimerais-connaître-comment-les-utiliser-existe-t-il-une-documentation-spécifique)
         * [J'ai enregistré les informations, mais je souhaite les modifier, comment faire?](#jai-enregistré-les-informations-mais-je-souhaite-les-modifier-comment-faire)
         * [J'ai terminé mon lot de photographies, que faire désormais?](#jai-terminé-mon-lot-de-photographies-que-faire-désormais)
-    * [Les données de l'inventaire](#les-donnes-de-linventaire)
+    * [Les données de l'inventaire](#les-données-de-linventaire)
         * [Quelles visualisations sont disponibles?](#quelles-visualisations-sont-disponibles)
         * [Comment rechercher dans le catalogue?](#comment-rechercher-dans-le-catalogue)
         * [Comment utiliser l'API?](#comment-utiliser-lapi)
     * [Le site renvoie une erreur, est-ce normal?](#le-site-renvoie-une-erreur-est-ce-normal)
 3. [Informations globales](#informations-globales)
     * [Qui contacter ?](#qui-contacter)
-    * [Puis-je réutiliser les données ou le code source?](#puis-je-rutiliser-les-donnes-ou-le-code-source)
+    * [Puis-je réutiliser les données ou le code source?](#puis-je-réutiliser-les-données-ou-le-code-source)
 
 
 ## L'inventaire
+### ![question](img/question.png){:height="25px"}Qu'est-ce que l'inventaire de la photothèque de l'association du Paris Historique?
+
+L'inventaire de la photothèque de l'association Paris Historique consiste en la **description** systématique de chaque photographie, physique ou numérique, conservée dans la photothèque, peu importe le degré d'importance que l'on attribue actuellement aux photographies (une photographie jugée non utile ou inintéressante aujourd'hui peut se révéler être un trésor pour un chercheur dans 50 ans). L'objectif est d'obtenir pour chaque item une description du contenu, une localisation géographique, une description des droits et des événements associés, et une localisation au sein de la photothèque sous la forme d'une cote.
+
+Ce **projet** a été initié en septembre 2019 à la suite d'un audit mené sur l'ensemble de la médiathèque de l'association (bibliothèque, photothèque, archives). Il a révélé l'absence de connaissance et de description du fonds photographique, ce qui compliquait la consultation des photographies. Ce projet va durer plusieurs années: près de 4000 photographies physiques ont été inventorié en un an (traversé par les deux grosses coupures des confinements), ce qui est une infime partie des fonds.
+
+La création et le maintien d'une base de **données** étant trop complexe pour l'association, l'inventaire est conservé sous la forme d'un fichier .ods et .xlsx pour des raisons de maniabilité par l'ensemble des bénévoles. Une extraction .csv est régulièrement réalisée afin d'alimenter les bases de données du [site de l'inventaire](#site-de-linventaire) et d'effectuer des opérations sur les données brutes. 
+
+Si l'inventaire a été réalisé en 2019-2020 par des bénévoles sur des fichiers austères .ods et .xlsx, l'objectif est de passer fin 2020 à un inventaire étant réalisé uniquement sur un **site dédié**, qui permette également de trouver différentes valorisations des données produites ainsi que de la documentation sur l'inventaire.
+
+Une fois ce projet de description des fonds actuellement présents à la photothèque, la méthode de l'inventaire sera conservée pour toutes les photographies entrantes, physiques ou numériques.
+
+### ![question](img/question.png){:height="25px"}Quels sont les différents fonds photographiques conservés?
+
+La photothèque du Paris Historique conserve conserve une grande diversité de fonds photographiques, ce qui la rend très riche. Vous y trouverez des fonds photographiques crées par les bénévoles de l'association depuis les années 1960 jusqu'à aujourd'hui. La spécificité de cette photothèque est de n'avoir que des fonds relatifs au **patrimoine bâti parisien**: elle permet l'observation de son évolution dans les 60 dernières années, ce qui est un atout considérable qu'aucune institution patrimoniale ne possède. Couplée à la bibliothèque, la photothèque est un lieu de conservation d'une partie de l'histoire architecturale parisienne qui mérite d'être décrit, valorisé et utilisé par tous.
+
+De multiples **supports** sont présents:
+* des négatifs en nombre
+* des photographies nativement numériques
+* des tirages papier de négatifs ou de photographies numériques
+* des contrecollés
+* des affiches
+* des diapositives
+* des cartes postales
+* etc.
+
+Un des fonds mérite d'être évoque ici, le **Plan Perspectif du Marais**, datant du milieu des années 1960: ce quartier de Paris a été systématiquement photographié et classé. Les négatifs, des agrandissements de ces négatifs, et le travail classificatoire et cartographique qui en résulte, sont conservés à la photothèque. Ce Plan Perspectif étant très bien décrit, l'un des objectifs de l'inventaire est de pouvoir en faire de même pour toutes les photographies ultérieures, afin de pouvoir comparer les états de chaque bâtiment selon les années.
+
+### ![question](img/question.png){:height="25px"}Combien y-a-t-il de photographies à l'association?
+
+C'est justement l'enjeu de cet inventaire: connaître le fonds photographique. Il est aujourd'hui impossible d'évaluer l'étendue du fonds. Cependant, quelques chiffres peuvent nous donner un ordre de grandeur:
+* la base des numérisations contient 35000 entrées. Attention, il y a des photographies en double, triple, et jusqu'à 20 ou 30 fois les mêmes. Cette base aurait pu servir de point de départ pour l'inventaire, mais elle est très fautive, et les numérisations ne pointent pas vers les photographies originales physiques.
+* les 4000 photographies inventoriées en un an montrent l'ampleur du travail à accomplir pour les seuls fonds physiques: il y a certainement encore 10 fois cette quantité à inventorier, rien que pour le physique!
+* l'ampleur des photographies numériques est plus grande encore:
+	* 140 Go de fichiers (48000) sont stockés sur les ordinateurs de l'association pour le groupe Sauvegarde
+	* 244 Go de fichiers (94000) sont stockés à la photothèque
+
+### ![question](img/question.png){:height="25px"}Quelle est la méthode d'inventaire?
+
+L'inventaire passe systématiquement sur chaque étagère, dans chaque casier, sans écarter de photographies, afin de leur attribuer un **numéro unique** sous la forme <1111>, de les décrire, et de leur attribuer une cote. Ce numéro unique est la clé de l'inventaire, il permet à la fois d'identifier une description dans l'inventaire, et de retrouver la photographie physiquement. C'est pourquoi **une photographie inventoriée ne doit jamais être déplacée au sein de la photothèque sans lui changer la cote dans le fichier d'inventaire**.
+
+### ![question](img/question.png){:height="25px"}Comment se passe l'inventaire au quotidien?
+
+**Avertissement** : **Une personne qui inventorie n'aura jamais à numéroter elle-même une photographie** afin d'éviter l'attribution par deux personnes d'un même numéro. 
+
+L'inventaire de la photothèque peut se faire chez soi. Pour ccela, il vous suffit d'emporter un lot de photographies, pris **uniquement** dans la boîte "À inventorier" à la photothèque. Seules les photographies qui sont dans cette boîte sont à inventorier: elles sont déjà numérotées et n'attendent qu'à être décrites (vous n'avez pas à leur attribuer de cote, je le fais par la suite). N'oubliez pas de remplir le classeur rouge des sorties.
+
+Une fois chez vous, connectez-vous avec votre compte au site [http://parishistoriqueinventaire.eu.pythonanywhere.com](http://parishistoriqueinventaire.eu.pythonanywhere.com). C'est ici que vous remplirez l'inventaire: voir [la section suivante pour plus d'informations sur le site](#site-de-linventaire).
+
+Quand vous avez terminé votre lot de photographies, exxportez les comme expliqué dans le sujet [J'ai terminé mon lot de photographies, que faire désormais?](#jai-terminé-mon-lot-de-photographies-que-faire-désormais), et rapportez le lot à la photothèque dans la boîte "Retours". 
+
+L'intégration de vos données dans l'inventaire final et le classement des photographies dans la photothèque est à ma charge.
+
+### ![question](img/question.png){:height="25px"}Où puis-je retrouver l'intégralité de l'inventaire final?
+
+L'inventaire final sous forme de fichier .ods ou .xlsx est disponible sur l'ordinateur de la photothèque. Une version expurgée des photographies sous droit est disponible sur le site de l'association [ici](https://www.paris-historique.org/phototheque/).
+
+Comme disposer de la totalité de l'inventaire n'est pas utile, le site [http://parishistoriqueinventaire.eu.pythonanywhere.com](http://parishistoriqueinventaire.eu.pythonanywhere.com) vous permet de chercher des photographies selon leur localisation, leurs mots-clés, leur adresse: pour plus de détails, voir le sujet dédié sur [les données de l'inventaire](#les-données-de-linventaire).
+Attention, seules les données des photographies qui ne sont pas soumises à des droits spécifiques sont disponibles (environ 3000 à la fin 2020).
+
+### ![question](img/question.png){:height="25px"}Je souhaite participer, comment faire?
+
+Super! Il vous suffit d'envoyer un mail à [contact@paris-historique.org](contact@paris-historique.org), nous vous recontacterons pour vous rencontrer.
 
 ## Site de l'inventaire
 ### Mon compte
@@ -163,7 +233,7 @@ Il y a deux possibilités pour y accéder et récupérer les données:
 * Elle est disponible dans l'onglet "Données" > "API". Vous n'avez alors qu'à remplir l'un des quatre formulaires pour obtenir les données. ![API](img/API.png){:width="750px"}
 * Elle est accessible via HTTP GET avec l'URL de base "http://parishistoriqueinventaire.eu.pythonanywhere.com/api/photographie/". Une documentation plus poussée sur l'API arrive prochainement [ici]().
 	* Ajouter à cette URL de base "numero_inventaire?q=" + NUMERO_INVENTAIRE vous renvoie les informations concernant cette unique photographie.
-	* Ajouter à cette URL de base "numeros_inventaire?q=" + NUMEROS_INVENTAIRE_SEPARES_PAR_AUTRE_CHOSE_QU_UN_CHIFFRE vous renvoi toutes les informations pour chacune des photographies comprises dans l'intervalle fourni.
+	* Ajouter à cette URL de base "numeros_inventaire?q=" + NUMEROS_INVENTAIRE_SEPARES_PAR_AUTRE_CHOSE_QU_UN_CHIFFRE vous renvoie toutes les informations pour chacune des photographies comprises dans l'intervalle fourni.
 	* Ajouter à cette URL de base "adresse?q=" + ADRESSE vous renvoie l'ensemble des photographies situées à cette adresse.
 	* Ajouter à cette URL de base "mot_cle?q=" + MOT_CLE vous renvoie l'ensemble des photographies ayant ce mot-clé dans ses mots-clés.
 
