@@ -7,3 +7,4 @@ app/users.sqlite
 app/db.sqlite
 app/utils/get*
 sitemap.xml
+docs/
