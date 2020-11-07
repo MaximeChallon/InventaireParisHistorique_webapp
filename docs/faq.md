@@ -22,7 +22,7 @@ permalink: /faq
     * [Les données de l'inventaire](#les-donnes-de-linventaire)
         * [Quelles visualisations sont disponibles?](#quelles-visualisations-sont-disponibles)
         * [Comment rechercher dans le catalogue?](#comment-rechercher-dans-le-catalogue)
-        * [Comment utiliser à l'API?](#comment-utiliser--lapi)
+        * [Comment utiliser l'API?](#comment-utiliser-lapi)
     * [Le site renvoie une erreur, est-ce normal?](#le-site-renvoie-une-erreur-est-ce-normal)
 3. [Informations globales](#informations-globales)
     * [Qui contacter ?](#qui-contacter)
@@ -38,7 +38,7 @@ permalink: /faq
 Pour remplir l'inventaire, il est nécessaire de disposer d'un compte. 
 
 
-Si vous êtes autorisé à participer à l'inventaire, un mot de passe a été envoyé à votre adresse mail.
+Si vous êtes autorisé à participer à l'inventaire, un mot de passe a été envoyé à votre adresse mail. Si vous n'avez pas encore de compte et que vous souhaitez participer, vous pouvez nous contacter [ici](#qui-contacter).
 
 
 Pour vous **connecter**, il vous suffit alors de cliquer sur [l'onglet "Connexion"](http://parishistoriqueinventaire.eu.pythonanywhere.com/connexion), de rentrer votre nom de famille avec une majuscule au début, puis votre mot de passe.
@@ -98,9 +98,9 @@ Le **numéro d'inventaire** est absolument nécessaire, tout comme l'un des dix 
 
 Cependant, n'oubliez pas que le but de l'inventaire est la description des photographies. S'il peut arriver fréquemment que l'on ne connaissance ni l'adresse ni les informations comme les droits ou le photographe, il est normalement toujours possible de poser au moins un ou deux **mots-clés** puisqu'ils sont décidés en fonction du contenu de la photographie.
 
-Concernant la **localisation GPS**, vous n'êtes pas obligé de chercher la localisation sur la carte. Cependant, si vous le faites, il faut être certain que l'adresse remplie plus haut dans le formulaire soit exactement cette localisation GPS: un traitement automatique se fait plusieurs fois par mois afin de relier toutes les adresses similaires à une seule localisation; la localisation rentrée par le formulaire par vos soins est prioritaire face aux données qui sont normalement rapatriées depuis le site du gouvernement.
+Concernant la **localisation GPS**, vous n'êtes pas obligé de chercher la localisation sur la carte. Cependant, si vous le faites, il faut être certain que l'adresse remplie plus haut dans le formulaire corresponde exactement à cette localisation GPS: un traitement automatique se fait plusieurs fois par mois afin de relier toutes les adresses similaires à une seule localisation; la localisation rentrée par le formulaire par vos soins est prioritaire face aux données qui sont normalement rapatriées depuis l'API mise à dispoition par le gouvernement.
 
-Enfin, l'inventaire fonctionne pour une majorité des champs selon des **listes déroulantes** à choix: le but de ces listes est de contraindre à l'utilisation commune de mêmes textes. Ainsi, vous ne pourrez pas indiquer ce que vous souhaitez dans ces champs: seuls certains des champs comme la légende ou les notes le permettent. 
+Enfin, l'inventaire fonctionne pour une majorité des champs selon des **listes déroulantes** à choix: le but de ces listes est de contraindre à l'utilisation commune de mêmes textes. Ainsi, vous ne pourrez pas indiquer ce que vous souhaitez dans ces champs: seuls certains des champs comme la légende ou les notes le permettent. En effet, plus les données de l'inventaire seront normalisées, plus les photographies pourront être consultées et retrouvées par le lecteur!
 
 #### ![question](img/question.png){:height="25px"}Je ne trouve pas la rue, la ville, le site, ou toute autre information, dans les menus déroulants, comment puis-je faire?
 
@@ -130,13 +130,82 @@ En cliquant sur le bouton "Mettre à jour", vous pourrez alors modifier les info
 
 #### ![question](img/question.png){:height="25px"}J'ai terminé mon lot de photographies, que faire désormais?
 
+Afin que je sache qu'il faut rentrer vos photographies dans l'inventaire final, il faut se rendre dans l'onglet ["Mon espace" > "Exporter"](http://parishistoriqueinventaire.eu.pythonanywhere.com/espace_personnel/exporter). Cette page vous demande plusieurs informations:
+![exporter](img/exporter.png){:width="750px"}
+* dans le premier champ "Numéro de début", il faut rentrer le numéro d'inventaire le plus bas de son lot de photographies
+* dans "Numéro de fin", il faut rentrer le numéro d'inventaire le plus haut dans son lot de photographies.
+* cocher l'une des deux cases suivantes:
+	* si vous souhaitez seulement envoyer les photographies à la photothèque, cochez la première case
+	* si vous souhaitez recevoir une copie du mail qui est envoyé à la photothèque, cochez la seconde case "Recevoir une copie"
+
+**Attention**, il peut arriver que votre lot de photographies n'ait pas des numéros qui se suivent. Par exemple, il a les numéros 25 à 30 puis 120 à 125 et 40 à 50. Il n'est pas nécessaire de faire trois envois distincts. Dans ce cas, remplir en numéro de début 25 et en numéro de fin 125, la machine s'occupe ensuite du reste!
+
+Enfin, n'oubliez pas de rapporter le lot de photographies à la photothèque, dans la boîte **"Retours"**, et d'en prendre de nouvelles si vous le souhaitez.
+
 ### Les données de l'inventaire
 #### ![question](img/question.png){:height="25px"}Quelles visualisations sont disponibles?
+
+L'intérêt de l'inventaire est de pouvoir utiliser les données pour rechercher comme dans un catalogue, ou pour les visualiser de différentes manières. Ainsi, vous trouverez plusieurs visualisations (de nouvelles sont créées au fil des mois, ou des présentes sont mises à jour ou améliorées régulièrement):
+* l'onglet "Quelques chiffres" offre des généralités sur l'inventaire ![chiffres](img/chiffres.png){:width="750px"}
+	* une visualisation spécifique à l'avancée de l'inventaire est disponible dans l'onglet ["Quelques chiffres" > "Rythme de catalogage"](http://parishistoriqueinventaire.eu.pythonanywhere.com/rythme_catalogage). Vous y trouverez un graphique que vous pouvez construire vous-même pour observer l'avancée de l'inventaire dans le temps.![rythme](img/rythme.png){:width="750px"}
+	* dans ce même onglet à ["Répartissement par arrondissement"](http://parishistoriqueinventaire.eu.pythonanywhere.com/graphiques/repartition_arrondissements), vous avez une carte montrant la répartition des photographies inventoriées dans chaque arrondissement ![arrdmt](img/arrdmt.png){:width="750px"}
+* l'onglet ["Cartographie"](http://parishistoriqueinventaire.eu.pythonanywhere.com/cartographie) vous permet de trouver toutes les photographies associées à une localisation GPS. Vous pouvez zommer pour éclater les clusters. Quand le zoom n'est plus possible, cliquez sur les clusters. Des points rouges apparaîtront et vous permettront, en cliquant dessus, d'afficher les informations de la photographie. ![carto](img/carto.png){:width="750px"}
+
+
 #### ![question](img/question.png){:height="25px"}Comment rechercher dans le catalogue?
-#### ![question](img/question.png){:height="25px"}Comment utiliser à l'API?
+
+Le [catalogue](http://parishistoriqueinventaire.eu.pythonanywhere.com/catalogue) est encore en cours de construction, il arrive très vite!
+
+#### ![question](img/question.png){:height="25px"}Comment utiliser l'API?
+
+L'[API](http://parishistoriqueinventaire.eu.pythonanywhere.com/api) permet de renvoyer des résultats au format JSON. 
+Il y a deux possibilités pour y accéder et récupérer les données:
+* Elle est disponible dans l'onglet "Données" > "API". Vous n'avez alors qu'à remplir l'un des quatre formulaires pour obtenir les données. ![API](img/API.png){:width="750px"}
+* Elle est accessible via HTTP GET avec l'URL de base "http://parishistoriqueinventaire.eu.pythonanywhere.com/api/photographie/". Une documentation plus poussée sur l'API arrive prochainement [ici]().
+	* Ajouter à cette URL de base "numero_inventaire?q=" + NUMERO_INVENTAIRE vous renvoie les informations concernant cette unique photographie.
+	* Ajouter à cette URL de base "numeros_inventaire?q=" + NUMEROS_INVENTAIRE_SEPARES_PAR_AUTRE_CHOSE_QU_UN_CHIFFRE vous renvoi toutes les informations pour chacune des photographies comprises dans l'intervalle fourni.
+	* Ajouter à cette URL de base "adresse?q=" + ADRESSE vous renvoie l'ensemble des photographies situées à cette adresse.
+	* Ajouter à cette URL de base "mot_cle?q=" + MOT_CLE vous renvoie l'ensemble des photographies ayant ce mot-clé dans ses mots-clés.
+
+Structure du JSON renvoyé:
+``` json
+{"data":[{"numero_inventaire":
+		{"Arrondissement":"str",
+		"Cote_base":"str",
+		"Cote_classement":"str",
+		"Couleur":"str",
+		"Date_prise_vue":"str",
+		"Latitude_x":"str",
+		"Longitude_y":"str",
+		"Mot_cle1":"str",
+		"Mot_cle2":"str",
+		"Mot_cle3":"str",
+		"Mot_cle4":"str",
+		"Mot_cle5":"str",
+		"Mot_cle6":"str",
+		"N_inventaire":"str",
+		"N_rue":"str",
+		"Nom_site":"str",
+		"Photographe":"str",
+		"Rue":"str",
+		"Support":"str",
+		"Taille":"str",
+		"Ville":"str"}
+	},],
+"links":{
+	"next":"str",
+	"self":"str"
+	},
+"meta":{
+	"copyright":"str",
+	"total results": int}
+	}
+}
+```
 
 ### ![question](img/question.png){:height="25px"}Le site renvoie une erreur, est-ce normal?
-404 oui, la page demandée n'existe pas, les 500 reste non
+
+Non, ce n'est pas normal. Cependant, si l'erreur est 404, c'est que vous avez demandé une page qui n'existe pas. Si l'erreur est dans les 500, il faut vite me [prévenir](#qui-contacter), l'erreur est de mon côté et j'essaierai de la résoudre très vite!
 
 ## Informations globales
 ### ![question](img/question.png){:height="25px"}Qui contacter?
@@ -166,6 +235,6 @@ contacter directement l'association:
 
 Sauf mention explicite contraire, toutes les données disponibles sur [parishistoriqueinventaire.eu.pythonanywhere.com/](parishistoriqueinventaire.eu.pythonanywhere.com/)
 sont réutilisables  et sous license GNU/GPL 3.0 ou ultérieure, de même que le code source du site d'inventaire
-disponible sur Github [https://github.com/MaximeChallon/InventaireParisHistorique](https://github.com/MaximeChallon/InventaireParisHistorique/tree/master).
+disponible sur Github [https://github.com/MaximeChallon/InventaireParisHistorique](https://github.com/MaximeChallon/InventaireParisHistorique/tree/master). Vous êtes libre de proposer des modifications sur ce code source via les *issues* ou les *pull request*.
 
 L'[API](http://parishistoriqueinventaire.eu.pythonanywhere.com/api) permet la récupération des données de l'inventaire formatées en JSON.
