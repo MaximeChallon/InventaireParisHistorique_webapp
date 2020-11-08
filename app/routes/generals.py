@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, request, flash
+from flask import render_template, redirect, url_for, request, flash, send_from_directory
 from flask_login import current_user, login_user, logout_user, login_required
 from ..app import app, db, login_manager, mail
 from ..models.graphiques import classe_graphiques
@@ -11,6 +11,7 @@ from ..constantes import MAIL_USERNAME
 from werkzeug.security import generate_password_hash
 import json
 import requests
+import os
 #from ..utils import get_latlg_addresses
 
 # routes dans l'ordre:
@@ -25,6 +26,12 @@ import requests
 #/reset_password
 #/get_latlg_addresses
 #/catalogue
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'statics/img'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 @app.route("/", methods=['post','get'])
 def accueil():
