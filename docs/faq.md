@@ -224,7 +224,30 @@ L'intérêt de l'inventaire est de pouvoir utiliser les données pour rechercher
 
 #### ![question](img/question.png){:height="25px"}Comment rechercher dans le catalogue?
 
-Le [catalogue](http://parishistoriqueinventaire.eu.pythonanywhere.com/catalogue) est encore en cours de construction, il arrive très vite!
+Le [catalogue](http://parishistoriqueinventaire.eu.pythonanywhere.com/catalogue), accessible dans l'onglet "Données" > "Catalogue", permet une recherche rapide et précise des photographies.
+![catalogue](img/catalogue.png){:width="750px"}
+Plusieurs filtres vous permettent d'affiner les résultats en cochant les termes qui vous intéressent:
+* par Arrondissement
+* par Mots-clés
+* par Taille
+* par Support
+* par Photographe
+
+**Astuce 1**: n'hésitez pas à sélectionner plusieurs cases dans chaque filtres, ou même plusieurs cases dans plusieurs filtres, afin d'effectuer une recherche vraiment complète. Si vous n'arrivez pas à effectuer une combinaison, c'est qu'il n'y a aucune photographie qui correspond à cette combinaison.
+
+Le champ de recherche vous permet d'ajouter un filtre en plus. Il recherche dans les champs suivants:
+* Arrondissement
+* Mots-clés
+* Taille
+* Support
+* Photographe
+* Nom de rue
+* Nom de site
+* Date de prise de vue
+
+**Astuce 2**: la recherche est lancée dès que vous tapez sur votre clavier, vous pouvez donc voir les résultats en temps réel.
+
+**Astuce 3**: pour une recherche optimale, utilisez les filtres et la recherche en même temps!
 
 #### ![question](img/question.png){:height="25px"}Comment utiliser l'API?
 
