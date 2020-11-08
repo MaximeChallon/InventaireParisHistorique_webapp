@@ -285,7 +285,6 @@ def get_latlg_adresses():
 
 @app.route("/catalogue", methods=['GET', 'POST'])
 def catalogue():
-	flash("Cette page est en cours de construction", "warning")
 	return render_template("pages/catalogue.html")
 
 
