@@ -231,7 +231,7 @@ Le [catalogue](http://parishistoriqueinventaire.eu.pythonanywhere.com/catalogue)
 L'[API](http://parishistoriqueinventaire.eu.pythonanywhere.com/api) permet de renvoyer des résultats au format JSON. 
 Il y a deux possibilités pour y accéder et récupérer les données:
 * Elle est disponible dans l'onglet "Données" > "API". Vous n'avez alors qu'à remplir l'un des quatre formulaires pour obtenir les données. ![API](img/API.png){:width="750px"}
-* Elle est accessible via HTTP GET avec l'URL de base "http://parishistoriqueinventaire.eu.pythonanywhere.com/api/photographie/". Une documentation plus poussée sur l'API arrive prochainement [ici]().
+* Elle est accessible via HTTP GET avec l'URL de base "http://parishistoriqueinventaire.eu.pythonanywhere.com/api/photographie/". Une documentation plus poussée sur l'API est disponible avec la page [https://maximechallon.github.io/InventaireParisHistorique/2020/11/07/api.html](https://maximechallon.github.io/InventaireParisHistorique/2020/11/07/api.html).
 	* Ajouter à cette URL de base "numero_inventaire?q=" + NUMERO_INVENTAIRE vous renvoie les informations concernant cette unique photographie.
 	* Ajouter à cette URL de base "numeros_inventaire?q=" + NUMEROS_INVENTAIRE_SEPARES_PAR_AUTRE_CHOSE_QU_UN_CHIFFRE vous renvoie toutes les informations pour chacune des photographies comprises dans l'intervalle fourni.
 	* Ajouter à cette URL de base "adresse?q=" + ADRESSE vous renvoie l'ensemble des photographies situées à cette adresse.
