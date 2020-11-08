@@ -69,14 +69,23 @@ class Classe_export():
 
         if copie == "oui" and envoyer == "oui":
             destinataires.append(current_user.mail)
-            Classe_mails.envoyer_export(liste_globale, destinataires)
-            flash("Mails correctement envoyés", "info")
+            try:
+                Classe_mails.envoyer_export(liste_globale, destinataires)
+                flash("Mails correctement envoyés", "info")
+            except:
+                flash("Échec de l'envoi", "warning")
         elif envoyer == "oui":
-            Classe_mails.envoyer_export(liste_globale, destinataires)
-            flash("Mail correctement envoyé", "info")
+            try:
+                Classe_mails.envoyer_export(liste_globale, destinataires)
+                flash("Mails correctement envoyés", "info")
+            except:
+                flash("Échec de l'envoi", "warning")
         elif copie == "oui":
             destinataires.append(current_user.mail)
-            Classe_mails.envoyer_export(liste_globale, destinataires)
-            flash("Mail correctement envoyé", "info")
+            try:
+                Classe_mails.envoyer_export(liste_globale, destinataires)
+                flash("Mails correctement envoyés", "info")
+            except:
+                flash("Échec de l'envoi", "warning")
         else:
             flash("Veuillez sélectionner une action", "warning")
