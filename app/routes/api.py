@@ -32,10 +32,11 @@ def single_photo_id():
     """
     recherche = request.args.get("q", None)
     page, results_per_page = Classe_API.check_n_p(1,1)
-    query = Classe_db.query.filter(Classe_db.N_inventaire == int(recherche))
+    query = Classe_db.query.filter(Classe_db.N_inventaire == str(recherche))
 
     try:
         resultats = query.paginate(page=page, per_page=results_per_page)
+        print(resultats)
     except Exception:
         return Json_404()
 
@@ -54,8 +55,8 @@ def multiple_photo_id():
 
     page, results_per_page = Classe_API.check_n_p(page, results_per_page)
 
-    _from = int(re.sub("[^0-9]+[0-9]+$", "", recherche))
-    _to = int(re.sub("[0-9]+[^0-9]+", "", recherche))
+    _from = str(re.sub("[^0-9]+[0-9]+$", "", recherche))
+    _to = str(re.sub("[0-9]+[^0-9]+", "", recherche))
 
     query = Classe_db.query.filter(Classe_db.N_inventaire.between(_from, _to))
 
