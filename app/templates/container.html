@@ -24,13 +24,13 @@
   <a class="navbar-brand" href="{{ url_for('accueil') }}"><img class="navbar-img" src="https://www.paris-historique.org/wp-content/uploads/2018/10/logoPH2-300x176.png"></a>
     <a class="navbar-brand" href="{{ url_for('accueil') }}" style="color:black;font-size:20px;">Inventaire du <br>Paris Historique</a>
 
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto" style="color:black;">
         <li class="nav-item">
             <a class="nav-link" href="{{url_for('cartographie')}}">Cartographie</a>
         </li>
     </ul>
 
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto" style="color:black;">
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Quelques chiffres
@@ -41,7 +41,7 @@
         </div>
       </li>
     </ul>
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto" style="color:black;">
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Données
@@ -53,13 +53,13 @@
         </li>
     </ul>
     {% if not current_user.is_authenticated %}
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto" style="color:black;">
         <li class="nav-item">
             <a class="nav-link" href="{{url_for('connexion')}}">Connexion</a>
         </li>
     </ul>
         {% else %}
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto" style="color:black;">
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Mon espace
@@ -78,7 +78,7 @@
     </ul>
         {% endif %}
     {% if current_user.is_admin == True %}
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto" style="color:black;">
         <li class="nav-item">
             <a class="nav-link" href="/admin">Admin</a>
         </li>
@@ -88,7 +88,7 @@
     </ul>
     {% endif %}
 
-<ul class="navbar-nav mr-auto">
+<ul class="navbar-nav mr-auto" style="color:black;">
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Aide
