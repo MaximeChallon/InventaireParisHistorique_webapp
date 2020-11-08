@@ -240,11 +240,15 @@ def forgot_password():
 		return redirect(url_for('accueil'))
 	form = Forgot_form()
 	if form.validate_on_submit():
-		user = Classe_utilisateurs.query.filter_by(mail=form.email.data).first()
-		Classe_mails.send_reset_email(user)
-		msg = "Un mail a été envoyé à l'adresse " + form.email.data + " avec les instructions pour changer de mot de passe.\nPensez à vérifier les spams.\nLe lien n'est valable que 30 minutes.\nL'expéditeur est "+MAIL_USERNAME
-		flash(msg, "info")
-		return redirect(url_for('accueil'))
+		try:
+			user = Classe_utilisateurs.query.filter_by(mail=form.email.data).first()
+			Classe_mails.send_reset_email(user)
+			msg = "Un mail a été envoyé à l'adresse " + form.email.data + " avec les instructions pour changer de mot de passe.\nPensez à vérifier les spams.\nLe lien n'est valable que 30 minutes.\nL'expéditeur est "+MAIL_USERNAME
+			flash(msg, "info")
+			return redirect(url_for('accueil'))
+		except:
+			flash("Une erreur est survenue lors de l'envoi du mail", "warning")
+			return redirect("forgot_password")
 	return render_template("pages/forgot_password.html", form=form)
 
 
