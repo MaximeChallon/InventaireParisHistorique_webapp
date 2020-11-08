@@ -28,7 +28,7 @@ $.ajax({
 
 
         var configuration = {
-  searchableFields: ['Support', 'Taille', 'Mots-cles', 'Arrondissement'],
+  searchableFields: ['Support', 'Taille', 'Mots-cles', 'Arrondissement', 'Rue', 'Nom_site', 'Photographe', 'Date_prise_vue'],
   sortings: {
     name_asc: {
       field: 'N_inventaire',
@@ -36,20 +36,24 @@ $.ajax({
     }
   },
   aggregations: {
-    Support: {
-      title: 'Support',
-      size: 10
-    },
-    Taille: {
-      title: 'Taille',
-      size: 10
+    Arrondissement: {
+      title: 'Arrondissement',
+      size: 20
     },
     Mots_cles: {
       title: 'Mots clés',
-      size: 30
+      size: 50
     },
-    Arrondissement: {
-      title: 'Arrondissement',
+    Support: {
+      title: 'Support',
+      size: 15
+    },
+    Taille: {
+      title: 'Taille',
+      size: 20
+    },
+    Photographe: {
+      title: 'Photographe',
       size: 20
     }
   }
@@ -128,6 +132,11 @@ const vm = new Vue({
                 </div>
             </div>
         </div>
+        <form>
+          <div class="form-group" style="margin-left:15px;">
+            <input type="text" v-model="query" class="form-control" placeholder="Recherche">
+          </div>
+        </form>
 
 
     </div>
