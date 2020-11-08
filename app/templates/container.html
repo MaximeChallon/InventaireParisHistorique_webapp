@@ -26,53 +26,53 @@
 
     <ul class="navbar-nav mr-auto" style="color:black;">
         <li class="nav-item">
-            <a class="nav-link" href="{{url_for('cartographie')}}">Cartographie</a>
+            <a class="nav-link" href="{{url_for('cartographie')}}" style="color:black;">Cartographie</a>
         </li>
     </ul>
 
     <ul class="navbar-nav mr-auto" style="color:black;">
         <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" style="color:black;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Quelques chiffres
         </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color:#a6cfb1;">
-          <a class="dropdown-item" href="{{url_for('repartition_arrondissements', nom_user=current_user.nom)}}">Répartition par arrondissements</a>
-          <a class="dropdown-item" href="{{url_for('rythme_catalogage', nom_user=current_user.nom)}}">Rythme de catalogage</a>
+          <a class="dropdown-item" style="color:black;" href="{{url_for('repartition_arrondissements', nom_user=current_user.nom)}}">Répartition par arrondissements</a>
+          <a class="dropdown-item" style="color:black;" href="{{url_for('rythme_catalogage', nom_user=current_user.nom)}}">Rythme de catalogage</a>
         </div>
       </li>
     </ul>
     <ul class="navbar-nav mr-auto" style="color:black;">
         <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" style="color:black;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Données
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color:#a6cfb1;">
-            <a class="dropdown-item" href="{{url_for('catalogue')}}">Catalogue</a>
-          <a class="dropdown-item" href="{{url_for('api')}}">API</a>
+            <a class="dropdown-item" href="{{url_for('catalogue')}}" style="color:black;">Catalogue</a>
+          <a class="dropdown-item" href="{{url_for('api')}}" style="color:black;">API</a>
         </div>
         </li>
     </ul>
     {% if not current_user.is_authenticated %}
     <ul class="navbar-nav mr-auto" style="color:black;">
         <li class="nav-item">
-            <a class="nav-link" href="{{url_for('connexion')}}">Connexion</a>
+            <a class="nav-link" style="color:black;" href="{{url_for('connexion')}}">Connexion</a>
         </li>
     </ul>
         {% else %}
     <ul class="navbar-nav mr-auto" style="color:black;">
         <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" style="color:black;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Mon espace
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color:#a6cfb1;">
-            <a class="nav-link" href="{{url_for('mon_profil')}}">Mon profil</a>
+            <a class="nav-link" href="{{url_for('mon_profil')}}" style="color:black;">Mon profil</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url_for('cataloguer', nom_user=current_user.nom)}}">Cataloguer</a>
-            <a class="dropdown-item" href="{{url_for('exporter', nom_user=current_user.nom)}}">Exporter</a>
+            <a class="dropdown-item" href="{{url_for('cataloguer', nom_user=current_user.nom)}}" style="color:black;">Cataloguer</a>
+            <a class="dropdown-item" href="{{url_for('exporter', nom_user=current_user.nom)}}" style="color:black;">Exporter</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{url_for('enregistrements_recents', nom_user=current_user.nom)}}">Enregistrements récents</a>
+            <a class="dropdown-item" href="{{url_for('enregistrements_recents', nom_user=current_user.nom)}}" style="color:black;">Enregistrements récents</a>
             <div class="dropdown-divider"></div>
-            <a class="nav-link" href="{{url_for('deconnexion')}}">Déconnexion ({{current_user.nom}})</a>
+            <a class="nav-link" href="{{url_for('deconnexion')}}" style="color:black;">Déconnexion ({{current_user.nom}})</a>
         </div>
         </li>
     </ul>
@@ -80,22 +80,22 @@
     {% if current_user.is_admin == True %}
     <ul class="navbar-nav mr-auto" style="color:black;">
         <li class="nav-item">
-            <a class="nav-link" href="/admin">Admin</a>
+            <a class="nav-link" href="/admin" style="color:black;">Admin</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/inscription">Inscription</a>
+            <a class="nav-link" href="/inscription" style="color:black;">Inscription</a>
         </li>
     </ul>
     {% endif %}
 
 <ul class="navbar-nav mr-auto" style="color:black;">
         <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" style="color:black;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Aide
         </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color:#a6cfb1;">
-          <a class="dropdown-item" href="https://maximechallon.github.io/InventaireParisHistorique/home">Documentation</a>
-          <a class="dropdown-item" href="https://maximechallon.github.io/InventaireParisHistorique/faq">FAQ</a>
+          <a class="dropdown-item" style="color:black;" href="https://maximechallon.github.io/InventaireParisHistorique/home">Documentation</a>
+          <a class="dropdown-item" style="color:black;" href="https://maximechallon.github.io/InventaireParisHistorique/faq">FAQ</a>
         </div>
       </li>
     </ul>
