@@ -13,12 +13,15 @@ def cataloguer_contact():
     """
     form = CataloguerContactForm()
     if form.validate_on_submit():
-        Classe_mails.send_cataloguer_contact_mail(user=current_user,
+        try:
+            Classe_mails.send_cataloguer_contact_mail(user=current_user,
                                                   numero_inventaire=form.Numero_inventaire.data,
                                                   objet=form.Objet.data,
                                                   message=form.Message.data,
                                                   copie=form.Copie.data)
-        flash("Mail envoyé avec succès", "info")
+            flash("Mail envoyé avec succès", "info")
+        except:
+            flash("Échec de l'envoi", "warning")
         return redirect(url_for("cataloguer"))
     return render_template("pages/cataloguer_contact.html", form=form)
 

@@ -23,21 +23,7 @@ div.footer{
     font-size:8pt;
 }
 
-/* barre de navigation */
-.navbar-custom{
- 	background-color: #a6cfb1;
-}
-
-.navbar-custom .navbar-brand, 
-.navbar-custom .navbar-text, 
-.nav-link { 
-    color: #4b4646; 
-} 
-
-.navbar-brand{
-	font-weight: bolder;
-	font-size: 24px;
-}
+/*navbar*/
 
 .navbar-img{
 	width: 100px;
