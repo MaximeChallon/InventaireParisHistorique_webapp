@@ -75,7 +75,6 @@ class Classe_mails():
                       recipients=recipients)
         msg.body = f''''''
         for line in donnees_export:
-            msg.body = msg.body + '''
-            
+            msg.body = msg.body + '''  
 ''' + line
         mail.send(msg)
