@@ -65,6 +65,8 @@ def json_carto():
 	Permet de renvoyer le JSON de la cartographie
 	:return: JSON
 	"""
+	print(request.args)
+
 	data = {}
 	i = 0
 	for photo in Classe_db.query.all():
