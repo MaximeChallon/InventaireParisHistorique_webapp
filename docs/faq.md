@@ -219,7 +219,10 @@ L'intérêt de l'inventaire est de pouvoir utiliser les données pour rechercher
 * l'onglet "Quelques chiffres" offre des généralités sur l'inventaire ![chiffres](img/chiffres.png){:width="750px"}
 	* une visualisation spécifique à l'avancée de l'inventaire est disponible dans l'onglet ["Quelques chiffres" > "Rythme de catalogage"](http://parishistoriqueinventaire.eu.pythonanywhere.com/rythme_catalogage). Vous y trouverez un graphique que vous pouvez construire vous-même pour observer l'avancée de l'inventaire dans le temps.![rythme](img/rythme.png){:width="750px"}
 	* dans ce même onglet à ["Répartissement par arrondissement"](http://parishistoriqueinventaire.eu.pythonanywhere.com/graphiques/repartition_arrondissements), vous avez une carte montrant la répartition des photographies inventoriées dans chaque arrondissement ![arrdmt](img/arrdmt.png){:width="750px"}
-* l'onglet ["Cartographie"](http://parishistoriqueinventaire.eu.pythonanywhere.com/cartographie) vous permet de trouver toutes les photographies associées à une localisation GPS. Vous pouvez zommer pour éclater les clusters. Quand le zoom n'est plus possible, cliquez sur les clusters. Des points rouges apparaîtront et vous permettront, en cliquant dessus, d'afficher les informations de la photographie. ![carto](img/carto.png){:width="750px"}
+* l'onglet ["Cartographie"](http://parishistoriqueinventaire.eu.pythonanywhere.com/cartographie) vous permet de trouver toutes les photographies associées à une localisation GPS. 
+	* Vous pouvez zommer pour éclater les clusters. Quand le zoom n'est plus possible, cliquez sur les clusters. Des points rouges apparaîtront et vous permettront, en cliquant dessus, d'afficher les informations de la photographie.
+	* Vous pouvez également filtrer les résultats sur l'arrondissement, un mot clé, un site, un photographe ou une date. Vous pouvez appliquer plusieurs filtres à la fois.
+![carto](img/carto.png){:width="750px"}
 
 
 #### ![question](img/question.png){:height="25px"}Comment rechercher dans le catalogue?
