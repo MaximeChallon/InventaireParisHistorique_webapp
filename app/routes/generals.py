@@ -65,13 +65,92 @@ def json_carto():
 	Permet de renvoyer le JSON de la cartographie
 	:return: JSON
 	"""
-	print(request.args)
+	arrondissement = request.args.get("_Arrondissement", '')
+	try:
+		mot = request.args.get("_Mot", '').upper()
+	except:
+		mot = request.args.get("_Mot", '')
+	try:
+		site = request.args.get("_Site", '').upper()
+	except:
+		site = request.args.get("_Site", '')
+	try:
+		photographe = request.args.get("_Photographe", '').upper()
+	except:
+		photographe = request.args.get("_Photographe", '')
+	date = request.args.get("_Date", '')
+
+	where_clause = ""
+
+	if arrondissement != '' or mot != '' or site !='' or photographe != '' or date != '':
+		where_clause = " where "
+		i = 0
+		statut_arrondissement = 0
+		statut_mot = 0
+		statut_photographe = 0
+		statut_site = 0
+		statut_date = 0
+		if arrondissement != "" and i ==0:
+			where_clause = where_clause + "Arrondissement  in ('"+ str(arrondissement) + "')"
+			i += 1
+			statut_arrondissement = 1
+		if arrondissement != "" and i !=0 and statut_arrondissement == 0:
+			where_clause = where_clause + " and Arrondissement  in ('"+ str(arrondissement) + "')"
+		if mot != "" and i ==0:
+			where_clause = where_clause + "(Mot_cle1  in ('"+ str(mot) + "') or Mot_cle2 in ('"+ str(mot) + "') or Mot_cle3 in ('"+ str(mot) + "') or Mot_cle4 in ('"+ str(mot) + "') or Mot_cle5 in ('"+ str(mot) + "') or Mot_cle6 in ('"+ str(mot) + "'))"
+			i += 1
+			statut_mot = 1
+		if mot != "" and i !=0 and statut_mot == 0:
+			where_clause = where_clause + " and (Mot_cle1  in ('"+ str(mot) + "') or Mot_cle2 in ('"+ str(mot) + "') or Mot_cle3 in ('"+ str(mot) + "') or Mot_cle4 in ('"+ str(mot) + "') or Mot_cle5 in ('"+ str(mot) + "') or Mot_cle6 in ('"+ str(mot) + "'))"
+		if photographe != "" and i ==0:
+			where_clause = where_clause + "Photographe  like '"+ str(photographe) + "%'"
+			i += 1
+			statut_photographe = 1
+		if photographe != "" and i !=0 and statut_photographe == 0:
+			where_clause = where_clause + " and Photographe  like '" + str(photographe) + "%'"
+		if site != "" and i ==0:
+			where_clause = where_clause + "Nom_site  like '"+ str(site) + "%'"
+			i += 1
+			statut_site = 1
+		if site != "" and i !=0 and statut_site == 0:
+			where_clause = where_clause + " and Nom_site  like '" + str(site) + "%'"
+		if date != "" and i ==0:
+			where_clause = where_clause + "Date_prise_vue  like '"+ str(date) + "%'"
+			i += 1
+			statut_date = 1
+		if date != "" and i !=0 and statut_date == 0:
+			where_clause = where_clause + " and Date_prise_vue  like '" + str(date) + "%'"
+
+	requete = """select * from Classe_db""" + where_clause
+	results = db.session.execute(requete).fetchall()
 
 	data = {}
-	i = 0
-	for photo in Classe_db.query.all():
-		data[str(i)] = photo.to_json()
+	i=0
+	for photo in results:
+		data[str(i)] = {"N_inventaire": str(photo[0]),
+		 "Rue": photo[1],
+		 "N_rue": photo[2],
+		 "Nom_site": photo[3],
+		 "Arrondissement": str(photo[4]),
+		 "Ville": photo[5],
+		 "Latitude_x": photo[6],
+		 "Longitude_y": photo[7],
+		 "Support": photo[8],
+		 "Couleur": photo[9],
+		 "Taille": photo[10],
+		 "Date_prise_vue": photo[11],
+		 "Photographe": photo[12],
+		 "Mot_cle1": photo[17],
+		 "Mot_cle2": photo[18],
+		 "Mot_cle3": photo[19],
+		 "Mot_cle4": photo[20],
+		 "Mot_cle5": photo[21],
+		 "Mot_cle6": photo[22],
+		 "Cote_base": photo[23],
+		 "Cote_classement": photo[24]
+		 }
 		i += 1
+
 	json_array = {"data": data}
 	return json_array
 
