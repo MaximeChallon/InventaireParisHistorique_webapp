@@ -7,7 +7,63 @@ Cataloguer
 {%block js%}
 
 <script type="text/javascript">
+
+
+
+
+
+
+
+
     $(document).ready(function() {
+    map_markers = [];
+    var intervalle = setInterval(check_adresse, 10000);
+
+    function check_adresse() {
+    const url_api = "https://api-adresse.data.gouv.fr/search/?q=";
+
+    var empt_rue = document.forms["form1"]["Rue"].value;
+    var empt_n_rue = document.forms["form1"]["N_rue"].value;
+    if ((empt_rue == "" && empt_n_rue == "") || empt_rue == "" || empt_n_rue == "")
+        {
+        console.log("Veuillez rentrer une valuer dans la rue et le numéro de rue");
+        return false;
+        }
+    else
+        {
+        // appeler l'api et prendre les résultats
+
+        fetch(url_api + empt_n_rue + " " + empt_rue + "&limit=1").then((response)=>{
+            return response.json();  // converting byte data to json
+            }).then(data=>{
+
+                // suppression du marker déjà présent
+                if (map_markers.length > 0){for(i=0;i<map_markers.length;i++) {
+                    map.removeLayer(map_markers[i]);
+                        };
+                    }
+                else {};
+
+                var latitude = data["features"][0]["geometry"]["coordinates"][1];
+                var longitude = data["features"][0]["geometry"]["coordinates"][0];
+
+                var new_marker = L.marker([latitude, longitude]);
+                map_markers.push(new_marker);
+                new_marker.addTo(map);
+
+                // remplissage des champs GPS
+                document.getElementById('Latitude_x').value = latitude;
+                document.getElementById('Longitude_y').value = longitude;
+            });
+
+        return true;
+        }
+
+};
+intervalle;
+
+
+
             // Création de la carte à l'id "map"
             var map = L.map('map', {
                 zoomControl: true
@@ -19,10 +75,17 @@ Cataloguer
                 maxNativeZoom: 100
             }).addTo(map);
 
+
             // récupération de la latitude et de la longitude lors d'un clic sur la carte
             map.on('click', function(e) {
                 if (confirm("Valider cette position?"))
                     {
+                    if (map_markers.length > 0){for(i=0;i<map_markers.length;i++) {
+                    map.removeLayer(map_markers[i]);
+                        };
+                    }
+                else {};
+
                     var lat = e.latlng.lat;
                     document.getElementById('Latitude_x').value = lat;
                     var long = e.latlng.lng;
@@ -31,6 +94,9 @@ Cataloguer
                     // ajout d'un marqueur à l'endroit du clic
                     marker = L.marker([lat, long]);
                     marker.addTo(map);
+
+                    // arrêt de la recherche dans l'API
+                    clearInterval(intervalle);
                     }
                 });
 });
@@ -38,6 +104,8 @@ Cataloguer
 {%endblock%}
 
 {% block corps %}
+
+
 <div class="container">
     <div class="row">
         <p>Veuillez remplir un formulaire par photographie. Vous pourrez retrouver vos photos inventoriées dans l'onglet "Enregistrements récents", pour les consulter, les modifier, ou les envoyer à la photothèque.</p>
@@ -47,7 +115,7 @@ Cataloguer
         </p>
     </div>
     <div class="row">
-        <form method="post" novalidate>
+        <form method="post" novalidate name="form1">
             {{ form.hidden_tag() }}
             <h1 style="font-size:16pt;color:#da1916;">Informations générales sur la photographie</h1>
             <div class="row">
@@ -63,11 +131,11 @@ Cataloguer
             <h1 style="font-size:16pt;color:#da1916;">Informations concernant l'adresse</h1>
             <p  style="font-size:8pt;">En cas de doute, ne rien mettre.</p>
             <div class="row">
-                <div class="col-8">
+                <div class="col-8" id="form-adresse">
                     <p>Nom de la rue<br>
                         {{form.Rue}}</p>
                 </div>
-                <div class="col-4">
+                <div class="col-4" id="form-numero-adresse">
                     <p>Numéro dans la rue <br>
                         {{form.N_rue(size=5)}}</p>
                 </div>
@@ -92,8 +160,12 @@ Cataloguer
                         {{form.Departement(size=5, maxlength=2)}}</p>
                 </div>
             </div>
-            <div class="row">
-                <p style="font-size:8pt;">Il n'est pas obligatoire d'indiquer la localisation GPS. Si vous souhaitez l'indiquer, cliquez sur l'adresse, les champs se rempliront automatiquement.</p>
+            <div class="row" style="margin-left:5px;">
+                <p style="font-size:8pt;">Une proposition de localisation est effectuée toutes les 10 secondes selon le numéro et le nom de la rue.
+                    <br>
+                    Si vous souhaitez la changer, cliquez sur l'emplacement dans la carte, les champs se rempliront automatiquement.
+                    <br>
+                    Si rien ne s'affiche automatiquement et que vous ne souhaitez pas remplir la localisation, ce n'est pas grave, ce n'est pas obligatoire.</p>
             </div>
             <div class="row">
                 <div class="col-6">
