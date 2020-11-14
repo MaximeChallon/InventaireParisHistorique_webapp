@@ -169,6 +169,10 @@ Le **numéro d'inventaire** est absolument nécessaire, tout comme l'un des dix 
 Cependant, n'oubliez pas que le but de l'inventaire est la description des photographies. S'il peut arriver fréquemment que l'on ne connaissance ni l'adresse ni les informations comme les droits ou le photographe, il est normalement toujours possible de poser au moins un ou deux **mots-clés** puisqu'ils sont décidés en fonction du contenu de la photographie.
 
 Concernant la **localisation GPS**, vous n'êtes pas obligé de chercher la localisation sur la carte. Cependant, si vous le faites, il faut être certain que l'adresse remplie plus haut dans le formulaire corresponde exactement à cette localisation GPS: un traitement automatique se fait plusieurs fois par mois afin de relier toutes les adresses similaires à une seule localisation; la localisation rentrée par le formulaire par vos soins est prioritaire face aux données qui sont normalement rapatriées depuis l'API mise à dispoition par le gouvernement.
+De plus, une proposition de **géolocalisation automatique** vous est faite toutes les 10 secondes si vous avez rempli le nom de la rue et le numéro. Plusieurs choix s'offrent alors à vous:
+* ne rien toucher et laisser ce qui est proposé
+* cliquer sur la carte pour modifier ce qui est proposé
+* ne rien faire si rien n'est proposé et que vous ne souhaitez pas remplir la localisation GPS
 
 Enfin, l'inventaire fonctionne pour une majorité des champs selon des **listes déroulantes** à choix: le but de ces listes est de contraindre à l'utilisation commune de mêmes textes. Ainsi, vous ne pourrez pas indiquer ce que vous souhaitez dans ces champs: seuls certains des champs comme la légende ou les notes le permettent. En effet, plus les données de l'inventaire seront normalisées, plus les photographies pourront être consultées et retrouvées par le lecteur!
 
