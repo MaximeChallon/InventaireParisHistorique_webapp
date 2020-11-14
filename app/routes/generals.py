@@ -43,8 +43,7 @@ def accueil():
 	compteur_photos_inventoriees = Classe_db.query.count()
 	compteur_photos_geolocalisees = db.session.query(Classe_db).filter(Classe_db.Latitude_x != "").count()
 
-	flash("[Nouveautés du mois de novembre] Le catalogue est disponible dans l'onglet Données", "info")
-	flash("[Nouveautés du mois de novembre] Des filtres sont maintenant possibles sur la page de la cartographie", "info")
+	flash("[Nouveautés du mois de novembre] Catalogue dans l'onglet Données; Filtres sur la cartographie; Géolocalisation automatique lors du catalogage", "info")
 	return render_template("pages/accueil.html",
 						   compteur_catalogueurs=compteur_catalogueurs,
 						   compteur_photos_inventoriees=compteur_photos_inventoriees,
