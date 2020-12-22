@@ -1,4 +1,4 @@
-from flask import Flask, url_for
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_admin import Admin
@@ -31,7 +31,7 @@ app.config['MAIL_PASSWORD'] = MAIL_PASSWORD
 
 mail = Mail(app)
 
-admin = Admin(app)
+admin = Admin(app, name='Dashboard')
 
 login_manager = LoginManager(app)
 
