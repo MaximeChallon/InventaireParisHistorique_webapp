@@ -16,6 +16,12 @@ Cataloguer
 
 
     $(document).ready(function() {
+
+    var latitude_nord_est = 48.9532;
+    var longitude_nord_est = 2.5008;
+    var latitude_sud_ouest = 48.7865;
+    var longitude_sud_ouest = 2.0689;
+
     map_markers = [];
     var intervalle = setInterval(check_adresse, 10000);
 
@@ -51,9 +57,16 @@ Cataloguer
                 map_markers.push(new_marker);
                 new_marker.addTo(map);
 
-                // remplissage des champs GPS
+                // remplissage des champs GPS uniqueent si la latitude la longitude sont dans  l'aire parisienne
+                // 48.7865,2.0689 au sud_ouest, 48.9532,2.5008 au nord-est
+                if(latitude > latitude_sud_ouest && latitude < latitude_nord_est && longitude < longitude_nord_est && longitude > longitude_sud_ouest){
                 document.getElementById('Latitude_x').value = latitude;
                 document.getElementById('Longitude_y').value = longitude;
+                }
+                else{
+                document.getElementById('Latitude_x').value = '';
+                document.getElementById('Longitude_y').value = '';
+                }
             });
 
         return true;
