@@ -6,181 +6,24 @@ Catalogue
 
 
 {% block corps %}
-<script src="https://unpkg.com/itemsjs@latest/dist/itemsjs.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-$.ajax({
-  url: "{{ url_for('get_json_final')}}",
-  dataType: 'json'
-}).done(function (data) {
-  loadData(data);});
 
-  var photos = [];
-
-              function loadData(data) {
-        $.each(data, function(index, row) {
-          photos.push([
-            row.Taille,
-            row.Support
-          ]);
-        });
-
-
-        var configuration = {
-  searchableFields: ['Support', 'Taille', 'Mots-cles', 'Arrondissement', 'Rue', 'Nom_site', 'Photographe', 'Date_prise_vue'],
-  sortings: {
-    name_asc: {
-      field: 'N_inventaire',
-      order: 'asc'
-    }
-  },
-  aggregations: {
-    Arrondissement: {
-      title: 'Arrondissement',
-      size: 20
-    },
-    Mots_cles: {
-      title: 'Mots clés',
-      size: 50
-    },
-    Support: {
-      title: 'Support',
-      size: 15
-    },
-    Taille: {
-      title: 'Taille',
-      size: 20
-    },
-    Photographe: {
-      title: 'Photographe',
-      size: 20
-    }
-  }
-};
-
-itemsjs = itemsjs(data, configuration);
-
-const vm = new Vue({
-  el: '#el',
-  delimiters : ['${', '}%'],
-  data: function () {
-
-    // making it more generic
-    var filters = {};
-    Object.keys(configuration.aggregations).map(function(v) {
-      filters[v] = [];
-    })
-
-    return {
-      query: '',
-      // initializing filters with empty arrays
-      filters: filters,
-    }
-  },
-  methods: {
-    reset: function () {
-      var filters = {};
-      Object.keys(configuration.aggregations).map(function(v) {
-        filters[v] = [];
-      })
-
-      this.filters = filters;
-      this.query = '';
-    }
-  },
-  computed: {
-    searchResult: function () {
-
-      var result = itemsjs.search({
-        query: this.query,
-        filters: this.filters
-      })
-      return result
-    }
-  }
-});
-      }
-});
-
-
-</script>
-
-
-<div class="container" style="margin-top: 50px;" id="el">
-
-    <h1 style="font-size:16pt;color:#da1916;">Liste globale des photographies (${ searchResult.pagination.total }%)</h1>
-
-    <p class="text-muted">Facettes créées en ${ searchResult.timings.facets }% ms</p>
-
+<div class="container">
     <div class="row">
-
-
-        <div class="btn-group" v-for="facet in searchResult.data.aggregations"
-             style="margin-left:15px;margin-bottom:15px;">
-            <button type="button" class="btn btn-danger dropdown-toggle" type="button" :id="facet.title"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${ facet.title }%
-            </button>
-            <span class="sr-only">${ facet.title }%</span>
-            </button>
-            <div div class="dropdown-menu" :aria-labelledby="facet.title">
-                <div class="dropdown-item" v-for="bucket in facet.buckets">
-                    <label>
-                        <input class="checkbox" type="checkbox" v-model="filters[facet.name]" v-bind:value="bucket.key">
-                        ${ bucket.key }% (${ bucket.doc_count }%)
-                    </label>
+        <form method="post" novalidate name="form1">
+            {{ form.hidden_tag() }}
+            <div class="btn-group">
+                <input type="text" class="form-control" id="Rue" name="Rue" placeholder="Rue" style="width:150px">
+                <div class="dropdown" style="margin-left:5px;">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Arrondissements
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {{form.Arrondissement}}
+                    </div>
                 </div>
             </div>
-        </div>
-        <form>
-          <div class="form-group" style="margin-left:15px;">
-            <input type="text" v-model="query" class="form-control" placeholder="Recherche">
-          </div>
+            {{ form.submit }}
         </form>
-
-
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 col-xs-12">
-            <div class="breadcrumbs"></div>
-            <div class="clearfix"></div>
-            <table class="table table-striped">
-                <tbody>
-                <tr v-for="item of searchResult.data.items">
-                    <td style="width=35%;">
-                        <b>${ item.N_rue }% ${ item.Rue }%</b>
-                        <br/>
-                        ${ item.Nom_site }%
-                        <div style="margin-top:20px;">
-                            <br/>
-                            <span>${ item.Ville }% ${ item.Arrondissement }%</span>
-                        </div>
-                    </td>
-                    <td style="width=35%;">
-                        ${ item.Support }% en ${ item.Couleur }% (${ item.Taille }%)
-                        <br/>
-                        <div>
-                            <br/>
-                        Prise le ${ item.Date_prise_vue }% par ${ item.Photographe }%
-                    </div>
-                    </td>
-                    <td style="width=30%;">
-                        <span style="font-size: 12px; display: block; float: left; background-color: #dbebf2; border-radius: 5px; padding: 1px 3px 1px 3px; margin: 2px;"
-                              v-for="tag in item.Mots_cles">${ tag }%</span>
-                        <br/>
-                        <div style="margin-top:30px;">
-                            <br/>
-                            <span style="margin-top:20px;font-size:10pt;">Numéro d'inventaire</span> <span style="font-weight:bold;">${ item.N_inventaire }%</span> (<span style="font-size:10pt;">Cote</span> ${ item.Cote_classement }%)
-                    </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="clearfix"></div>
-        </div>
-
-        <div class="clearfix" style="margin-bottom: 100px;"></div>
     </div>
 </div>
 {% endblock %}

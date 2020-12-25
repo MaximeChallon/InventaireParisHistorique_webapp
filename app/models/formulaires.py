@@ -1,10 +1,15 @@
-from wtforms import RadioField, SubmitField, TextAreaField, BooleanField, StringField, validators, PasswordField, SelectField, IntegerField, SelectMultipleField
+from wtforms import RadioField,widgets, SelectMultipleField, SubmitField, TextAreaField, BooleanField, StringField, validators, PasswordField, SelectField, IntegerField, SelectMultipleField
 from flask_wtf import FlaskForm
 from flask_login import current_user
 from .users import Classe_utilisateurs
+from ..app import db
 from ..constantes import RUE, NOM_SITE, VILLE, CLASSEMENT_MH, MOT_CLE, GENERALITE_ARHITECTURE, PHOTOGRAPHE, SUPPORT, DROITS, COULEUR, COLLECTION
 
+class MultiCheckboxField(SelectMultipleField):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
 # classes contenant les formulaires utilisés dans l'application
+ardt = [ (art[0], art[0]) for art in db.session.execute("""select distinct Arrondissement from Classe_db where Arrondissement != ''""")]
 
 class Chart_rythme_catalogage_form(FlaskForm):
     visuel = RadioField('Visuel', choices=[('line', 'En ligne'), ('bar', 'En barres')])
@@ -32,6 +37,12 @@ class Reset_password_form(FlaskForm):
     confirm_password = PasswordField("Mot de passe", [validators.DataRequired(), validators.Length(min=6, max=40),
                                       validators.EqualTo('current_password')])
     submit = SubmitField('Enregistrer')
+
+class Recherche_form(FlaskForm):
+    Rue = StringField("Rue")
+    Arrondissement = MultiCheckboxField('Arrondissement', choices=ardt)
+
+    submit = SubmitField('Envoyer')
 
 class Catalogage_form(FlaskForm):
     N_inventaire = IntegerField("Numéro d'inventaire", [validators.DataRequired()])
