@@ -1,0 +1,9 @@
+{% extends 'admin/model/list.html' %}
+
+{% macro duplicate_row(action, row_id, row) %}
+  {{ link(action, get_url('.duplicate_view', id=row_id, url=return_url), 'fa fa-repeat glyphicon icon-repeat') }}
+{% endmacro %}
+
+{% macro duplicate_row_popup(action, row_id, row) %}
+  {{ lib.add_modal_button(url=get_url('.duplicate_view', id=row_id, url=return_url, modal=True), title=action.title, content='<span class="fa fa-repeat glyphicon icon-repeat"></span>') }}
+{% endmacro %}
