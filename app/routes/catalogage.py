@@ -6,6 +6,8 @@ from ..models.users import Classe_catalogage
 from ..models.export import Classe_export
 from ..constantes import *
 
+from ..models.actions import Actions
+
 #SQL creation table ds db users
 """CREATE TABLE catalogage (
 	N_inventaire_index  INTEGER PRIMARY KEY NOT NULL,
@@ -217,3 +219,12 @@ def editer_photographie( id_photo):
     form.Notes.data = photo.Notes
     form.Cote_base.data = photo.Cote_base
     return render_template("pages/editer_photographie.html", form=form)
+
+@app.route("/espace_personnel/dupliquer/<id_photo>", methods=['GET', "POST"])
+@login_required
+def dupliquer_photographie( id_photo):
+    """ Créé un doublon de la photographie en attribuant un numéro d'inventaire provisoire 
+    Renvoie à la page Editer_photographie quand la duplication est terminée"""
+    old_model = Classe_catalogage.query.get_or_404(id_photo)
+    Msg, new_id = Actions.duplicate(old_model)
+    return redirect(url_for("editer_photographie", id_photo=new_id))
