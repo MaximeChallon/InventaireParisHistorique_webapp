@@ -31,7 +31,7 @@ Cataloguer
 {% block corps %}
 <div class="container">
     <div class="row">
-        <p>Vous pouvez modifier ici les informations déjà remplies. Attention, il faut de nouveau remplir les mots-clés.</p>
+        <p>Vous pouvez modifier ici les informations déjà remplies. <span style="color:red">En cas de duplication de notice, veuillez bien vérifier le numéro d'inventaire avec celui de la nouvelle photographie.</span></p>
     </div>
     <div class="row">
         <form method="post" novalidate>
@@ -197,6 +197,12 @@ Cataloguer
                 <div class="col-12">
                     <p>Note libre<br>
                         {{form.Notes}}</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-12">
+                    <p>Dupliquer après l'enregistrement ?   {{form.Dupliquer}}</p>
                 </div>
             </div>
             {{ form.submit }}

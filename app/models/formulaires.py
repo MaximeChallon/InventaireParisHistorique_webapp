@@ -66,6 +66,7 @@ class Catalogage_form(FlaskForm):
     Notes = TextAreaField("Notes", default="", render_kw={"rows": 6, "cols": 100})
     Cote_base = StringField("Cote de la base", default="")
 
+    Dupliquer = BooleanField("Enregistrer et dupliquer ensuite")
     submit = SubmitField('Enregistrer')
 
 class CataloguerContactForm(FlaskForm):
