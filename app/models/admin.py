@@ -50,11 +50,9 @@ class Classe_admin_controller(ModelView):
     @expose('/duplicate/')
     def duplicate_record(self):
         """Make a duplicate of the current record"""
-
-        # Grab parameters from URL
+        
         view_args = self._get_list_extra_args()
 
-        # Duplicate current record
         return_url = get_redirect_target() or self.get_url('.index_view')
 
         if not self.can_create:
@@ -66,16 +64,14 @@ class Classe_admin_controller(ModelView):
             return redirect(return_url)
 
         old_model = self.get_one(id_)
-        #print(old_model.Rue)
         if old_model is None:
             flash(gettext('Record does not exist.'), 'error')
             return redirect(return_url)
-        n_inv = db.session.execute("select N_inventaire from Classe_catalogage order by N_inventaire desc").fetchall()[0]
-        print(n_inv)
-        # Make a clone of the old model, without the primary key
+        n_inv = int(str(db.get_engine(app, 'users').execute("select N_inventaire from catalogage order by N_inventaire desc").fetchall()[0]).replace('"', "").replace("(", "").replace(",","").replace(")","")) + 1
+        
         new_model = Classe_catalogage(
-            N_inventaire_index=old_model.N_inventaire,
-            N_inventaire=old_model.N_inventaire,
+            N_inventaire_index=n_inv,
+            N_inventaire=n_inv,
             Rue=old_model.Rue,
             N_rue=old_model.N_rue,
             Nom_site=old_model.Nom_site,
@@ -108,10 +104,9 @@ class Classe_admin_controller(ModelView):
             Cote_base = old_model.Cote_base,
             Auteur = current_user.id_utilisateur
             )
-        print(new_model.N_inventaire_index)
 
         # Add duplicate record to the database
-        db.session.add(old_model)
+        db.session.add(new_model)
         db.session.commit()
         flash(gettext("You have successfully duplicated that record."), 'success')
 
