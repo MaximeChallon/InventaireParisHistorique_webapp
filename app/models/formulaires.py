@@ -67,6 +67,7 @@ class Catalogage_form(FlaskForm):
     Cote_base = StringField("Cote de la base", default="")
 
     Dupliquer = BooleanField("Enregistrer et dupliquer ensuite")
+    Delete = BooleanField()
     submit = SubmitField('Enregistrer')
 
 class CataloguerContactForm(FlaskForm):
