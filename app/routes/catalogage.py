@@ -159,6 +159,11 @@ def editer_photographie( id_photo):
     photo = Classe_catalogage.query.get_or_404(id_photo)
     # lors de la validation du formulaire, intégration des données dans la base
     if form.validate_on_submit():
+        if form.Delete.data == True:
+            Msg, n_inv = Actions.delete(form.N_inventaire.data)
+            flash(Msg, "info")
+            return redirect(url_for("cataloguer"))
+
         photo.N_inventaire_index = form.N_inventaire.data
         photo.N_inventaire = form.N_inventaire.data
         photo.Rue = form.Rue.data

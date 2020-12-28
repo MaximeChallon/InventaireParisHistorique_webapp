@@ -6,12 +6,10 @@ from ..models.users import Classe_catalogage
 
 
 class Actions():
-	def duplicate(old_model):
-		print(old_model)
-		n_inv = int(str(db.get_engine(app, 'users').execute("""select N_inventaire 
+    def duplicate(old_model):
+        n_inv = int(str(db.get_engine(app, 'users').execute("""select N_inventaire 
 			from catalogage order by N_inventaire desc""").fetchall()[0]).replace('"', "").replace("(", "").replace(",","").replace(")","")) + 1
-
-		new_model = Classe_catalogage(
+        new_model = Classe_catalogage(
             N_inventaire_index=n_inv,
             N_inventaire=n_inv,
             Rue=old_model.Rue,
@@ -46,12 +44,19 @@ class Actions():
             Cote_base = old_model.Cote_base,
             Auteur = current_user.id_utilisateur
             )
+        try:
+            db.session.add(new_model)
+            db.session.commit()
+            Msg = "Duplication réussie: nouveau numéro d'inventaire provisoire " + str(n_inv)
+            return Msg, n_inv
+        except Exception as e:
+            Msg = "Une erreur est survenue lors de l'insertion: " + str(e)
+            return Msg
 
-		try:
-			db.session.add(new_model)
-			db.session.commit()
-			Msg = "Duplication réussie: nouveau numéro d'inventaire provisoire " + str(n_inv)
-			return Msg, n_inv
-		except Exception as e:
-			Msg = "Une erreur est survenue lors de l'insertion: " + str(e)
-			return Msg
+
+    def delete(n_inv):
+        db.get_engine(app, "users").execute("""delete 
+                  from catalogage 
+                  where N_inventaire = """ + str(n_inv))
+        Msg = "Suppression réussie de la photo "  + str(n_inv)
+        return Msg, n_inv
