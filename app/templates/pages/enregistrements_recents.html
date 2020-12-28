@@ -16,6 +16,10 @@ Mes enregistrements récents
 
                 <a href="{{ url_for('dupliquer_photographie', id_photo=photo.N_inventaire_index) }}" style="margin-left:5px;">
                     <span class="fas fa-copy"></span>
+                </a>
+
+                <a href="{{ url_for('supprimer_photographie', id_photo=photo.N_inventaire_index) }}" style="margin-left:5px;">
+                    <span class="fas fa-trash"></span>
                 </a></h1>
             </div>
         </div>

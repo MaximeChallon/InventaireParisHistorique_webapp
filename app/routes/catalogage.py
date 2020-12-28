@@ -250,6 +250,7 @@ def editer_photographie( id_photo):
     form.Cote_base.data = photo.Cote_base
     return render_template("pages/editer_photographie.html", form=form)
 
+
 @app.route("/espace_personnel/dupliquer/<id_photo>", methods=['GET', "POST"])
 @login_required
 def dupliquer_photographie( id_photo):
@@ -258,3 +259,11 @@ def dupliquer_photographie( id_photo):
     old_model = Classe_catalogage.query.get_or_404(id_photo)
     Msg, new_id = Actions.duplicate(old_model)
     return redirect(url_for("editer_photographie", id_photo=new_id))
+
+
+@app.route("/espace_personnel/supprimer/<id_photo>", methods=['GET', "POST"])
+@login_required
+def supprimer_photographie( id_photo):
+    Msg, new_id = Actions.delete(id_photo)
+    flash(Msg, "info")
+    return redirect(url_for("enregistrements_recents"))
