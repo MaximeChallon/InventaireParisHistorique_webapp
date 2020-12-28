@@ -94,13 +94,24 @@ def cataloguer():
             Cote_base = form.Cote_base.data,
             Auteur = current_user.id_utilisateur
         )
-        try:
-            db.session.add(nouvelle_photo)
-            db.session.commit()
-            flash("Photographie correctement enregistrée", "info")
-            return redirect(url_for('cataloguer'))
-        except:
-            flash("Echec de l'enregistrement, veuillez vérifier que les champs sont remplis correctement", "warning")
+        if form.Dupliquer.data == True:
+            try:
+                db.session.add(nouvelle_photo)
+                db.session.commit()
+                flash("Photographie correctement enregistrée", "info")
+                Msg, new_id = Actions.duplicate(Classe_catalogage.query.get_or_404(form.N_inventaire.data))
+                flash(Msg, "info")
+                return redirect(url_for("editer_photographie", id_photo=new_id))
+            except:
+                flash("Echec de l'enregistrement, veuillez vérifier que les champs sont remplis correctement", "warning")
+        else:
+            try:
+                db.session.add(nouvelle_photo)
+                db.session.commit()
+                flash("Photographie correctement enregistrée", "info")
+                return redirect(url_for('cataloguer'))
+            except:
+                flash("Echec de l'enregistrement, veuillez vérifier que les champs sont remplis correctement", "warning")
     return render_template("pages/cataloguer.html", form=form)
 
 
@@ -184,6 +195,20 @@ def editer_photographie( id_photo):
         db.session.add(photo)
         db.session.commit()
         flash("La photographie a bien été mise à jour", "info")
+
+        if form.Dupliquer.data == True:
+            try:
+                Msg, new_id = Actions.duplicate(Classe_catalogage.query.get_or_404(form.N_inventaire.data))
+                flash(Msg, "info")
+                return redirect(url_for("editer_photographie", id_photo=new_id))
+            except:
+                flash("Echec de la duplication", "warning")
+        else:
+            try:
+                return redirect(url_for('cataloguer'))
+            except:
+                flash("Echec de la duplication", "warning")
+
         return redirect(url_for("cataloguer"))
     # pré-remplissage du formulaire avec les données existantes
     form.N_inventaire.data = photo.N_inventaire_index
