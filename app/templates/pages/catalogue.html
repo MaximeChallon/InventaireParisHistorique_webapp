@@ -11,56 +11,70 @@ Catalogue
     <div class="row">
         <form method="post" novalidate name="form1">
             {{ form.hidden_tag() }}
-            <div class="btn-group">
-                <input type="text" class="form-control" id="Rue" name="Rue" placeholder="Rue" style="width:150px">
+            <div class="container">
+            <div class="row">
+                <div class="col-12">
+                <div class="btn-group">
+                    {{form.Rue(size=15, maxsize=40, placeholder="Rue")}}
+                    <div class="dropdown" style="margin-left:5px;">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        style="background-color: #da1715" 
+                        >
+                        Arrondissements
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {{form.Arrondissement}}
+                    </div>
+                </div>
                 <div class="dropdown" style="margin-left:5px;">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                    style="background-color: #da1715" 
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    style="background-color: #da1715"
                     >
-                    Arrondissements
+                    Mots-clés
                 </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    {{form.Arrondissement}}
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                    {{form.Mots_cles}}
                 </div>
             </div>
             <div class="dropdown" style="margin-left:5px;">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                style="background-color: #da1715"
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                style="background-color: #da1715; width:115px;"
                 >
-                Mots-clés
+                Supports
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                {{form.Mots_cles}}
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                {{form.Support}}
             </div>
         </div>
         <div class="dropdown" style="margin-left:5px;">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-            style="background-color: #da1715; width:115px;"
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+            style="background-color: #da1715; width:125px;"
             >
-            Supports
+            Tailles
         </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-            {{form.Support}}
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+            {{form.Taille}}
         </div>
     </div>
     <div class="dropdown" style="margin-left:5px;">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-        style="background-color: #da1715; width:125px;"
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        style="background-color: #da1715; width:250px;"
         >
-        Tailles
+        Photographe
     </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
-        {{form.Taille}}
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5">
+        {{form.Photographe}}
     </div>
 </div>
-<div class="dropdown" style="margin-left:5px;">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-    style="background-color: #da1715; width:250px;"
-    >
-    Photographe
-</button>
-<div class="dropdown-menu" aria-labelledby="dropdownMenuButton5">
-    {{form.Photographe}}
+</div>
+</div>
+<br>
+<div class="row">
+    <div class="col-12" style="margin-top:5px;margin-left:15px">
+    <div>
+        {{form.Par_page(size=4)}} résultats maximum
+    </div>
+</div>
 </div>
 </div>
 </div>

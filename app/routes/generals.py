@@ -370,8 +370,17 @@ def get_latlg_adresses():
 def catalogue():
 	form = Recherche_form()
 	if form.validate_on_submit():
-		resultats = search(form, 2)
+		limit = form.Par_page.data
+		resultats = search(form, limit)
+		form.Par_page.data = limit
 		return render_template("pages/catalogue.html", form=form, resultats=resultats)
+	form.Par_page.data = 50
+	form.Rue.data = form.Rue.data
+	form.Arrondissement.data = form.Arrondissement.data
+	form.Mots_cles.data = form.Mots_cles.data
+	form.Support.data = form.Support.data
+	form.Taille.data = form.Taille.data
+	form.Photographe.data = form.Photographe.data
 	return render_template("pages/catalogue.html", form=form)
 
 
