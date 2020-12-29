@@ -47,6 +47,7 @@ class Recherche_form(FlaskForm):
     Taille = MultiCheckboxField('Taille', choices=TAILLES)
     Photographe = MultiCheckboxField('Photographe', choices=PHOTOGRAPHES)
     Par_page = StringField("Par page")
+    Download = BooleanField()
 
     submit = SubmitField('Rechercher')
 

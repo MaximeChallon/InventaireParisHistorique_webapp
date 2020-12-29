@@ -1,6 +1,7 @@
 from flask import render_template, redirect, url_for, request, flash, send_from_directory
 from flask_login import current_user, login_user, logout_user, login_required
 from ..app import app, db, login_manager, mail
+import flask_excel as Excel
 from ..models.graphiques import classe_graphiques
 import pandas as pd
 from ..models.donnees import Classe_db
@@ -372,6 +373,8 @@ def catalogue():
 	if form.validate_on_submit():
 		limit = form.Par_page.data
 		resultats = search(form, limit)
+		if form.Download.data == True:
+			return Excel.make_response_from_array([[1,2], [3,4]], "xlsx")
 		form.Par_page.data = limit
 		return render_template("pages/catalogue.html", form=form, resultats=resultats)
 	form.Par_page.data = 50
@@ -393,4 +396,3 @@ def get_json_final():
 		i += 1
 	json_final = (json.dumps(photos))
 	return json_final
-

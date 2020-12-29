@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_admin import Admin
 from flask_mail import Mail
+import flask_excel as Excel
 from .constantes import SECRET_KEY, MAIL_PASSWORD, MAIL_USERNAME, SQLALCHEMY_DATABASE_URI, SQLALCHEMY_BINDS, MAIL_SERVER, MAIL_PORT
 import os
 
@@ -40,3 +41,4 @@ from .routes import generals, catalogage, api, mails, users
 def init_app():
     db.create_all()
     db.create_all(bind="users")
+    Excel.init_excel(app)
