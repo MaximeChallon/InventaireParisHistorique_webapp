@@ -374,7 +374,14 @@ def catalogue():
 		limit = form.Par_page.data
 		resultats = search(form, limit)
 		if form.Download.data == True:
-			return Excel.make_response_from_array([[1,2], [3,4]], "xlsx")
+			array = [["N_inventaire", "Rue", "N_rue", "Nom_site", "Arrondissement", "Ville", "Latitude_x",
+						"Longitude_y", "Support", "Couleur", "Taille", "Date_prise_vue", "Photographe",
+						 "Date_construction", "Architecte", "Classement_MH", 
+						"Généralité_architecture", "Mot_cle1", "Mot_cle2", "Mot_cle3", "Mot_cle4", "Mot_cle5", "Mot_cle6",
+						 "Cote_base", "Cote_classement"]]
+			for result in resultats:
+				array.append(list(result)[:-2])
+			return Excel.make_response_from_array(array, "xlsx", file_name="recherche_Paris_Historique.xlsx")
 		form.Par_page.data = limit
 		return render_template("pages/catalogue.html", form=form, resultats=resultats)
 	form.Par_page.data = 50
