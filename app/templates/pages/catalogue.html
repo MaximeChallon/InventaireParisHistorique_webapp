@@ -14,11 +14,23 @@ Catalogue
             <div class="btn-group">
                 <input type="text" class="form-control" id="Rue" name="Rue" placeholder="Rue" style="width:150px">
                 <div class="dropdown" style="margin-left:5px;">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    style="background-color: #da1715" 
+                    >
                         Arrondissements
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         {{form.Arrondissement}}
+                    </div>
+                </div>
+                <div class="dropdown" style="margin-left:5px;">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    style="background-color: #da1715"
+                    >
+                        Mots-clés
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                        {{form.Mots_cles}}
                     </div>
                 </div>
             </div>
