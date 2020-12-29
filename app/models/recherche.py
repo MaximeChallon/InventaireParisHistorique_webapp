@@ -8,6 +8,12 @@ def extract_filters(form):
         dico_filters["Arrondissement"] = form.Arrondissement.data
     if form.Mots_cles.data != "":
         dico_filters["Mot_cle"] = form.Mots_cles.data
+    if form.Support.data != "":
+        dico_filters["Support"] = form.Support.data
+    if form.Taille.data != "":
+        dico_filters["Taille"] = form.Taille.data
+    if form.Photographe.data != "":
+        dico_filters["Photographe"] = form.Photographe.data
     return dico_filters
 
 def where_clause(filters):
@@ -20,13 +26,13 @@ def where_clause(filters):
             else:
                 where_clause = where_clause + " and " + entree + " like '%" + filters[entree].upper() + "%'"
         # filtres de liste sauf pour mot-clé
-        if type(filters[entree]) == list and entree != "Mot_cle":
+        if type(filters[entree]) == list and entree != "Mot_cle" and filters[entree]:
             if len(where_clause) == 0:
                 where_clause = " where " + entree + " in " + str(filters[entree]).replace("[", "(").replace("]", ")")
             else:
                 where_clause = where_clause +  " and " + entree + " in " + str(filters[entree]).replace("[", "(").replace("]", ")")
         # filtre du mot-clé
-        if type(filters[entree]) == list and entree == "Mot_cle":
+        if type(filters[entree]) == list and entree == "Mot_cle" and filters[entree]:
             if len(where_clause) == 0:
                 where_clause = " where (" + entree + "1" + " in " + str(filters[entree]).replace("[", "(").replace("]", ")") + " or " +\
                                 entree + "2" + " in " + str(filters[entree]).replace("[", "(").replace("]", ")") + " or " +\

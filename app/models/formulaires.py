@@ -4,35 +4,13 @@ from flask_login import current_user
 from .users import Classe_utilisateurs
 from ..app import db
 from ..constantes import RUE, NOM_SITE, VILLE, CLASSEMENT_MH, MOT_CLE, GENERALITE_ARHITECTURE, PHOTOGRAPHE, SUPPORT, DROITS, COULEUR, COLLECTION
-from collections import Counter
+from ..utils.distinct_classe_db import ARRONDISSEMENTS, MOTS_CLES, SUPPORTS, TAILLES, PHOTOGRAPHES
 
 class MultiCheckboxField(SelectMultipleField):
     widget = widgets.ListWidget(prefix_label=False)
     option_widget = widgets.CheckboxInput()
 
 # classes contenant les formulaires utilisés dans l'application
-
-#création de variables
-ardt = [ (art[0], art[0]) for art in db.session.execute("""select distinct Arrondissement from Classe_db where Arrondissement != '' order by Arrondissement""")]
-
-liste_mots_cles = []
-for row in db.session.execute("""select Mot_cle1 , Mot_cle2 , Mot_cle3 , Mot_cle4 , Mot_cle5, Mot_cle6 
-from Classe_db  
-"""):
-    if row is not None and row != '':
-        if row[0] is not None and row[0] != '':
-            liste_mots_cles.append(row[0])
-        if row[1] is not None and row[1] != '':
-            liste_mots_cles.append(row[1])
-        if row[2] is not None and row[2] != '':
-            liste_mots_cles.append(row[2])
-        if row[3] is not None and row[3] != '':
-            liste_mots_cles.append(row[3])
-        if row[4] is not None and row[4] != '':
-            liste_mots_cles.append(row[4])
-        if row[5] is not None and row[5] != '':
-            liste_mots_cles.append(row[5])
-mots_cles = [(mc[0], mc[0] + " (" + str(mc[1]) + ")")for mc in Counter(liste_mots_cles).most_common()]
 
 class Chart_rythme_catalogage_form(FlaskForm):
     visuel = RadioField('Visuel', choices=[('line', 'En ligne'), ('bar', 'En barres')])
@@ -63,10 +41,13 @@ class Reset_password_form(FlaskForm):
 
 class Recherche_form(FlaskForm):
     Rue = StringField("Rue")
-    Arrondissement = MultiCheckboxField('Arrondissement', choices=ardt)
-    Mots_cles = MultiCheckboxField('Mots-clés', choices=mots_cles)
+    Arrondissement = MultiCheckboxField('Arrondissement', choices=ARRONDISSEMENTS)
+    Mots_cles = MultiCheckboxField('Mots-clés', choices=MOTS_CLES)
+    Support = MultiCheckboxField('Support', choices=SUPPORTS)
+    Taille = MultiCheckboxField('Taille', choices=TAILLES)
+    Photographe = MultiCheckboxField('Photographe', choices=PHOTOGRAPHES)
 
-    submit = SubmitField('Envoyer')
+    submit = SubmitField('Rechercher')
 
 class Catalogage_form(FlaskForm):
     N_inventaire = IntegerField("Numéro d'inventaire", [validators.DataRequired()])

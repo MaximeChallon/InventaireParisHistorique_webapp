@@ -33,6 +33,36 @@ Catalogue
                         {{form.Mots_cles}}
                     </div>
                 </div>
+                <div class="dropdown" style="margin-left:5px;">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    style="background-color: #da1715; width:115px;"
+                    >
+                        Supports
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                        {{form.Support}}
+                    </div>
+                </div>
+                <div class="dropdown" style="margin-left:5px;">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    style="background-color: #da1715; width:125px;"
+                    >
+                        Tailles
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+                        {{form.Taille}}
+                    </div>
+                </div>
+                <div class="dropdown" style="margin-left:5px;">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                    style="background-color: #da1715; width:250px;"
+                    >
+                        Photographe
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5">
+                        {{form.Photographe}}
+                    </div>
+                </div>
             </div>
             {{ form.submit }}
         </form>
