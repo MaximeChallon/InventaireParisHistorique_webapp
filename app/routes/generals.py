@@ -1,6 +1,7 @@
 from flask import render_template, redirect, url_for, request, flash, send_from_directory
 from flask_login import current_user, login_user, logout_user, login_required
 from ..app import app, db, login_manager, mail
+import flask_excel as Excel
 from ..models.graphiques import classe_graphiques
 import pandas as pd
 from ..models.donnees import Classe_db
@@ -372,6 +373,15 @@ def catalogue():
 	if form.validate_on_submit():
 		limit = form.Par_page.data
 		resultats = search(form, limit)
+		if form.Download.data == True:
+			array = [["N_inventaire", "Rue", "N_rue", "Nom_site", "Arrondissement", "Ville", "Latitude_x",
+						"Longitude_y", "Support", "Couleur", "Taille", "Date_prise_vue", "Photographe",
+						 "Date_construction", "Architecte", "Classement_MH", 
+						"Généralité_architecture", "Mot_cle1", "Mot_cle2", "Mot_cle3", "Mot_cle4", "Mot_cle5", "Mot_cle6",
+						 "Cote_base", "Cote_classement"]]
+			for result in resultats:
+				array.append(list(result)[:-2])
+			return Excel.make_response_from_array(array, "xlsx", file_name="recherche_Paris_Historique.xlsx")
 		form.Par_page.data = limit
 		return render_template("pages/catalogue.html", form=form, resultats=resultats)
 	form.Par_page.data = 50
@@ -393,4 +403,3 @@ def get_json_final():
 		i += 1
 	json_final = (json.dumps(photos))
 	return json_final
-
