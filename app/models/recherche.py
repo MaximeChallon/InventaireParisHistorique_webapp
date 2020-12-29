@@ -51,10 +51,8 @@ def where_clause(filters):
 
 def search(form, limit):
     filters = extract_filters(form)
+    resultats = []
     if filters:
         where = where_clause(filters)
         resultats = db.session.execute("""select * from Classe_db """ + where + """ limit """ + str(limit)+ """ offset 0""").fetchall()
-        print(where)
-        print(resultats)
-    print(filters)
-    return "ok"
+    return resultats

@@ -17,55 +17,133 @@ Catalogue
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                     style="background-color: #da1715" 
                     >
-                        Arrondissements
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        {{form.Arrondissement}}
-                    </div>
-                </div>
-                <div class="dropdown" style="margin-left:5px;">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                    style="background-color: #da1715"
-                    >
-                        Mots-clés
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                        {{form.Mots_cles}}
-                    </div>
-                </div>
-                <div class="dropdown" style="margin-left:5px;">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                    style="background-color: #da1715; width:115px;"
-                    >
-                        Supports
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
-                        {{form.Support}}
-                    </div>
-                </div>
-                <div class="dropdown" style="margin-left:5px;">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                    style="background-color: #da1715; width:125px;"
-                    >
-                        Tailles
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
-                        {{form.Taille}}
-                    </div>
-                </div>
-                <div class="dropdown" style="margin-left:5px;">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                    style="background-color: #da1715; width:250px;"
-                    >
-                        Photographe
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton5">
-                        {{form.Photographe}}
-                    </div>
+                    Arrondissements
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {{form.Arrondissement}}
                 </div>
             </div>
-            {{ form.submit }}
-        </form>
+            <div class="dropdown" style="margin-left:5px;">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                style="background-color: #da1715"
+                >
+                Mots-clés
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                {{form.Mots_cles}}
+            </div>
+        </div>
+        <div class="dropdown" style="margin-left:5px;">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+            style="background-color: #da1715; width:115px;"
+            >
+            Supports
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+            {{form.Support}}
+        </div>
     </div>
+    <div class="dropdown" style="margin-left:5px;">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+        style="background-color: #da1715; width:125px;"
+        >
+        Tailles
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+        {{form.Taille}}
+    </div>
+</div>
+<div class="dropdown" style="margin-left:5px;">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+    style="background-color: #da1715; width:250px;"
+    >
+    Photographe
+</button>
+<div class="dropdown-menu" aria-labelledby="dropdownMenuButton5">
+    {{form.Photographe}}
+</div>
+</div>
+</div>
+{{ form.submit }}
+</form>
+</div>
+{%if resultats %}
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <div class="breadcrumbs"></div>
+        <div class="clearfix"></div>
+        <table class="table table-striped">
+            <tbody>
+                {%for result in resultats%}
+                <tr v-for="item of searchResult.data.items">
+                    <td style="width=35%;">
+                        <b>{{result[2]}} {{result[1]}}</b>
+                        <br/>
+                        {{result[3]}}
+                        <div style="margin-top:20px;">
+                            <br/>
+                            <span>{{result[5]}} {{result[4]}}</span>
+                        </div>
+                    </td>
+                    <td style="width=35%;">
+                        {{result[8]}} en {{result[9]}} ({{result[10]}})
+                        <br/>
+                        <div>
+                            <br/>
+                            Prise le {{result[11]}} par {{result[12]}}
+                        </div>
+                    </td>
+                    <td style="width=30%;">
+                        <div class="row">
+                            <span>Type d'architecture: </span>
+                            <span style="font-size: 13px; font-weight: bold; display: block; float: left; background-color: #dbebf2; border-radius: 5px; padding: 1px 3px 1px 3px; margin: 2px;">
+                                {{result[16]}}
+                            </span>
+                        </div>
+                        <div class="row">
+                            {%if result[17]%}
+                            <span style="font-size: 12px; display: block; float: left; background-color: #dbebf2; border-radius: 5px; padding: 1px 3px 1px 3px; margin: 2px;">
+                                {{result[17]}}
+                            </span>
+                            {%endif%}
+                            {%if result[18]%}
+                            <span style="font-size: 12px; display: block; float: left; background-color: #dbebf2; border-radius: 5px; padding: 1px 3px 1px 3px; margin: 2px;">
+                                {{result[18]}}
+                            </span>
+                            {%endif%}
+                            {%if result[19]%}
+                            <span style="font-size: 12px; display: block; float: left; background-color: #dbebf2; border-radius: 5px; padding: 1px 3px 1px 3px; margin: 2px;">
+                                {{result[19]}}
+                            </span>
+                            {%endif%}
+                            {%if result[20]%}
+                            <span style="font-size: 12px; display: block; float: left; background-color: #dbebf2; border-radius: 5px; padding: 1px 3px 1px 3px; margin: 2px;">
+                                {{result[20]}}
+                            </span>
+                            {%endif%}
+                            {%if result[21]%}
+                            <span style="font-size: 12px; display: block; float: left; background-color: #dbebf2; border-radius: 5px; padding: 1px 3px 1px 3px; margin: 2px;">
+                                {{result[21]}}
+                            </span>
+                            {%endif%}
+                            {%if result[22]%}
+                            <span style="font-size: 12px; display: block; float: left; background-color: #dbebf2; border-radius: 5px; padding: 1px 3px 1px 3px; margin: 2px;">
+                                {{result[22]}}
+                            </span>
+                            {%endif%}
+                        </div>
+                        <br/>
+                        <div style="margin-top:30px;">
+                            <br/>
+                            <span style="margin-top:20px;font-size:10pt;">Numéro d'inventaire</span> <span style="font-weight:bold;">{{result[0]}}</span> (<span style="font-size:10pt;">Cote</span> {{result[24]}})
+                        </div>
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        <div class="clearfix"></div>
+    </div>
+    {%endif%}
 </div>
 {% endblock %}
