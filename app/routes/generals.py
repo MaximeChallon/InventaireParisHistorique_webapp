@@ -5,13 +5,14 @@ from ..models.graphiques import classe_graphiques
 import pandas as pd
 from ..models.donnees import Classe_db
 from ..models.users import Classe_utilisateurs
-from ..models.formulaires import Chart_rythme_catalogage_form, Reset_password_form, Forgot_form
+from ..models.formulaires import Chart_rythme_catalogage_form, Reset_password_form, Forgot_form, Recherche_form
 from ..models.mails import Classe_mails
 from ..constantes import MAIL_USERNAME
 from werkzeug.security import generate_password_hash
 import json
 import requests
 import os
+from ..models.recherche import search
 #from ..utils import get_latlg_addresses
 
 # routes dans l'ordre:
@@ -367,7 +368,20 @@ def get_latlg_adresses():
 
 @app.route("/catalogue", methods=['GET', 'POST'])
 def catalogue():
-	return render_template("pages/catalogue.html")
+	form = Recherche_form()
+	if form.validate_on_submit():
+		limit = form.Par_page.data
+		resultats = search(form, limit)
+		form.Par_page.data = limit
+		return render_template("pages/catalogue.html", form=form, resultats=resultats)
+	form.Par_page.data = 50
+	form.Rue.data = form.Rue.data
+	form.Arrondissement.data = form.Arrondissement.data
+	form.Mots_cles.data = form.Mots_cles.data
+	form.Support.data = form.Support.data
+	form.Taille.data = form.Taille.data
+	form.Photographe.data = form.Photographe.data
+	return render_template("pages/catalogue.html", form=form)
 
 
 @app.route("/get_json_final",methods=['GET', 'POST'])
