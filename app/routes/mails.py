@@ -20,8 +20,8 @@ def cataloguer_contact():
                                                   message=form.Message.data,
                                                   copie=form.Copie.data)
             flash("Mail envoyé avec succès", "info")
-        except:
-            flash("Échec de l'envoi", "warning")
+        except Exception as e:
+            flash("Échec de l'envoi: " + str(e), "warning")
         return redirect(url_for("cataloguer"))
     return render_template("pages/cataloguer_contact.html", form=form)
 
