@@ -18,7 +18,7 @@ email: maxime.challon@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Documentation de l'inventaire de la photothèque du Paris Historique.
   L'application d'inventaire et de visualisation est disponible sur http://www.parishistoriqueinventaire.eu.pythonanywhere.com/
-baseurl: "/InventaireParisHistorique/" # the subpath of your site, e.g. /blog
+baseurl: "/InventaireParisHistorique_webapp/" # the subpath of your site, e.g. /blog
 url: "https://maximechallon.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: #
 github_username:  MaximeChallon
