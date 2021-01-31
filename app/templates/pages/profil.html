@@ -4,6 +4,11 @@
 Mon profil
 {% endblock %}
 
+{% block js %}
+
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+{%endblock%}
+
 {% block corps %}
 <div class="container">
     <div class="row">
@@ -31,5 +36,40 @@ Mon profil
     <div>
         <p>Pour changer le mot de passe, <a href="{{url_for('forgot_password')}}">cliquer ici</a></p>
     </div>
+
+
+
+
+    <div class="row">
+        <div id="chart_mots_cles" width="500px"></div>
+    </div>
 </div>
+
+
+<script>
+    var element =  document.getElementById('chart_mots_cles');
+if (typeof(element) != 'undefined' && element != null)
+{
+    var data = [{
+  values: {{liste_mots_cles[1]}},
+  labels: {{liste_mots_cles[0] | safe}},
+  type: 'pie'
+}];
+
+var layout = {
+  height: 500,
+  width: 700,
+  title:{text:'Mes mots-clés les plus utilisés',font: {
+      family: 'Courier New, monospace',
+      size: 24
+    },
+    xref: 'paper',
+    x: 0.05,}
+};
+
+Plotly.newPlot(element, data, layout);
+  // Exists.
+}
+else{console.log("non");}
+</script>
 {% endblock %}
