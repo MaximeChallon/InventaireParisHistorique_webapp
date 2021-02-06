@@ -196,7 +196,7 @@ Si vous ne trouvez pas le mot-clé nécessaire, voir le sujet [Je ne trouve pas 
 Pour accéder à la modification d'une photographie, il faut se rendre sur la page qui recense tous vos enregistrements récents dans l'onglet "Mon espace" > "Enregistrements récents". Vous arriverez alors sur la page [http://parishistoriqueinventaire.eu.pythonanywhere.com/espace_personnel/enregistrements_recents?nom_user=VOTRE_NOM](http://parishistoriqueinventaire.eu.pythonanywhere.com/espace_personnel/enregistrements_recents).
 ![enregistrements_recents](img/enregistrements_recents.png){:width="750px"}
 
-Cette page des enregistrements récents vous donne un aperçu des photographies inventoriées, et vous permet de les modifier.
+Cette page des enregistrements récents vous donne un aperçu des photographies inventoriées (vous pouvez également les filtrer selon plusieurs critères), et vous permet de les modifier.
 ![enr_recents](img/enr_recents.png){:width="750px"}
 
 En cliquant sur le bouton "Mettre à jour", vous pourrez alors modifier les informations que vous aviez remplies auparavant.
@@ -226,6 +226,8 @@ L'intérêt de l'inventaire est de pouvoir utiliser les données pour rechercher
 * l'onglet ["Cartographie"](http://parishistoriqueinventaire.eu.pythonanywhere.com/cartographie) vous permet de trouver toutes les photographies associées à une localisation GPS. 
 	* Vous pouvez zommer pour éclater les clusters. Quand le zoom n'est plus possible, cliquez sur les clusters. Des points rouges apparaîtront et vous permettront, en cliquant dessus, d'afficher les informations de la photographie.
 	* Vous pouvez également filtrer les résultats sur l'arrondissement, un mot clé, un site, un photographe ou une date. Vous pouvez appliquer plusieurs filtres à la fois.
+	En mettant un tiret entre deux dates dans le filtre "Date", vous pouvez rechercher sur une plage temporelle.
+	En mettant un point-virgule entre plusieurs arrondissments ou plusieurs mots-clés, vous pouvez ainsi rechercher les photographies de ces arrondissements ou mots-clés.
 ![carto](img/carto.png){:width="750px"}
 
 
