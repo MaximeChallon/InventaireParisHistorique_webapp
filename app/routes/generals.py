@@ -99,24 +99,50 @@ def json_carto():
 			statut_arrondissement = 1
 		if arrondissement != "" and i !=0 and statut_arrondissement == 0:
 			where_clause = where_clause + " and Arrondissement  in ('"+ str(arrondissement) + "')"
+
 		if mot != "" and i ==0:
-			where_clause = where_clause + "(Mot_cle1  in ('"+ str(mot) + "') or Mot_cle2 in ('"+ str(mot) + "') or Mot_cle3 in ('"+ str(mot) + "') or Mot_cle4 in ('"+ str(mot) + "') or Mot_cle5 in ('"+ str(mot) + "') or Mot_cle6 in ('"+ str(mot) + "'))"
+			if ";" not in mot:
+				where_clause = where_clause + "(Mot_cle1  in ('"+ str(mot) + "') or Mot_cle2 in ('"+ str(mot) + "') or Mot_cle3 in ('"+ str(mot) + "') or Mot_cle4 in ('"+ str(mot) + "') or Mot_cle5 in ('"+ str(mot) + "') or Mot_cle6 in ('"+ str(mot) + "'))"
+			else:
+				mots = mot.split(";")
+				requete = ["(Mot_cle1  in ('"+ 
+						str(un_mot) + "') or Mot_cle2 in ('"+ 
+						str(un_mot) + "') or Mot_cle3 in ('"+ 
+						str(un_mot) + "') or Mot_cle4 in ('"+ 
+						str(un_mot) + "') or Mot_cle5 in ('"+ 
+						str(un_mot) + "') or Mot_cle6 in ('"+ 
+						str(un_mot) + "'))" for un_mot in mots]
+				where_clause = where_clause + " or ".join(requete)
 			i += 1
 			statut_mot = 1
 		if mot != "" and i !=0 and statut_mot == 0:
-			where_clause = where_clause + " and (Mot_cle1  in ('"+ str(mot) + "') or Mot_cle2 in ('"+ str(mot) + "') or Mot_cle3 in ('"+ str(mot) + "') or Mot_cle4 in ('"+ str(mot) + "') or Mot_cle5 in ('"+ str(mot) + "') or Mot_cle6 in ('"+ str(mot) + "'))"
+			if ";" not in mot:
+				where_clause = where_clause + "(Mot_cle1  in ('"+ str(mot) + "') or Mot_cle2 in ('"+ str(mot) + "') or Mot_cle3 in ('"+ str(mot) + "') or Mot_cle4 in ('"+ str(mot) + "') or Mot_cle5 in ('"+ str(mot) + "') or Mot_cle6 in ('"+ str(mot) + "'))"
+			else:
+				mots = mot.split(";")
+				requete = ["(Mot_cle1  in ('"+ 
+						str(un_mot) + "') or Mot_cle2 in ('"+ 
+						str(un_mot) + "') or Mot_cle3 in ('"+ 
+						str(un_mot) + "') or Mot_cle4 in ('"+ 
+						str(un_mot) + "') or Mot_cle5 in ('"+ 
+						str(un_mot) + "') or Mot_cle6 in ('"+ 
+						str(un_mot) + "'))" for un_mot in mots]
+				where_clause = where_clause + " or ".join(requete)
+		
 		if photographe != "" and i ==0:
 			where_clause = where_clause + "Photographe  like '"+ str(photographe) + "%'"
 			i += 1
 			statut_photographe = 1
 		if photographe != "" and i !=0 and statut_photographe == 0:
 			where_clause = where_clause + " and Photographe  like '" + str(photographe) + "%'"
+		
 		if site != "" and i ==0:
 			where_clause = where_clause + "Nom_site  like '"+ str(site) + "%'"
 			i += 1
 			statut_site = 1
 		if site != "" and i !=0 and statut_site == 0:
 			where_clause = where_clause + " and Nom_site  like '" + str(site) + "%'"
+		
 		if date != "" and i ==0:
 			if "-" not in date:
 				where_clause = where_clause + "Date_prise_vue  like '"+ str(date) + "%'"
