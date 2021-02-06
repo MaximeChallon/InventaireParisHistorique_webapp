@@ -4,12 +4,43 @@
 Mon profil
 {% endblock %}
 
+
 {% block js %}
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-tooltip@0.16.0/build/vega-tooltip.min.js"></script>
 
 <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
 {%endblock%}
 
+{% block css %}
+<link rel="stlesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/vega-tooltip@0.16.0/vega-tooltip.scss">
+{% endblock %}
+
 {% block corps %}
+
+
+<script type="text/javascript">
+    var visuel = 'bar';
+    var dates = 'general_au_jour';
+      function parse(url, div) {
+        var opt = {
+          mode: "vega-lite",
+          renderer: "svg",
+          actions: {export: true, source: false, editor: false}
+        };
+
+        vegaEmbed("#"+div, url, opt, function(error, result) {
+          // result.view is the Vega View, url is the original Vega-Lite specification
+          vegaTooltip.vegaLite(result.view, url);
+        });
+      }
+
+      parse("{{url_for('user_rythme_catalogage')}}", "line");
+   
+    </script>
+
 <div class="container">
     <div class="row">
         <h1 style="font-size:16pt;color:#da1916;">Mon profil</h1>
@@ -40,10 +71,20 @@ Mon profil
 
 
 
-    <div class="row">
-        <div id="chart_mots_cles" width="500px"></div>
+    <div class="row" style="text-align: center;">
+        <div  class="col-sm-3"></div>
+        <div id="chart_mots_cles" class="col-sm-6"></div>
+        <div  class="col-sm-3"></div>
+    </div><div class="row" style="text-align: center;">
+        <div  class="col-sm-2"></div>
+        <div class="charts text-center col-sm-6" width="400px">
+            <div class="row"><div id="line"></div></div><hr>
+            <div id="vis-tooltip" class="vg-tooltip"></div>
+        </div>
+        <div  class="col-sm-3"></div>
     </div>
 </div>
+
 
 
 <script>
@@ -58,7 +99,7 @@ if (typeof(element) != 'undefined' && element != null)
 
 var layout = {
   height: 500,
-  width: 700,
+  width: 600,
   title:{text:'Mes mots-clés les plus utilisés',font: {
       family: 'Courier New, monospace',
       size: 24

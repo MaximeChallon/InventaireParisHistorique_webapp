@@ -4,6 +4,8 @@ from flask import render_template, redirect, url_for, flash
 from ..models.formulaires import ModifierInformationsPersonnelles
 from ..models.donnees import Classe_db
 from ..models.users import Classe_utilisateurs, Classe_catalogage
+import pandas as pd
+from ..models.graphiques import classe_graphiques
 
 @app.route("/espace_personnel/mon_profil", methods=['GET', 'POST'])
 @login_required
@@ -67,3 +69,20 @@ group by Mot_cle6""").fetchall()
                            compteur_photos_ok=compteur_photos_ok,
                            compteur_photos_attente=compteur_photos_attente,
                            liste_mots_cles=liste_finale_mots)
+
+
+@app.route("/graphiques/user_rythme_catalogage")
+@login_required
+def user_rythme_catalogage():
+    # récupération des dates de chaque photographie
+    liste = [[x.Date_inventaire] for x in Classe_db.query.filter(Classe_db.Auteur == current_user.nom.upper()).all()]
+    
+    # construction des graphiques selon le type de date
+    data_jour = pd.DataFrame(liste, columns=["Date_inventaire"])
+    data_jour["Date_inventaire"] = pd.to_datetime(data_jour["Date_inventaire"], format="%Y/%m/%d")
+    data_jour["occurences"] = 1
+    general_au_jour = data_jour.groupby("Date_inventaire", as_index=False).sum()
+    donnees = general_au_jour
+    chart = classe_graphiques.generate_temporels_bar(donnees, "Mois et jour")
+    
+    return chart.to_json()
