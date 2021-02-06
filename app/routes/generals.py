@@ -94,11 +94,21 @@ def json_carto():
 		statut_site = 0
 		statut_date = 0
 		if arrondissement != "" and i ==0:
-			where_clause = where_clause + "Arrondissement  in ('"+ str(arrondissement) + "')"
+			if ";" not in arrondissement:
+				where_clause = where_clause + "Arrondissement  in ('"+ str(arrondissement) + "')"
+			else:
+				arrondissements= arrondissement.split(";")
+				requete = [ "Arrondissement  in ('"+ str(arrdt) + "')" for arrdt in arrondissements]
+				where_clause = where_clause + " or ".join(requete)
 			i += 1
 			statut_arrondissement = 1
 		if arrondissement != "" and i !=0 and statut_arrondissement == 0:
-			where_clause = where_clause + " and Arrondissement  in ('"+ str(arrondissement) + "')"
+			if ";" not in arrondissement:
+				where_clause = where_clause + "Arrondissement  in ('"+ str(arrondissement) + "')"
+			else:
+				arrondissements= arrondissement.split(";")
+				requete = [ "Arrondissement  in ('"+ str(arrdt) + "')" for arrdt in arrondissements]
+				where_clause = where_clause + " or ".join(requete)
 
 		if mot != "" and i ==0:
 			if ";" not in mot:
