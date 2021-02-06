@@ -118,11 +118,19 @@ def json_carto():
 		if site != "" and i !=0 and statut_site == 0:
 			where_clause = where_clause + " and Nom_site  like '" + str(site) + "%'"
 		if date != "" and i ==0:
-			where_clause = where_clause + "Date_prise_vue  like '"+ str(date) + "%'"
+			if "-" not in date:
+				where_clause = where_clause + "Date_prise_vue  like '"+ str(date) + "%'"
+			else:
+				dates = date.split("-")
+				where_clause = where_clause + "Date_prise_vue  >= '"+ str(dates[0]) + "'" + " and Date_prise_vue  <= '"+ str(dates[1]) + "'"
 			i += 1
 			statut_date = 1
 		if date != "" and i !=0 and statut_date == 0:
-			where_clause = where_clause + " and Date_prise_vue  like '" + str(date) + "%'"
+			if "-" not in date:
+				where_clause = where_clause + " and Date_prise_vue  like '" + str(date) + "%'"
+			else:
+				dates = date.split("-")
+				where_clause = where_clause + "Date_prise_vue  >= '"+ str(dates[0]) + "'" + " and Date_prise_vue  <= '"+ str(dates[1]) + "'"
 
 	requete = """select * from Classe_db""" + where_clause
 	results = db.session.execute(requete).fetchall()
