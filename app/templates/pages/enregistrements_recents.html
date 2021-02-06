@@ -6,6 +6,14 @@ Mes enregistrements récents
 
 {% block corps %}
 <div class="container">
+    <form class="form-group" id="formulaire" method="get" action="{{ url_for ('enregistrements_recents')}}">
+        <input type="text" name="_Arrondissement" id="_Arrondissement" placeholder="Arrondissement" size="7px;">
+        <input type="text" name="_Site" id="_Site" placeholder="Site" size="10px;">
+        <input type="text" name="_Mot" id="_Mot" placeholder="Mot clé" size="10px;">
+        <input type="text" name="_Photographe" id="_Photographe" placeholder="Photographe" size="10px;">
+        <input type="text" name="_Date" id="_Date" placeholder="Date" size="7px;">
+        <input type="submit" value="Filtrer" id="submit" class="btn-primary btn">
+</form>
     {%for photo in photos%}
     <div class="row">
         <div class="col-12">

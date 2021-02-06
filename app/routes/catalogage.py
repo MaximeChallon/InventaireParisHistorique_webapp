@@ -10,42 +10,42 @@ from ..models.actions import Actions
 
 #SQL creation table ds db users
 """CREATE TABLE catalogage (
-	N_inventaire_index  INTEGER PRIMARY KEY NOT NULL,
-	N_inventaire	INTEGER NOT NULL,
-	Rue	TEXT,
-	N_rue	TEXT,
-	Nom_site	TEXT,
-	Arrondissement	TEXT,
-	Ville	TEXT,
-	Departement	INTEGER,
-	Latitude_x	TEXT,
-	Longitude_y	TEXT,
-	Support	TEXT,
-	Couleur	TEXT,
-	Taille	TEXT,
-	Date_prise_vue	TEXT,
-	Photographe	TEXT,
-	Droits	TEXT,
-	Mention_don	TEXT,
-	Mention_collection	TEXT,
-	Date_construction	TEXT,
-	Architecte	TEXT,
-	Classement_MH	TEXT,
-	Legende	TEXT,
-	Generalite_architecture	TEXT,
-	Mot_cle1	TEXT,
-	Mot_cle2	TEXT,
-	Mot_cle3	TEXT,
-	Mot_cle4	TEXT,
-	Mot_cle5	TEXT,
-	Mot_cle6	TEXT,
-	Autre_adresse	TEXT,
-	Notes	TEXT,
-	Cote_base	TEXT,
-	Cote_classement	TEXT,
-	Date_inventaire	TEXT,
-	Auteur	TEXT,
-	exporte	INTEGER NOT NULL
+    N_inventaire_index  INTEGER PRIMARY KEY NOT NULL,
+    N_inventaire    INTEGER NOT NULL,
+    Rue    TEXT,
+    N_rue    TEXT,
+    Nom_site    TEXT,
+    Arrondissement    TEXT,
+    Ville    TEXT,
+    Departement    INTEGER,
+    Latitude_x    TEXT,
+    Longitude_y    TEXT,
+    Support    TEXT,
+    Couleur    TEXT,
+    Taille    TEXT,
+    Date_prise_vue    TEXT,
+    Photographe    TEXT,
+    Droits    TEXT,
+    Mention_don    TEXT,
+    Mention_collection    TEXT,
+    Date_construction    TEXT,
+    Architecte    TEXT,
+    Classement_MH    TEXT,
+    Legende    TEXT,
+    Generalite_architecture    TEXT,
+    Mot_cle1    TEXT,
+    Mot_cle2    TEXT,
+    Mot_cle3    TEXT,
+    Mot_cle4    TEXT,
+    Mot_cle5    TEXT,
+    Mot_cle6    TEXT,
+    Autre_adresse    TEXT,
+    Notes    TEXT,
+    Cote_base    TEXT,
+    Cote_classement    TEXT,
+    Date_inventaire    TEXT,
+    Auteur    TEXT,
+    exporte    INTEGER NOT NULL
 );"""
 
 
@@ -141,7 +141,117 @@ def enregistrements_recents():
     :param nom_user:  nom de famille de l'utilisateur
     :return: template
     """
-    photos = Classe_catalogage.query.filter_by(auteur=current_user).all()
+    """
+    Permet de renvoyer le JSON de la cartographie
+    :return: JSON
+    """
+    arrondissement = request.args.get("_Arrondissement", '')
+    try:
+        mot = request.args.get("_Mot", '').upper()
+    except:
+        mot = request.args.get("_Mot", '')
+    try:
+        site = request.args.get("_Site", '').upper()
+    except:
+        site = request.args.get("_Site", '')
+    try:
+        photographe = request.args.get("_Photographe", '').upper()
+    except:
+        photographe = request.args.get("_Photographe", '')
+    date = request.args.get("_Date", '')
+
+    where_clause = ""
+
+    if arrondissement != '' or mot != '' or site !='' or photographe != '' or date != '':
+        where_clause = " where "
+        i = 0
+        statut_arrondissement = 0
+        statut_mot = 0
+        statut_photographe = 0
+        statut_site = 0
+        statut_date = 0
+        if arrondissement != "" and i ==0:
+            if ";" not in arrondissement:
+                where_clause = where_clause + "Arrondissement  in ('"+ str(arrondissement) + "')"
+            else:
+                arrondissements= arrondissement.split(";")
+                requete = [ "Arrondissement  in ('"+ str(arrdt) + "')" for arrdt in arrondissements]
+                where_clause = where_clause + " or ".join(requete)
+            i += 1
+            statut_arrondissement = 1
+        if arrondissement != "" and i !=0 and statut_arrondissement == 0:
+            if ";" not in arrondissement:
+                where_clause = where_clause + "Arrondissement  in ('"+ str(arrondissement) + "')"
+            else:
+                arrondissements= arrondissement.split(";")
+                requete = [ "Arrondissement  in ('"+ str(arrdt) + "')" for arrdt in arrondissements]
+                where_clause = where_clause + " or ".join(requete)
+
+        if mot != "" and i ==0:
+            if ";" not in mot:
+                where_clause = where_clause + "(Mot_cle1  in ('"+ str(mot) + "') or Mot_cle2 in ('"+ str(mot) + "') or Mot_cle3 in ('"+ str(mot) + "') or Mot_cle4 in ('"+ str(mot) + "') or Mot_cle5 in ('"+ str(mot) + "') or Mot_cle6 in ('"+ str(mot) + "'))"
+            else:
+                mots = mot.split(";")
+                requete = ["(Mot_cle1  in ('"+ 
+                        str(un_mot) + "') or Mot_cle2 in ('"+ 
+                        str(un_mot) + "') or Mot_cle3 in ('"+ 
+                        str(un_mot) + "') or Mot_cle4 in ('"+ 
+                        str(un_mot) + "') or Mot_cle5 in ('"+ 
+                        str(un_mot) + "') or Mot_cle6 in ('"+ 
+                        str(un_mot) + "'))" for un_mot in mots]
+                where_clause = where_clause + " or ".join(requete)
+            i += 1
+            statut_mot = 1
+        if mot != "" and i !=0 and statut_mot == 0:
+            if ";" not in mot:
+                where_clause = where_clause + "(Mot_cle1  in ('"+ str(mot) + "') or Mot_cle2 in ('"+ str(mot) + "') or Mot_cle3 in ('"+ str(mot) + "') or Mot_cle4 in ('"+ str(mot) + "') or Mot_cle5 in ('"+ str(mot) + "') or Mot_cle6 in ('"+ str(mot) + "'))"
+            else:
+                mots = mot.split(";")
+                requete = ["(Mot_cle1  in ('"+ 
+                        str(un_mot) + "') or Mot_cle2 in ('"+ 
+                        str(un_mot) + "') or Mot_cle3 in ('"+ 
+                        str(un_mot) + "') or Mot_cle4 in ('"+ 
+                        str(un_mot) + "') or Mot_cle5 in ('"+ 
+                        str(un_mot) + "') or Mot_cle6 in ('"+ 
+                        str(un_mot) + "'))" for un_mot in mots]
+                where_clause = where_clause + " or ".join(requete)
+        
+        if photographe != "" and i ==0:
+            where_clause = where_clause + "Photographe  like '"+ str(photographe) + "%'"
+            i += 1
+            statut_photographe = 1
+        if photographe != "" and i !=0 and statut_photographe == 0:
+            where_clause = where_clause + " and Photographe  like '" + str(photographe) + "%'"
+        
+        if site != "" and i ==0:
+            where_clause = where_clause + "Nom_site  like '"+ str(site) + "%'"
+            i += 1
+            statut_site = 1
+        if site != "" and i !=0 and statut_site == 0:
+            where_clause = where_clause + " and Nom_site  like '" + str(site) + "%'"
+        
+        if date != "" and i ==0:
+            if "-" not in date:
+                where_clause = where_clause + "Date_prise_vue  like '"+ str(date) + "%'"
+            else:
+                dates = date.split("-")
+                where_clause = where_clause + "Date_prise_vue  >= '"+ str(dates[0]) + "'" + " and Date_prise_vue  <= '"+ str(dates[1]) + "'"
+            i += 1
+            statut_date = 1
+        if date != "" and i !=0 and statut_date == 0:
+            if "-" not in date:
+                where_clause = where_clause + " and Date_prise_vue  like '" + str(date) + "%'"
+            else:
+                dates = date.split("-")
+                where_clause = where_clause + "Date_prise_vue  >= '"+ str(dates[0]) + "'" + " and Date_prise_vue  <= '"+ str(dates[1]) + "'"
+
+        if where_clause != '':
+            requete = """select * from catalogage""" + where_clause + " and Auteur == " + str(current_user.id_utilisateur)
+        else:
+            requete = """select * from catalogage""" + where_clause + " where Auteur == " + str(current_user.id_utilisateur) 
+        photos = db.get_engine(bind='users').execute(requete).fetchall()
+    else:
+        photos = Classe_catalogage.query.filter_by(auteur=current_user).all()
     return render_template("pages/enregistrements_recents.html", photos=photos)
 
 
