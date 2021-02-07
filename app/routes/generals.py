@@ -435,7 +435,8 @@ def catalogue():
 	form.Support.data = form.Support.data
 	form.Taille.data = form.Taille.data
 	form.Photographe.data = form.Photographe.data
-	return render_template("pages/catalogue.html", form=form)
+	resultats = search(form, 50)
+	return render_template("pages/catalogue.html", form=form, resultats=resultats)
 
 
 @app.route("/get_json_final",methods=['GET', 'POST'])

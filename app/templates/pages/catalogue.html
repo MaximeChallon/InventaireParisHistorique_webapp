@@ -91,15 +91,15 @@ Catalogue
         <div class="clearfix"></div>
         <table class="table table-striped">
             <tbody>
-                {%for result in resultats%}
+                {%for result in resultats %}
                 <tr v-for="item of searchResult.data.items">
                     <td style="width=35%;">
-                        <b>{{result[2]}} {{result[1]}}</b>
+                        <b>{%if result[2] != None and result[2] != '' %}{{result[2]}}{%endif%} {{result[1]}}</b>
                         <br/>
-                        {{result[3]}}
+                        {%if result[3] != None and result[3] != '' %}{{result[3]}}{%endif%}
                         <div style="margin-top:20px;">
                             <br/>
-                            <span>{{result[5]}} {{result[4]}}</span>
+                            <span>{%if result[5] != None and result[5] != '' %}{{result[5]}}{%endif%} {%if result[4] != None and result[4] != '' %}{{result[4]}}{%endif%}</span>
                         </div>
                     </td>
                     <td style="width=35%;">
@@ -107,7 +107,7 @@ Catalogue
                         <br/>
                         <div>
                             <br/>
-                            Prise le {{result[11]}} par {{result[12]}}
+                            {%if (result[11] != None and result[11] != '') or (result[12] != None and result[12] != '') %}Prise {%if result[11] != None and result[11] != '' %}le {{result[11]}}{%endif%} {%if result[12] != None and result[12] != '' %}par {{result[12]}}{%endif%}{%endif%}
                         </div>
                     </td>
                     <td style="width=30%;">
