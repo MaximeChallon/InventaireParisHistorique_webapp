@@ -54,6 +54,7 @@ def accueil():
 
 #les routes cratographie et json_carto vont ensemble: la première affiche le html, la seconde fournit à Ajax de la première le JSON nécessaire
 @app.route("/cartographie")
+@login_required
 def cartographie():
 	"""
 	Route de la page de la cartographie
@@ -204,6 +205,7 @@ def json_carto():
 
 # les routes suivantes vont ensemble: la première gère l'affichage des graphiques, les autres contiennent seulement le JSOn nécessaire aux graphiques
 @app.route("/rythme_catalogage", methods=['get', 'post'])
+@login_required
 def rythme_catalogage(visuel="line", dates='general_au_jour'):
 	"""
 	Permet de visualiser les graphiques des données
@@ -276,6 +278,7 @@ def temporels_rythme_catalogage(visuel='line', dates='general_au_jour'):
 
 
 @app.route("/graphiques/repartition_arrondissements")
+@login_required
 def repartition_arrondissements():
 	return render_template("pages/repartition_arrondissements.html")
 
@@ -412,6 +415,7 @@ def get_latlg_adresses():
 
 
 @app.route("/catalogue", methods=['GET', 'POST'])
+@login_required
 def catalogue():
 	form = Recherche_form()
 	if form.validate_on_submit():
