@@ -72,7 +72,7 @@ class Catalogage_form(FlaskForm):
     Date_construction = StringField("Date de construction", default="")
     Architecte = StringField("Architecte", default="")
     Classement_MH = SelectField("Classement MH", choices=CLASSEMENT_MH, default="INCONNU")
-    N_inventaire_lie = IntegerField("Numéro d'inventaire lié")
+    N_inventaire_lie = IntegerField("Numéro d'inventaire lié", default=0)
     Legende = TextAreaField("Date de prise de vue", default="", render_kw={"rows": 6, "cols": 40})
     Generalite_architecture = SelectField("Généralité architecture", choices=GENERALITE_ARHITECTURE, default="PRIVEE")
     Mot_cle1 = SelectField(choices = MOT_CLE, default = ['', ''])

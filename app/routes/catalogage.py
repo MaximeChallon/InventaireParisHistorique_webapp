@@ -5,6 +5,7 @@ from ..models.formulaires import Catalogage_form
 from ..models.users import Classe_catalogage
 from ..models.export import Classe_export
 from ..constantes import *
+import re
 
 from ..models.actions import Actions
 
@@ -90,7 +91,7 @@ def cataloguer():
             Mot_cle5=form.Mot_cle5.data,
             Mot_cle6=form.Mot_cle6.data,
             Autre_adresse = form.Autre_adresse.data,
-            Notes = form.Notes.data,
+            Notes = "[Numéro d'inventaire lié: " + (str(form.N_inventaire_lie.data) if form.N_inventaire_lie.data != 0 else "") + "]" + form.Notes.data,
             Cote_base = form.Cote_base.data,
             Auteur = current_user.id_utilisateur
         )
@@ -304,7 +305,7 @@ def editer_photographie( id_photo):
         photo.Mot_cle5 = form.Mot_cle5.data
         photo.Mot_cle6 = form.Mot_cle6.data
         photo.Autre_adresse = form.Autre_adresse.data
-        photo.Notes = form.Notes.data
+        photo.Notes = "[Numéro d'inventaire lié: " + (str(form.N_inventaire_lie.data) if form.N_inventaire_lie.data != 0 else "") + "]" + form.Notes.data
         photo.Cote_base = form.Cote_base.data
         photo.Auteur = current_user.id_utilisateur
         db.session.add(photo)
@@ -347,6 +348,7 @@ def editer_photographie( id_photo):
     form.Date_construction.data = photo.Date_construction
     form.Architecte.data = photo.Architecte
     form.Classement_MH.data = photo.Classement_MH
+    form.N_inventaire_lie.data = re.sub("\].*", "", photo.Notes.replace("[Numéro d'inventaire lié: ", ""))
     form.Legende.data = photo.Legende
     form.Generalite_architecture.data = photo.Generalite_architecture
     form.Mot_cle1.data = photo.Mot_cle1

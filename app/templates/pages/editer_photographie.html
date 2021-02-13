@@ -136,10 +136,16 @@ Cataloguer
                         {{form.Generalite_architecture}}</p>
                 </div>
             </div>
-            <div class="row"><div class="col-6">
-                <p>Classement MH <br>
-                    {{form.Classement_MH}}</p>
-            </div>
+            <div class="row">
+                <div class="col-3">
+                    <p>Classement MH <br>
+                        {{form.Classement_MH}}</p>
+                </div>
+                <div class="col-3" id="N_inventaire_lie2" style="display: none;">
+                    <!-- mettre display inline pour afficher ce champ, none pour le retirer-->
+                    <p>Numéro d'inventaire lié (obligatoire)<br>
+                        {{form.N_inventaire_lie}}</p>
+                </div>
                 <div class="col-6">
                     <p>Légende <br>
                         {{form.Legende(size=50)}}</p>
@@ -223,7 +229,6 @@ Cataloguer
     
     
         if( $(this).val()==="PLAN PERSPECTIF 1964"){
-            console.log('oui');
             $("#N_inventaire_lie2").show()
             }
             else{
