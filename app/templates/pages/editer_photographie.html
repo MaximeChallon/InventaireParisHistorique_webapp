@@ -216,8 +216,21 @@ Cataloguer
         }
         else{$('#Mention_don').val("INCONNU");};
     });
+    
+    
         $("#Mention_collection")
         .change(function () {
+    
+    
+        if( $(this).val()==="PLAN PERSPECTIF 1964"){
+            console.log('oui');
+            $("#N_inventaire_lie2").show()
+            }
+            else{
+            $("#N_inventaire_lie2").hide()
+            };
+    
+    
         var collection = "";
         $( "#Mention_collection option:selected" ).each(function() {
             collection += $( this ).text() + "";
@@ -227,7 +240,14 @@ Cataloguer
             $('#Droits').val("PH");
             $('#Mention_don').val("PARIS-HISTORIQUE, ASSOCIATION");
             $('#Photographe').val("PARIS-HISTORIQUE, ASSOCIATION");
+        }
+        else{
+            $('#Droits').val("");
+            $('#Mention_don').val("");
+            $('#Photographe').val("");
         };
+            
+        
     })
     </script>
 {% endblock %}

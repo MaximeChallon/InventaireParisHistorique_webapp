@@ -146,9 +146,14 @@ Cataloguer
                         {{form.Generalite_architecture}}</p>
                 </div>
             </div>
-            <div class="row"><div class="col-6">
+            <div class="row"><div class="col-3">
                 <p>Classement MH <br>
                     {{form.Classement_MH}}</p>
+            </div>
+            <div class="col-3" id="N_inventaire_lie2" style="display: none;">
+                <!-- mettre display inline pour afficher ce champ, none pour le retirer-->
+                <p>Numéro d'inventaire lié (obligatoire)<br>
+                    {{form.N_inventaire_lie}}</p>
             </div>
                 <div class="col-6">
                     <p>Légende <br>
@@ -219,8 +224,21 @@ $( "#Photographe" )
     }
     else{$('#Mention_don').val("INCONNU");};
 });
+
+
     $("#Mention_collection")
     .change(function () {
+
+
+    if( $(this).val()==="PLAN PERSPECTIF 1964"){
+        console.log('oui');
+        $("#N_inventaire_lie2").show()
+        }
+        else{
+        $("#N_inventaire_lie2").hide()
+        };
+
+
     var collection = "";
     $( "#Mention_collection option:selected" ).each(function() {
         collection += $( this ).text() + "";
@@ -230,7 +248,14 @@ $( "#Photographe" )
         $('#Droits').val("PH");
         $('#Mention_don').val("PARIS-HISTORIQUE, ASSOCIATION");
         $('#Photographe').val("PARIS-HISTORIQUE, ASSOCIATION");
+    }
+    else{
+        $('#Droits').val("");
+        $('#Mention_don').val("");
+        $('#Photographe').val("");
     };
+        
+    
 })
 </script>
 {% endblock %}
