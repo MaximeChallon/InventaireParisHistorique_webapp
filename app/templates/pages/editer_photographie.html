@@ -194,4 +194,40 @@ Cataloguer
         </form>
     </div>
 </div>
+
+
+<script>
+    $( "#Photographe" )
+        .change(function () {
+        var photographe = "";
+        $( "#Photographe option:selected" ).each(function() {
+            photographe += $( this ).text() + "";
+        });
+    
+        // préremplissage des droits
+        if(photographe === 'PONTY, PIERRE'){
+            $('#Droits').val("PHOTOGRAPHE");
+        }
+        else{$('#Droits').val("PH");};
+    
+        // préremplissage des dons
+        if(photographe !== 'INCONNU'){
+            $('#Mention_don').val(photographe);
+        }
+        else{$('#Mention_don').val("INCONNU");};
+    });
+        $("#Mention_collection")
+        .change(function () {
+        var collection = "";
+        $( "#Mention_collection option:selected" ).each(function() {
+            collection += $( this ).text() + "";
+        });
+    
+        if(collection === 'PLAN PERSPECTIF 1964'){
+            $('#Droits').val("PH");
+            $('#Mention_don').val("PARIS-HISTORIQUE, ASSOCIATION");
+            $('#Photographe').val("PARIS-HISTORIQUE, ASSOCIATION");
+        };
+    })
+    </script>
 {% endblock %}
