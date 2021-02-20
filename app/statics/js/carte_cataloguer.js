@@ -15,7 +15,6 @@ var empt_rue = document.forms["form1"]["Rue"].value;
 var empt_n_rue = document.forms["form1"]["N_rue"].value;
 if ((empt_rue == "" && empt_n_rue == "") || empt_rue == "" || empt_n_rue == "")
 {
-    console.log("Veuillez rentrer une valuer dans la rue et le numéro de rue");
     return false;
 }
 else
@@ -23,16 +22,20 @@ else
     // appeler l'api et prendre les résultats
 
     fetch(url_api + empt_n_rue + " " + empt_rue + "&limit=1").then((response)=>{
-    return response.json();  // converting byte data to json
+    return response.json(); // converting byte data to json
 }).then(data=>{
 
 // suppression du marker déjà présent
 if (map_markers.length > 0){for(i=0;i<map_markers.length;i++) {
 map.removeLayer(map_markers[i]);
+
+document.getElementById('Latitude_x').value = '';
+document.getElementById('Longitude_y').value = '';
 };
 }
 else {};
 
+if((data["features"][0]["properties"]["postcode"]).startsWith("75")){
 var latitude = data["features"][0]["geometry"]["coordinates"][1];
 var longitude = data["features"][0]["geometry"]["coordinates"][0];
 
@@ -49,7 +52,10 @@ document.getElementById('Longitude_y').value = longitude;
 else{
 document.getElementById('Latitude_x').value = '';
 document.getElementById('Longitude_y').value = '';
-}
+};
+
+};
+
 });
 
 return true;

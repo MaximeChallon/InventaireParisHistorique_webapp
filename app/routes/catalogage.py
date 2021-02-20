@@ -91,7 +91,7 @@ def cataloguer():
             Mot_cle5=form.Mot_cle5.data,
             Mot_cle6=form.Mot_cle6.data,
             Autre_adresse = form.Autre_adresse.data,
-            Notes = "[Numéro d'inventaire lié: " + (str(form.N_inventaire_lie.data) if form.N_inventaire_lie.data != 0 else "") + "]" + form.Notes.data,
+            Notes = ((("[Numéro d'inventaire lié: " + (str(form.N_inventaire_lie.data))  + "]" )if form.N_inventaire_lie.data != 0 else "") + form.Notes.data),
             Cote_base = form.Cote_base.data,
             Auteur = current_user.id_utilisateur
         )
@@ -283,8 +283,8 @@ def editer_photographie( id_photo):
         photo.Arrondissement = form.Arrondissement.data
         photo.Ville = form.Ville.data
         photo.Departement = form.Departement.data
-        photo.Latitude_x = form.Latitude_x.data
-        photo.Longitude_y = form.Longitude_y.data
+        photo.Latitude_x = str(form.Latitude_x.data)
+        photo.Longitude_y = str(form.Longitude_y.data)
         photo.Support = form.Support.data
         photo.Couleur = form.Couleur.data
         photo.Taille = form.Taille.data
@@ -305,7 +305,7 @@ def editer_photographie( id_photo):
         photo.Mot_cle5 = form.Mot_cle5.data
         photo.Mot_cle6 = form.Mot_cle6.data
         photo.Autre_adresse = form.Autre_adresse.data
-        photo.Notes = "[Numéro d'inventaire lié: " + (str(form.N_inventaire_lie.data) if form.N_inventaire_lie.data != 0 else "") + "]" + form.Notes.data
+        photo.Notes = ((("[Numéro d'inventaire lié: " + (str(form.N_inventaire_lie.data))  + "]" )if form.N_inventaire_lie.data != 0 else "") + form.Notes.data)
         photo.Cote_base = form.Cote_base.data
         photo.Auteur = current_user.id_utilisateur
         db.session.add(photo)
@@ -322,7 +322,7 @@ def editer_photographie( id_photo):
         else:
             try:
                 return redirect(url_for('cataloguer'))
-            except:
+            except :
                 flash("Echec de la duplication", "warning")
 
         return redirect(url_for("cataloguer"))
