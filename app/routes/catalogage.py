@@ -358,7 +358,7 @@ def editer_photographie( id_photo):
     form.Mot_cle5.data = photo.Mot_cle5
     form.Mot_cle6.data = photo.Mot_cle6
     form.Autre_adresse.data = photo.Autre_adresse
-    form.Notes.data = photo.Notes
+    form.Notes.data = re.sub("\[[^\]]+\]", "",photo.Notes)
     form.Cote_base.data = photo.Cote_base
     return render_template("pages/editer_photographie.html", form=form)
 
