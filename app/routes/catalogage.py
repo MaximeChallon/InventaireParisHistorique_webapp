@@ -49,6 +49,32 @@ from ..models.actions import Actions
     exporte    INTEGER NOT NULL
 );"""
 
+@app.route("/cotes", methods=['GET','POST'])
+@login_required
+def cotes():
+    if request.method == 'POST':
+        num_debut = request.form.get("num_debut", None)
+        num_fin = request.form.get("num_fin", None)
+        cote = request.form.get("cote", None)
+        if num_fin is None:
+            num_fin = num_debut
+        i = int(num_debut)
+        while i <= int(num_fin) and i >= int(num_debut):
+            try:
+                if db.session.execute("select * from cotes where N_inventaire = " + str(i)).fetchall() == []:
+                    db.session.execute("""insert into cotes values ("""+ str(i) + ",'" + str(cote) +"','" +
+                        str(current_user.nom) + "'" +""")""")
+                    db.session.commit()
+                else:
+                    flash(str(i) + " possède déjà une cote", "info")
+                    db.session.rollback()
+            except Exception as e:
+                print(e)
+                db.session.rollback()
+            i += 1
+        return render_template("pages/cotes.html")
+    return render_template("pages/cotes.html")
+
 
 @app.route("/espace_personnel/cataloguer", methods=['GET', 'POST'])
 @login_required

@@ -1,5 +1,10 @@
 from ..app import db
 
+class cotes(db.Model):
+    N_inventaire = db.Column(db.Integer, primary_key=True)
+    Cote = db.Column(db.String(120))
+    Utilisateur = db.Column(db.String(120))
+
 class Classe_db(db.Model):
     # table de db contenant les métadonnées des photographies inventoriées
     N_inventaire = db.Column(db.Integer, primary_key=True)
