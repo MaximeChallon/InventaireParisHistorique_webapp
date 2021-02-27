@@ -71,6 +71,7 @@ def cotes():
                 print(e)
                 db.session.rollback()
             i += 1
+        last = db.session.execute("select N_inventaire from cotes order by N_inventaire desc limit 1").fetchall()
         return render_template("pages/cotes.html", last=last)
     last = db.session.execute("select N_inventaire from cotes order by N_inventaire desc limit 1").fetchall()
     return render_template("pages/cotes.html", last=last)
