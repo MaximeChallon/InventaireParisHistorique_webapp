@@ -1,6 +1,7 @@
 from ..app import db, admin, app
 from ..models.users import Classe_utilisateurs, Classe_catalogage
 from ..models.actions import Actions
+from ..models.donnees import cotes
 
 from flask_login import current_user
 
@@ -76,3 +77,4 @@ class Classe_admin_controller(ModelView):
 
 admin.add_view(Classe_admin_controller(Classe_utilisateurs, db.session))
 admin.add_view(Classe_admin_controller(Classe_catalogage, db.session))
+admin.add_view(Classe_admin_controller(cotes, db.session))
