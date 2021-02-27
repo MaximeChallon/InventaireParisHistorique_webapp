@@ -52,6 +52,7 @@ from ..models.actions import Actions
 @app.route("/cotes", methods=['GET','POST'])
 @login_required
 def cotes():
+    last = db.session.execute("select N_inventaire from cotes order by N_inventaire desc limit 1").fetchall()
     if request.method == 'POST':
         num_debut = request.form.get("num_debut", None)
         num_fin = request.form.get("num_fin", None)
@@ -71,8 +72,8 @@ def cotes():
                 print(e)
                 db.session.rollback()
             i += 1
-        return render_template("pages/cotes.html")
-    return render_template("pages/cotes.html")
+        return render_template("pages/cotes.html", last=last)
+    return render_template("pages/cotes.html", last=last)
 
 
 @app.route("/espace_personnel/cataloguer", methods=['GET', 'POST'])
