@@ -1,7 +1,8 @@
 from ..app import db
 
 class cotes(db.Model):
-    N_inventaire = db.Column(db.Integer, primary_key=True)
+    cle = db.Column(db.Integer, primary_key=True)
+    N_inventaire = db.Column(db.Integer)
     Cote = db.Column(db.String(120))
     Utilisateur = db.Column(db.String(120))
     def get_id(self):

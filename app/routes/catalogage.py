@@ -62,8 +62,7 @@ def cotes():
         while i <= int(num_fin) and i >= int(num_debut):
             try:
                 if db.session.execute("select * from cotes where N_inventaire = " + str(i)).fetchall() == []:
-                    db.session.execute("""insert into cotes values ("""+ str(i) + ",'" + str(cote) +"','" +
-                        str(current_user.nom) + "'" +""")""")
+                    db.session.execute("""insert into cotes values ("""  + str(i) +","+ str(i) + ",'" + str(cote) +"','" + str(current_user.nom) + "'" +""")""")
                     db.session.commit()
                 else:
                     flash(str(i) + " possède déjà une cote", "info")
