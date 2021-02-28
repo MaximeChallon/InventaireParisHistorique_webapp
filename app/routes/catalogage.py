@@ -118,7 +118,7 @@ def cataloguer():
             Mot_cle5=form.Mot_cle5.data,
             Mot_cle6=form.Mot_cle6.data,
             Autre_adresse = form.Autre_adresse.data,
-            Notes = ((("[Numéro d'inventaire lié: " + (str(form.N_inventaire_lie.data))  + "]" )if form.N_inventaire_lie.data != 0 else "") + form.Notes.data),
+            Notes = ((("[Numéro d'inventaire lié: " + (str(form.N_inventaire_lie.data))  + "]" )if form.N_inventaire_lie.data != '0'else "") + form.Notes.data),
             Cote_base = form.Cote_base.data,
             Auteur = current_user.id_utilisateur
         )
@@ -332,7 +332,7 @@ def editer_photographie( id_photo):
         photo.Mot_cle5 = form.Mot_cle5.data
         photo.Mot_cle6 = form.Mot_cle6.data
         photo.Autre_adresse = form.Autre_adresse.data
-        photo.Notes = ((("[Numéro d'inventaire lié: " + (str(form.N_inventaire_lie.data))  + "]" )if form.N_inventaire_lie.data != 0 else "") + form.Notes.data)
+        photo.Notes = ((("[Numéro d'inventaire lié: " + (str(form.N_inventaire_lie.data))  + "]" )if form.N_inventaire_lie.data != '0' else "") + form.Notes.data)
         photo.Cote_base = form.Cote_base.data
         photo.Auteur = current_user.id_utilisateur
         db.session.add(photo)
