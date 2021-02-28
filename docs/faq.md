@@ -187,7 +187,7 @@ Sinon, une autre solution est de remplir le formulaire [http://parishistoriquein
 
 #### ![question](img/question.png){:height="25px"}Les mots-clés sont vraiment importants, j'aimerais connaître comment les utiliser, existe-t-il une documentation spécifique?
 
-Vous avez raison, les mots-clés et les descripteurs sont le coeur de l'inventaire. Leur liste exhaustive, et la description de leur utilisation, est disponible sur ce lien: [Guide des mots-clés](https://maximechallon.github.io/InventaireParisHistorique/2020/11/07/guide-des-mots-cles.html).
+Vous avez raison, les mots-clés et les descripteurs sont le coeur de l'inventaire. Leur liste exhaustive, et la description de leur utilisation, est disponible sur ce lien: [Guide des mots-clés](https://maximechallon.github.io/InventaireParisHistorique_webapp/2020/11/07/guide-des-mots-cles.html).
 
 Si vous ne trouvez pas le mot-clé nécessaire, voir le sujet [Je ne trouve pas la rue, la ville, le site, ou toute autre information, dans les menus déroulants, comment puis-je faire?](#je-ne-trouve-pas-la-rue-la-ville-le-site-ou-toute-autre-information-dans-les-menus-déroulants-comment-puis-je-faire).
 
@@ -263,7 +263,7 @@ Le champ de recherche vous permet d'ajouter un filtre en plus. Il recherche dans
 L'[API](http://parishistoriqueinventaire.eu.pythonanywhere.com/api) permet de renvoyer des résultats au format JSON. 
 Il y a deux possibilités pour y accéder et récupérer les données:
 * Elle est disponible dans l'onglet "Données" > "API". Vous n'avez alors qu'à remplir l'un des quatre formulaires pour obtenir les données. ![API](img/API.png){:width="750px"}
-* Elle est accessible via HTTP GET avec l'URL de base "http://parishistoriqueinventaire.eu.pythonanywhere.com/api/photographie/". Une documentation plus poussée sur l'API est disponible avec la page [https://maximechallon.github.io/InventaireParisHistorique/2020/11/07/api.html](https://maximechallon.github.io/InventaireParisHistorique/2020/11/07/api.html).
+* Elle est accessible via HTTP GET avec l'URL de base "http://parishistoriqueinventaire.eu.pythonanywhere.com/api/photographie/". Une documentation plus poussée sur l'API est disponible avec la page [https://maximechallon.github.io/InventaireParisHistorique_webapp/2020/11/07/api.html](https://maximechallon.github.io/InventaireParisHistorique_webapp/2020/11/07/api.html).
 	* Ajouter à cette URL de base "numero_inventaire?q=" + NUMERO_INVENTAIRE vous renvoie les informations concernant cette unique photographie.
 	* Ajouter à cette URL de base "numeros_inventaire?q=" + NUMEROS_INVENTAIRE_SEPARES_PAR_AUTRE_CHOSE_QU_UN_CHIFFRE vous renvoie toutes les informations pour chacune des photographies comprises dans l'intervalle fourni.
 	* Ajouter à cette URL de base "adresse?q=" + ADRESSE vous renvoie l'ensemble des photographies situées à cette adresse.
@@ -337,6 +337,6 @@ contacter directement l'association:
 
 Sauf mention explicite contraire, toutes les données disponibles sur [parishistoriqueinventaire.eu.pythonanywhere.com/](parishistoriqueinventaire.eu.pythonanywhere.com/)
 sont réutilisables  et sous license GNU/GPL 3.0 ou ultérieure, de même que le code source du site d'inventaire
-disponible sur Github [https://github.com/MaximeChallon/InventaireParisHistorique](https://github.com/MaximeChallon/InventaireParisHistorique/tree/master). Vous êtes libre de proposer des modifications sur ce code source via les *issues* ou les *pull request*.
+disponible sur Github [https://github.com/MaximeChallon/InventaireParisHistorique_webapp](https://github.com/MaximeChallon/InventaireParisHistorique_webapp/tree/master). Vous êtes libre de proposer des modifications sur ce code source via les *issues* ou les *pull request*.
 
 L'[API](http://parishistoriqueinventaire.eu.pythonanywhere.com/api) permet la récupération des données de l'inventaire formatées en JSON.
