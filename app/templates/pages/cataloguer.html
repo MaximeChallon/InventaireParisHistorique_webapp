@@ -150,7 +150,11 @@ Cataloguer
                 <p>Classement MH <br>
                     {{form.Classement_MH}}</p>
             </div>
+            {%if form.N_inventaire_lie.data == '0' or form.N_inventaire_lie.data == 0%}
             <div class="col-3" id="N_inventaire_lie2" style="display: none;">
+            {%else%}
+            <div class="col-3" id="N_inventaire_lie2" style="display: display;">
+            {%endif%}
                 <!-- mettre display inline pour afficher ce champ, none pour le retirer-->
                 <p>Numéro d'inventaire lié (obligatoire)<br>
                     {{form.N_inventaire_lie}}</p>
