@@ -375,7 +375,7 @@ def editer_photographie( id_photo):
     form.Date_construction.data = photo.Date_construction
     form.Architecte.data = photo.Architecte
     form.Classement_MH.data = photo.Classement_MH
-    form.N_inventaire_lie.data = re.sub("\].*", "", photo.Notes.replace("[Numéro d'inventaire lié: ", ""))
+    form.N_inventaire_lie.data = (re.sub("\].*", "", photo.Notes.replace("[Numéro d'inventaire lié: ", ""))) if "[" in photo.Notes else "0"
     form.Legende.data = photo.Legende
     form.Generalite_architecture.data = photo.Generalite_architecture
     form.Mot_cle1.data = photo.Mot_cle1
