@@ -8,3 +8,4 @@ app/db.sqlite
 app/utils/get_l*
 sitemap.xml
 docs/
+.vscode/
