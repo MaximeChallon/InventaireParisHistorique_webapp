@@ -1,9 +1,10 @@
-from ..app import db, login_manager
+from ..app import db, login_manager, app
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from ..constantes import SECRET_KEY
 from datetime import datetime
+import re
 
 class Classe_utilisateurs(db.Model, UserMixin):
     __tablename__ = "utilisateurs"
@@ -138,6 +139,24 @@ class Classe_catalogage(db.Model, UserMixin):
     Date_inventaire = db.Column(db.String(24), default=datetime.utcnow().strftime("%Y/%m/%d"))
     Auteur = db.Column(db.Integer, db.ForeignKey('utilisateurs.id_utilisateur'))
     exporte = db.Column(db.Integer, default=0)
+
+    @staticmethod
+    def check_data(form, check_id=True):
+        erreurs = []
+        if form.N_inventaire.data == "" or form.N_inventaire.data is  None:
+            erreurs.append(" le numéro d'inventaire est vide ")
+        if check_id == True:
+            if db.get_engine(app,"users").execute("select * from catalogage where N_inventaire = " + str(form.N_inventaire.data)).fetchall():
+                erreurs.append(" le numéro d'inventaire " + str(form.N_inventaire.data) + " est déjà enregistré sur le site et est en cours de traitement ")
+        if len(form.Arrondissement.data) > 2:
+            erreurs.append(" plus de deux caractères composent le numéro d'arrondissement " + str(form.Arrondissement.data) + " rentré ")
+        if re.match(".*[^0-9]+.*", form.Arrondissement.data):
+            erreurs.append(" le numéro d'arrondissement "+ str(form.Arrondissement.data) + " comporte un ou plusieurs autres caractères que des chiffres qui sont seuls autorisés au nombre de deux ")
+        if len(str(form.Departement.data)) > 2:
+            erreurs.append(" plus de deux chiffres composent le numéro de département " + str(form.Departement.data) + " rentré ")
+        if len(str(form.Departement.data)) == 1 :
+            erreurs.append("  le numéro de département " + str(form.Departement.data) + " doit comporter deux chiffres (ex: 04, 15)")
+        return True if len(erreurs) == 0 else False, erreurs
 
 
 @login_manager.user_loader
