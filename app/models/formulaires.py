@@ -52,11 +52,11 @@ class Recherche_form(FlaskForm):
     submit = SubmitField('Rechercher')
 
 class Catalogage_form(FlaskForm):
-    N_inventaire = IntegerField("Numéro d'inventaire", [validators.DataRequired()])
+    N_inventaire = IntegerField("Numéro d'inventaire")
     Rue = SelectField("Rue", choices=RUE, default="")
     N_rue = StringField("Numéro de rue", default="")
     Nom_site = SelectField("Rue", choices=NOM_SITE, default="")
-    Arrondissement = StringField("Arrondissement", [validators.Length(min=0, max=2, message="Le champ Arrondissement doit contenir deux chiffres.")], default="")
+    Arrondissement = StringField("Arrondissement", default="")
     Ville = SelectField("Rue", choices=VILLE, default=['PARIS', 'PARIS'])
     Departement = IntegerField("Code postal (2 premiers chiffres)", default=75)
     Latitude_x = StringField("Latitude", default="")
