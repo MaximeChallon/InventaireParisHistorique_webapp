@@ -155,7 +155,7 @@ def cataloguer():
                         )
                         else ""
                     )
-                    + form.Notes.data
+                    + (form.Notes.data).replace("[", "(").replace("]", ")")
                 ),
                 Cote_base=form.Cote_base.data,
                 Auteur=current_user.id_utilisateur,
@@ -490,7 +490,7 @@ def editer_photographie(id_photo):
                     and form.N_inventaire_lie.data != ""
                 )
                 else ""
-            ) + form.Notes.data
+            ) + (form.Notes.data).replace("[", "(").replace("]", ")")
             photo.Cote_base = form.Cote_base.data
             photo.Auteur = current_user.id_utilisateur
             db.session.add(photo)
