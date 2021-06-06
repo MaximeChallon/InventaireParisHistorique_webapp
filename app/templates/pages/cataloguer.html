@@ -6,6 +6,67 @@ Cataloguer
 
 {%block js%}
 <script type="text/javascript" src="{{url_for('static', filename='js/carte_cataloguer.js')}}"></script>
+<script type="text/javascript">
+     function firstfocus()
+  {
+  var n_inv = document.form1.N_inventaire.focus();
+  return true;
+  }
+
+
+  function N_inventaire_validation()
+  {
+  var n_inv = document.form1.N_inventaire.value;
+  if (!n_inv.match(/^[0-9]+$/))
+  {
+  alert("Le numéro d'inventaire ne doit contenir que des chiffres");
+  n_inv.focus();
+  return false;
+  }
+  document.form1.Cote_base.focus();
+  return true;
+  }
+
+  function Arrondissement_validation()
+  {
+  var arr = document.form1.Arrondissement.value;
+  if (!arr.match(/^[0-9]+$/))
+  {
+  alert("L'arrondissement ne doit contenir que des chiffres");
+  arr.focus();
+  return false;
+  }
+  else if((arr.length <2 || arr.length > 2) && arr.length != 0 && arr !== null)
+  {
+  alert("L'arrondissement doit être rempli avec deux chiffres");
+  arr.focus();
+  return false;
+  }
+  document.form1.Ville.focus();
+  return true;
+  }
+
+  function Departement_validation()
+  {
+  var dpt = document.form1.Departement.value;
+  if (!dpt.match(/^[0-9]+$/))
+  {
+  alert("Le département ne doit contenir que des chiffres");
+  dpt.focus();
+  return false;
+  }
+  else if((dpt.length <2 || dpt.length > 2) && dpt.length != 0 && dpt !== null)
+  {
+  alert("Le département doit être rempli avec deux chiffres");
+  dpt.focus();
+  return false;
+  }
+  document.form1.Latitude_x.focus();
+  return true;
+  }
+
+
+</script>
 {%endblock%}
 
 {% block corps %}
@@ -26,7 +87,7 @@ Cataloguer
             <div class="row">
                 <div class="col-4">
                     <p>Numéro d'inventaire (requis)<br>
-                        {{ form.N_inventaire }}</p>
+                        {{ form.N_inventaire(onblur="N_inventaire_validation()") }}</p>
                 </div>
                 <div class="col-6">
                     <p>Cote dans la base des numérisations<br>
@@ -54,7 +115,7 @@ Cataloguer
             <div class="row">
                 <div class="col-4">
                     <p>Arrondissement (2 chiffres. Ex: 02)<br>
-                        {{form.Arrondissement(size=5, maxlenth=2)}}</p>
+                        {{form.Arrondissement(size=5, maxlenth=2, onblur="Arrondissement_validation()")}}</p>
                 </div>
                 <div class="col-4">
                     <p>Ville <br>
@@ -62,7 +123,7 @@ Cataloguer
                 </div>
                 <div class="col-4">
                     <p>Département (code à 2 chiffres)<br>
-                        {{form.Departement(size=5, maxlength=2)}}</p>
+                        {{form.Departement(size=5, maxlength=2, onblur="Departement_validation()")}}</p>
                 </div>
             </div>
             <div class="row" style="margin-left:5px;">
