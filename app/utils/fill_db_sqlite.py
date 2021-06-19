@@ -26,7 +26,7 @@ with open('/home/maxime/dev/InventaireParisHistorique_files/exports/Inventaire_g
 			ligne_finale.append(quote(liste_labels[champ]))
 		f_e.write(';'.join(ligne_finale) + '\n')
 		for row in f_o:
-			if row[33] != '' and "PONTY" not in row[13] and "PONTY" not in row[14] and "PONTY" not in row[15]:
+			if row[33] != '' and "LIOT" not in row[13] and "LIOT" not in row[14] and "LIOT" not in row[15]:
 				ligne_finale = []
 				for champ in liste_champs_utiles:
 					ligne_finale.append(quote(row[champ]))

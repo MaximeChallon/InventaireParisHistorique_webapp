@@ -2,7 +2,7 @@
 import csv
 from collections import Counter
 
-with open('/home/maxime/Documents/PH/Inventaire/inventaire_complet_pipe.csv', 'r') as f:
+with open('/home/maxime/dev/InventaireParisHistorique_files/exports/Inventaire_general_phototheque.csv', 'r') as f:
     f_o = csv.reader(f, delimiter='|')
     next(f_o)
     next(f_o)
