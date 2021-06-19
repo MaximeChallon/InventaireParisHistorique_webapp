@@ -23,7 +23,7 @@ else
 
     fetch(url_api + empt_n_rue + " " + empt_rue + "&limit=1").then((response)=>{
     return response.json(); // converting byte data to json
-}).then(data=>{
+}).then(data=>{ 
 
 // suppression du marker déjà présent
 if (map_markers.length > 0){for(i=0;i<map_markers.length;i++) {
@@ -38,6 +38,7 @@ else {};
 if((data["features"][0]["properties"]["postcode"]).startsWith("75")){
 var latitude = data["features"][0]["geometry"]["coordinates"][1];
 var longitude = data["features"][0]["geometry"]["coordinates"][0];
+var arrondissement = (data["features"][0]["properties"]["postcode"]).slice(-2)
 
 var new_marker = L.marker([latitude, longitude]);
 map_markers.push(new_marker);
@@ -48,10 +49,14 @@ new_marker.addTo(map);
 if(latitude > latitude_sud_ouest && latitude < latitude_nord_est && longitude < longitude_nord_est && longitude > longitude_sud_ouest){
 document.getElementById('Latitude_x').value = latitude;
 document.getElementById('Longitude_y').value = longitude;
+document.getElementById('Arrondissement').value = arrondissement;
+document.getElementById('Ville').value = 'PARIS';
 }
 else{
 document.getElementById('Latitude_x').value = '';
 document.getElementById('Longitude_y').value = '';
+document.getElementById('Arrondissement').value = '';
+document.getElementById('Ville').value = 'PARIS';
 };
 
 };
