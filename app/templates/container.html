@@ -33,8 +33,14 @@
         {% else %}
 
     <ul class="navbar-nav mr-auto" style="color:black;">
-        <li class="nav-item">
-            <a class="nav-link" href="{{url_for('cartographie')}}" style="color:black;">Cartographie</a>
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" style="color:black;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Cartographies
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color:#a6cfb1;">
+            <a class="dropdown-item" href="{{url_for('cartographie')}}" style="color:black;">Globale</a>
+          <a class="dropdown-item" href="{{url_for('cartographie_plan_perspectif')}}" style="color:black;">Plan Perspectif</a>
+        </div>
         </li>
     </ul>
 

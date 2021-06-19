@@ -1,0 +1,116 @@
+{% extends "container.html" %}
+
+{% block titre %}
+Cartographie Plan Perspectif
+{% endblock %}
+
+
+{% block corps %}
+<script type="text/javascript">
+        function getJsonFromUrl(url) {
+  if(!url) url = document.URL;
+  var question = url.indexOf("?");
+  var hash = url.indexOf("#");
+  if(hash==-1 && question==-1) return {};
+  if(hash==-1) hash = url.length;
+  var query = question==-1 || hash==question+1 ? url.substring(hash) :
+  url.substring(question+1,hash);
+  var result = {};
+  query.split("&").forEach(function(part) {
+    if(!part) return;
+    part = part.split("+").join(" "); // replace every + with space, regexp-free version
+    var eq = part.indexOf("=");
+    var key = eq>-1 ? part.substr(0,eq) : part;
+    var val = eq>-1 ? decodeURIComponent(part.substr(eq+1)) : "";
+    var from = key.indexOf("[");
+    if(from==-1) result[decodeURIComponent(key)] = val;
+    else {
+      var to = key.indexOf("]",from);
+      var index = decodeURIComponent(key.substring(from+1,to));
+      key = decodeURIComponent(key.substring(0,from));
+      if(!result[key]) result[key] = [];
+      if(!index) result[key].push(val);
+      else result[key][index] = val;
+    }
+  });
+  return result;
+}
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+            // Création de la carte à l'id "map"
+            var map = L.map('carte', {
+        zoomControl: true
+    }).setView(new L.LatLng(48.8542, 2.3484), 12);
+
+            // Usage des tuiles de carte d'OpenStreetMap puis ajout à la carte map
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '<a href="openstreetmap.org">OpenStreetMap</a> | <a href="www.paris-historique.org">Association Paris Historique</a> | Maxime Challon', 
+                maxNativeZoom: 100
+            }).addTo(map);
+
+            // ici mettre un if click on submit, alors get data avec telle url selon les args du formulaire
+            var current_url = document.URL;
+            var obj = getJsonFromUrl(current_url);
+            var parametres = "";
+for(var key in obj) {
+  if (parametres === ""){
+  parametres = key + "=" + obj[key];}
+  else {parametres = parametres + "&"+ key + "=" + obj[key];}
+}
+
+
+            // sinon get date par défaut
+            var url = "{{url_for ('json_carto_plan_perspectif')}}?" + parametres
+
+            $.ajax(url).done(function(data, x, z) {
+
+                var leafletView = new PruneClusterForLeaflet();
+                var markers = []
+
+                for(var inv in data.data) {
+                    var photo = data.data[inv],
+                    lat = photo.Latitude_x,
+                    long = photo.Longitude_y,
+                    marker = new PruneCluster.Marker(lat, long);
+                    marker.data.icon = L.icon({ iconUrl: "{{url_for('static', filename='img/rouge.png')}}", iconSize: [17, 21] });
+                    marker.data.popup  = '<h1 class="infoHeader">' + 
+                      ((photo.Nom_site != '' && photo.Nom_site !== null)?(photo.Nom_site):'Site indéterminé') + 
+                      '</h1><h2 class="infoInventaire">Numéro d\'inventaire : <b>' + 
+                      '<b id="inv">' + photo.N_inventaire + 
+                      '</b>' + ' </b></h2><p class="infoPar"> ' + 
+                      ((photo.N_rue != '' && photo.N_rue !== null)?(photo.N_rue + ' '):'') + 
+                      photo.Rue + ', ' + photo.Ville + ' ' + 
+                      photo.Arrondissement + 
+                      ((photo.Photographe != '' && photo.Photographe !== null)?(' </p><p class="infoPar">Photographie de ' + photo.Photographe):'') + 
+                      ((photo.Date_prise_vue != '' && photo.Date_prise_vue !== null)?(' le/en ' + photo.Date_prise_vue):'') + 
+                      '</p><p class="infoPar">Description matérielle: ' + photo.Support + 
+                      ', ' + photo.Couleur + ', ' + photo.Taille + 
+                      '</p><p class="infoPar">Principaux sujets de la photographie : ' +
+                         ((photo.Mot_cle1 != '' && photo.Mot_cle1 !== null)?(photo.Mot_cle1):'') + ' ' 
+                      + ((photo.Mot_cle2 != '' && photo.Mot_cle2 !== null)?(photo.Mot_cle2):'') + ' ' 
+                      + ((photo.Mot_cle3 != '' && photo.Mot_cle3 !== null)?(photo.Mot_cle3):'') + ' ' 
+                      + ((photo.Mot_cle4 != '' && photo.Mot_cle4 !== null)?(photo.Mot_cle4):'') + ' ' 
+                      + ((photo.Mot_cle5 !='' && photo.Mot_cle5 !== null)?(photo.Mot_cle5):'') + ' ' 
+                      + ((photo.Mot_cle6 != '' && photo.Mot_cle6 !== null)?(photo.Mot_cle6):'') + ' ' +
+                       '</p><p class="infoPar">Cote dans la photothèque: ' + photo.Cote_classement + 
+                      '</p>';
+
+                    markers.push(marker);
+                    leafletView.RegisterMarker(marker);
+                };
+
+                map.addLayer(leafletView);
+            });});
+        </script>
+<form class="form-group" id="formulaire" method="get" action="{{ url_for ('cartographie_plan_perspectif')}}">
+        <input type="text" name="_Arrondissement" id="_Arrondissement" placeholder="Arrondissement" size="7px;">
+        <input type="text" name="_Site" id="_Site" placeholder="Site" size="10px;">
+        <input type="text" name="_Mot" id="_Mot" placeholder="Mot clé" size="10px;">
+        <input type="text" name="_Photographe" id="_Photographe" placeholder="Photographe" size="10px;">
+        <input type="text" name="_Date" id="_Date" placeholder="Date" size="7px;">
+        <input type="submit" value="Filtrer" id="submit" class="btn-primary btn">
+</form>
+<div id='carte' style="height:500px;">
+</div>
+{% endblock %}

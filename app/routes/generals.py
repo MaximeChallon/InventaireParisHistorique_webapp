@@ -203,6 +203,159 @@ def json_carto():
 	return json_array
 
 
+# routes de la carto du plan perspectif
+@app.route("/cartographie_plan_perspectif")
+@login_required
+def cartographie_plan_perspectif():
+	"""
+	Route de la page de la cartographie
+	:return: template
+	"""
+	return render_template("pages/cartographie_plan_perspectif.html")
+
+
+@app.route("/json_carto_plan_perspectif")
+def json_carto_plan_perspectif():
+	"""
+	Permet de renvoyer le JSON de la cartographie
+	:return: JSON
+	"""
+	arrondissement = request.args.get("_Arrondissement", '')
+	try:
+		mot = request.args.get("_Mot", '').upper()
+	except:
+		mot = request.args.get("_Mot", '')
+	try:
+		site = request.args.get("_Site", '').upper()
+	except:
+		site = request.args.get("_Site", '')
+	try:
+		photographe = request.args.get("_Photographe", '').upper()
+	except:
+		photographe = request.args.get("_Photographe", '')
+	date = request.args.get("_Date", '')
+
+	where_clause =   " where ( Cote_classement like 'H%' or Cote_classement like 'I%')"
+
+	if arrondissement != '' or mot != '' or site !='' or photographe != '' or date != '':
+		where_clause = where_clause + " and ("
+		i = 0
+		statut_arrondissement = 0
+		statut_mot = 0
+		statut_photographe = 0
+		statut_site = 0
+		statut_date = 0
+		if arrondissement != "" and i ==0:
+			if ";" not in arrondissement:
+				where_clause = where_clause + "Arrondissement  in ('"+ str(arrondissement) + "')"
+			else:
+				arrondissements= arrondissement.split(";")
+				requete = [ "Arrondissement  in ('"+ str(arrdt) + "')" for arrdt in arrondissements]
+				where_clause = where_clause + " or ".join(requete)
+			i += 1
+			statut_arrondissement = 1
+		if arrondissement != "" and i !=0 and statut_arrondissement == 0:
+			if ";" not in arrondissement:
+				where_clause = where_clause + "Arrondissement  in ('"+ str(arrondissement) + "')"
+			else:
+				arrondissements= arrondissement.split(";")
+				requete = [ "Arrondissement  in ('"+ str(arrdt) + "')" for arrdt in arrondissements]
+				where_clause = where_clause + " or ".join(requete)
+
+		if mot != "" and i ==0:
+			if ";" not in mot:
+				where_clause = where_clause + "(Mot_cle1  in ('"+ str(mot) + "') or Mot_cle2 in ('"+ str(mot) + "') or Mot_cle3 in ('"+ str(mot) + "') or Mot_cle4 in ('"+ str(mot) + "') or Mot_cle5 in ('"+ str(mot) + "') or Mot_cle6 in ('"+ str(mot) + "'))"
+			else:
+				mots = mot.split(";")
+				requete = ["(Mot_cle1  in ('"+ 
+						str(un_mot) + "') or Mot_cle2 in ('"+ 
+						str(un_mot) + "') or Mot_cle3 in ('"+ 
+						str(un_mot) + "') or Mot_cle4 in ('"+ 
+						str(un_mot) + "') or Mot_cle5 in ('"+ 
+						str(un_mot) + "') or Mot_cle6 in ('"+ 
+						str(un_mot) + "'))" for un_mot in mots]
+				where_clause = where_clause + " or ".join(requete)
+			i += 1
+			statut_mot = 1
+		if mot != "" and i !=0 and statut_mot == 0:
+			if ";" not in mot:
+				where_clause = where_clause + "(Mot_cle1  in ('"+ str(mot) + "') or Mot_cle2 in ('"+ str(mot) + "') or Mot_cle3 in ('"+ str(mot) + "') or Mot_cle4 in ('"+ str(mot) + "') or Mot_cle5 in ('"+ str(mot) + "') or Mot_cle6 in ('"+ str(mot) + "'))"
+			else:
+				mots = mot.split(";")
+				requete = ["(Mot_cle1  in ('"+ 
+						str(un_mot) + "') or Mot_cle2 in ('"+ 
+						str(un_mot) + "') or Mot_cle3 in ('"+ 
+						str(un_mot) + "') or Mot_cle4 in ('"+ 
+						str(un_mot) + "') or Mot_cle5 in ('"+ 
+						str(un_mot) + "') or Mot_cle6 in ('"+ 
+						str(un_mot) + "'))" for un_mot in mots]
+				where_clause = where_clause + " or ".join(requete)
+		
+		if photographe != "" and i ==0:
+			where_clause = where_clause + "Photographe  like '"+ str(photographe) + "%'"
+			i += 1
+			statut_photographe = 1
+		if photographe != "" and i !=0 and statut_photographe == 0:
+			where_clause = where_clause + " and Photographe  like '" + str(photographe) + "%'"
+		
+		if site != "" and i ==0:
+			where_clause = where_clause + "Nom_site  like '"+ str(site) + "%'"
+			i += 1
+			statut_site = 1
+		if site != "" and i !=0 and statut_site == 0:
+			where_clause = where_clause + " and Nom_site  like '" + str(site) + "%'"
+		
+		if date != "" and i ==0:
+			if "-" not in date:
+				where_clause = where_clause + "Date_prise_vue  like '"+ str(date) + "%'"
+			else:
+				dates = date.split("-")
+				where_clause = where_clause + "Date_prise_vue  >= '"+ str(dates[0]) + "'" + " and Date_prise_vue  <= '"+ str(dates[1]) + "'"
+			i += 1
+			statut_date = 1
+		if date != "" and i !=0 and statut_date == 0:
+			if "-" not in date:
+				where_clause = where_clause + " and Date_prise_vue  like '" + str(date) + "%'"
+			else:
+				dates = date.split("-")
+				where_clause = where_clause + "Date_prise_vue  >= '"+ str(dates[0]) + "'" + " and Date_prise_vue  <= '"+ str(dates[1]) + "'"
+		
+		where_clause = where_clause + ")"
+
+	requete = """select * from Classe_db""" + where_clause
+	results = db.session.execute(requete).fetchall()
+
+	data = {}
+	i=0
+	for photo in results:
+		data[str(i)] = {"N_inventaire": str(photo[0]),
+		 "Rue": photo[1],
+		 "N_rue": photo[2],
+		 "Nom_site": photo[3],
+		 "Arrondissement": str(photo[4]),
+		 "Ville": photo[5],
+		 "Latitude_x": photo[6],
+		 "Longitude_y": photo[7],
+		 "Support": photo[8],
+		 "Couleur": photo[9],
+		 "Taille": photo[10],
+		 "Date_prise_vue": photo[11],
+		 "Photographe": photo[12],
+		 "Mot_cle1": photo[17],
+		 "Mot_cle2": photo[18],
+		 "Mot_cle3": photo[19],
+		 "Mot_cle4": photo[20],
+		 "Mot_cle5": photo[21],
+		 "Mot_cle6": photo[22],
+		 "Cote_base": photo[23],
+		 "Cote_classement": photo[24]
+		 }
+		i += 1
+
+	json_array = {"data": data}
+	return json_array
+
+
 # les routes suivantes vont ensemble: la première gère l'affichage des graphiques, les autres contiennent seulement le JSOn nécessaire aux graphiques
 @app.route("/rythme_catalogage", methods=['get', 'post'])
 @login_required
