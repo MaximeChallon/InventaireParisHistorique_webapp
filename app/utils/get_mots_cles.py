@@ -22,6 +22,7 @@ with open('/home/maxime/dev/InventaireParisHistorique_files/exports/Inventaire_g
             if row[22] is not None and row[22] != '':
                 liste_mots_cles.append(row[22])
     sortie = Counter(liste_mots_cles).most_common()
+    print(sortie)
     markdown = ""
     for mot in sortie:
         markdown= markdown + "* " + mot[0] + " (" + str(mot[1]) + ")\n"
