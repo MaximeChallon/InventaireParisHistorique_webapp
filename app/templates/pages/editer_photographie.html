@@ -6,6 +6,32 @@ Cataloguer
 
 {%block js%}
 <script type="text/javascript" src="{{url_for('static', filename='js/carte_cataloguer.js')}}"></script>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+<script>
+$( function() {
+    var sites = new Array();
+    {% for site in NOM_SITE %}
+        sites.push('{{site}}'.replace("&#39;", "'"));
+    {% endfor %}
+  $( "#sites" ).autocomplete({
+    source: sites
+  });
+} );
+</script>
+<script>
+    $( function() {
+        var rues = new Array();
+        {% for r in RUE %}
+            rues.push('{{r}}'.replace("&#39;", "'"));
+        {% endfor %}
+      $( "#rues" ).autocomplete({
+        source: rues
+      });
+    } );
+    </script>
 {%endblock%}
 
 {% block corps %}
@@ -30,9 +56,9 @@ Cataloguer
             <h1 style="font-size:16pt;color:#da1916;">Informations concernant l'adresse</h1>
             <p  style="font-size:8pt;">En cas de doute, ne rien mettre.</p>
             <div class="row">
-                <div class="col-8">
-                    <p>Nom de la rue<br>
-                        {{form.Rue}}</p>
+                <div class="ui-widget col-8" id="form-adresse">
+                    <label for="rues">Nom de la rue: </label>
+                    <input name="Rue" id="rues">
                 </div>
                 <div class="col-4">
                     <p>Numéro dans la rue <br>
@@ -40,10 +66,10 @@ Cataloguer
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
-                    <p>Nom du site<br>
-                        {{form.Nom_site}}</p>
-                </div>
+                <div class="ui-widget col-12">
+                    <label for="sites">Nom du site: </label>
+                    <input name="sites" id="sites">
+                    </div>
             </div>
             <div class="row">
                 <div class="col-4">
@@ -263,4 +289,12 @@ Cataloguer
         
     })
     </script>
+
+<script>
+    var site_actuel = '{{site_actuel}}'.replace("&#39;", "'");
+    document.form1.sites.value = site_actuel
+
+    var rue_actuelle = '{{rue_actuelle}}'.replace("&#39;", "'");
+    document.form1.Rue.value = rue_actuelle
+</script>
 {% endblock %}

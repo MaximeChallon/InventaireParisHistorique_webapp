@@ -108,14 +108,16 @@ def cataloguer():
     """
     form = Catalogage_form()
     if form.validate_on_submit():
+        site = request.form.get("sites")
+        rue = request.form.get("Rue")
         check_data_bool, check_data_message = Classe_catalogage.check_data(form)
         if check_data_bool == True:
             nouvelle_photo = Classe_catalogage(
                 N_inventaire_index=form.N_inventaire.data,
                 N_inventaire=form.N_inventaire.data,
-                Rue=form.Rue.data,
+                Rue=rue,
                 N_rue=form.N_rue.data,
-                Nom_site=form.Nom_site.data,
+                Nom_site=site,
                 Arrondissement=form.Arrondissement.data,
                 Ville=form.Ville.data,
                 Departement=int(form.Departement.data),
@@ -189,7 +191,7 @@ def cataloguer():
         else:
             flash("Une ou plusieurs erreur(s) sont survenues: " + str(" ; ".join(check_data_message)), "warning")
             return render_template("pages/cataloguer.html", form=form)
-    return render_template("pages/cataloguer.html", form=form)
+    return render_template("pages/cataloguer.html", form=form, NOM_SITE=[nom[1].replace('"', "") for nom in NOM_SITE], RUE=[r[1].replace('"', "") for r in RUE])
 
 
 @app.route("/espace_personnel/exporter", methods=["get", "post"])
@@ -442,6 +444,8 @@ def editer_photographie(id_photo):
     :return: template
     """
     form = Catalogage_form()
+    site = request.form.get("sites")
+    rue = request.form.get("Rue")
     # récupération des données de la photo, 404 si elle n'existe pas
     photo = Classe_catalogage.query.get_or_404(id_photo)
     # lors de la validation du formulaire, intégration des données dans la base
@@ -454,9 +458,9 @@ def editer_photographie(id_photo):
         if check_data_bool == True:
             photo.N_inventaire_index = form.N_inventaire.data
             photo.N_inventaire = form.N_inventaire.data
-            photo.Rue = form.Rue.data
+            photo.Rue = rue
             photo.N_rue = form.N_rue.data
-            photo.Nom_site = form.Nom_site.data
+            photo.Nom_site = site
             photo.Arrondissement = form.Arrondissement.data
             photo.Ville = form.Ville.data
             photo.Departement = form.Departement.data
@@ -554,7 +558,16 @@ def editer_photographie(id_photo):
     form.Autre_adresse.data = photo.Autre_adresse
     form.Notes.data = re.sub("\[[^\]]+\]", "", photo.Notes)
     form.Cote_base.data = photo.Cote_base
-    return render_template("pages/editer_photographie.html", form=form)
+
+    site_actuel = (photo.Nom_site).replace('"', "")
+    if site and site !='':
+        site_actuel=site.replace('"', "")
+    
+    rue_actuelle = (photo.Rue).replace('"', "")
+    if rue and rue !='':
+        rue_actuelle=rue.replace('"', "")
+
+    return render_template("pages/editer_photographie.html", form=form,NOM_SITE=[nom[1].replace('"', "") for nom in NOM_SITE], site_actuel=site_actuel, RUE=[r[1].replace('"', "") for r in RUE], rue_actuelle=rue_actuelle)
 
 
 @app.route("/espace_personnel/dupliquer/<id_photo>", methods=["GET", "POST"])
