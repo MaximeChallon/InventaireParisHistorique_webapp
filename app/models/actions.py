@@ -7,6 +7,7 @@ from ..models.users import Classe_catalogage
 
 class Actions():
     def duplicate(old_model):
+        n_inv = None
         n_inv = int(str(db.get_engine(app, 'users').execute("""select N_inventaire 
 			from catalogage order by N_inventaire desc""").fetchall()[0]).replace('"', "").replace("(", "").replace(",","").replace(")","")) + 1
         new_model = Classe_catalogage(
@@ -51,7 +52,8 @@ class Actions():
             return Msg, n_inv
         except Exception as e:
             Msg = "Une erreur est survenue lors de l'insertion: " + str(e)
-            return Msg
+            db.session.rollback()
+            return Msg, n_inv
 
 
     def delete(n_inv):

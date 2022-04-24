@@ -174,9 +174,10 @@ def cataloguer():
                     return redirect(url_for("editer_photographie", id_photo=new_id))
                 except:
                     flash(
-                        "Echec de l'enregistrement, veuillez vérifier que les champs sont remplis correctement",
+                        "Echec de la duplication",
                         "warning",
                     )
+                    db.session.rollback()
             else:
                 try:
                     db.session.add(nouvelle_photo)
@@ -188,6 +189,7 @@ def cataloguer():
                         "Echec de l'enregistrement, veuillez vérifier que les champs sont remplis correctement",
                         "warning",
                     )
+                    db.session.rollback()
         else:
             flash("Une ou plusieurs erreur(s) sont survenues: " + str(" ; ".join(check_data_message)), "warning")
             return render_template("pages/cataloguer.html", form=form)
@@ -497,9 +499,13 @@ def editer_photographie(id_photo):
             ) + (form.Notes.data).replace("[", "(").replace("]", ")").replace("\n", " ; ").replace("\r", "")
             photo.Cote_base = form.Cote_base.data
             photo.Auteur = current_user.id_utilisateur
-            db.session.add(photo)
-            db.session.commit()
-            flash("La photographie a bien été mise à jour", "info")
+            try:
+                db.session.add(photo)
+                db.session.commit()
+                flash("La photographie a bien été mise à jour", "info")
+            except Exception as e:
+                flash("Erreur de mise à jour de la photographie : " + e, "warning")
+                db.session.rollback()
 
 
             if form.Dupliquer.data == True:
@@ -511,6 +517,7 @@ def editer_photographie(id_photo):
                     return redirect(url_for("editer_photographie", id_photo=new_id))
                 except:
                     flash("Echec de la duplication", "warning")
+                    db.session.rollback()
             else:
                 try:
                     return redirect(url_for("cataloguer"))
