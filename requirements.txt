@@ -30,7 +30,7 @@ Markdown==3.3
 MarkupSafe==1.1.1
 marshmallow==2.18.0
 marshmallow-jsonapi==0.23.1
-numpy==1.18.5
+numpy==1.22.0
 openpyxl==3.0.5
 pandas==1.0.4
 phonetics==1.0.5
