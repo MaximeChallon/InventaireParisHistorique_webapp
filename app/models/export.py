@@ -5,6 +5,7 @@ from .users import Classe_catalogage, Classe_utilisateurs
 from .mails import Classe_mails
 import csv
 from ..constantes import *
+from ..app import db
 
 class Classe_export():
     @staticmethod
@@ -57,7 +58,12 @@ class Classe_export():
                         liste_photo.append(photo.Autre_adresse)
                         liste_photo.append(photo.Notes)
                         liste_photo.append(photo.Cote_base)
-                        liste_photo.append(photo.Cote_classement)
+                        results = db.session.execute(
+                            """select Cote from cotes where N_inventaire = """ + str(photo.N_inventaire)).fetchall()
+                        if results:
+                            liste_photo.append(results[0][0])
+                        else:
+                            liste_photo.append("Cote à retrouver")
                         liste_photo.append(photo.Date_inventaire)
                         liste_photo.append(current_user.nom.upper())
                         item = "|".join(map(str, liste_photo))
@@ -100,12 +106,17 @@ class Classe_export():
                         liste_photo.append(photo.Autre_adresse)
                         liste_photo.append(photo.Notes)
                         liste_photo.append(photo.Cote_base)
-                        liste_photo.append(photo.Cote_classement)
+
+                        results = db.session.execute("""select Cote from cotes where N_inventaire = """ + str(photo.N_inventaire)).fetchall()
+                        if results:
+                            liste_photo.append(results[0][0])
+                        else:
+                            liste_photo.append("Cote à retrouver")
                         liste_photo.append(photo.Date_inventaire)
                         liste_photo.append((Classe_utilisateurs.query.get(photo.Auteur)).nom.upper())
                         item = "|".join(map(str, liste_photo))
                         liste_globale.append(item)
-                except:
+                except :
                     pass
             i += 1
 
