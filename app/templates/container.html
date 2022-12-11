@@ -76,7 +76,7 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{url_for('cataloguer', nom_user=current_user.nom)}}" style="color:black;">Cataloguer</a>
             <a class="dropdown-item" href="{{url_for('exporter', nom_user=current_user.nom)}}" style="color:black;">Exporter</a>
-            {% if current_user.is_admin == True or current_user.id_utilisateur == 22%}
+            {% if current_user.is_admin == True or current_user.id_utilisateur == 22 or current_user.nom == "Magonthier" or current_user.nom == "Moyen"%}
             <a class="dropdown-item" href="{{url_for('cotes')}}" style="color:black;">Cotes</a>
             {%endif%}
             <div class="dropdown-divider"></div>
